@@ -1,0 +1,32 @@
+# Unity 생성 폴더
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.csproj
+*.sln
+
+# 빌드 결과물
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# 에셋 임포트 캐시
+Assets/AssetStoreTools*
+Assets/Sprite/background.png

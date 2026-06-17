@@ -1,0 +1,3146 @@
+fileFormatVersion: 2
+guid: eb531ffeded7842dba6b8422f55290ba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7698656044273153542
+    second: worker_Sitting_0
+  - first:
+      213: -3928330346922233863
+    second: worker_Sitting_1
+  - first:
+      213: 6059602162124848331
+    second: worker_Sitting_2
+  - first:
+      213: -6138227126582609488
+    second: worker_Sitting_3
+  - first:
+      213: -53556789779841705
+    second: worker_Sitting_4
+  - first:
+      213: 5284958501487120017
+    second: worker_Sitting_5
+  - first:
+      213: 6227643212659346502
+    second: worker_Sitting_6
+  - first:
+      213: -1790182838698292976
+    second: worker_Sitting_7
+  - first:
+      213: 1775821978794815859
+    second: worker_Sitting_8
+  - first:
+      213: -886827986285016293
+    second: worker_Sitting_9
+  - first:
+      213: 1686282148226242112
+    second: worker_Sitting_10
+  - first:
+      213: 3061594883691378858
+    second: worker_Sitting_11
+  - first:
+      213: -3542424712612153941
+    second: worker_Sitting_12
+  - first:
+      213: 4524869474637732904
+    second: worker_Sitting_13
+  - first:
+      213: 9030523377158545545
+    second: worker_Sitting_14
+  - first:
+      213: -6603755415155940086
+    second: worker_Sitting_15
+  - first:
+      213: 5473745240034879082
+    second: worker_Sitting_16
+  - first:
+      213: 2006029020747932863
+    second: worker_Sitting_17
+  - first:
+      213: -4775209280159045173
+    second: worker_Sitting_18
+  - first:
+      213: -6715434921392029603
+    second: worker_Sitting_19
+  - first:
+      213: 3108308910789889386
+    second: worker_Sitting_20
+  - first:
+      213: -468927385409973784
+    second: worker_Sitting_21
+  - first:
+      213: 3311142588281238178
+    second: worker_Sitting_22
+  - first:
+      213: -2965754426682746327
+    second: worker_Sitting_23
+  - first:
+      213: -2518744640818603431
+    second: worker_Sitting_24
+  - first:
+      213: 4037236748274862081
+    second: worker_Sitting_25
+  - first:
+      213: -4002831096364778438
+    second: worker_Sitting_26
+  - first:
+      213: 854278539187788807
+    second: worker_Sitting_27
+  - first:
+      213: -3133864109800918911
+    second: worker_Sitting_28
+  - first:
+      213: -8109756895401660611
+    second: worker_Sitting_29
+  - first:
+      213: 1398846155562110687
+    second: worker_Sitting_30
+  - first:
+      213: -7842394363894642759
+    second: worker_Sitting_31
+  - first:
+      213: -5629835666071077525
+    second: worker_Sitting_32
+  - first:
+      213: -5688307031945879770
+    second: worker_Sitting_33
+  - first:
+      213: -6654013329076234856
+    second: worker_Sitting_34
+  - first:
+      213: 3977725422812417686
+    second: worker_Sitting_35
+  - first:
+      213: -2461346884492499111
+    second: worker_Sitting_36
+  - first:
+      213: -2655566365088107466
+    second: worker_Sitting_37
+  - first:
+      213: -4439333962566179151
+    second: worker_Sitting_38
+  - first:
+      213: -8727499357432111072
+    second: worker_Sitting_39
+  - first:
+      213: -4796207262639281784
+    second: worker_Sitting_40
+  - first:
+      213: 3005380935794134358
+    second: worker_Sitting_41
+  - first:
+      213: 6783749348000673575
+    second: worker_Sitting_42
+  - first:
+      213: 2687255206521599067
+    second: worker_Sitting_43
+  - first:
+      213: 6106124147596437687
+    second: worker_Sitting_44
+  - first:
+      213: 265751580340902375
+    second: worker_Sitting_45
+  - first:
+      213: 3205412942650319902
+    second: worker_Sitting_46
+  - first:
+      213: -4334279246910111611
+    second: worker_Sitting_47
+  - first:
+      213: -698064101807973772
+    second: worker_Sitting_48
+  - first:
+      213: 5355635547741296205
+    second: worker_Sitting_49
+  - first:
+      213: 8150532460730158211
+    second: worker_Sitting_50
+  - first:
+      213: 6199937576733189362
+    second: worker_Sitting_51
+  - first:
+      213: 1276293415028374662
+    second: worker_Sitting_52
+  - first:
+      213: 8483486166509572019
+    second: worker_Sitting_53
+  - first:
+      213: 2159002541328852742
+    second: worker_Sitting_54
+  - first:
+      213: -1897056303806576807
+    second: worker_Sitting_55
+  - first:
+      213: -615305858554705764
+    second: worker_Sitting_56
+  - first:
+      213: -7159021197611058204
+    second: worker_Sitting_57
+  - first:
+      213: -8704314353567925913
+    second: worker_Sitting_58
+  - first:
+      213: -3154230476295654445
+    second: worker_Sitting_59
+  - first:
+      213: -8870365667090426707
+    second: worker_Sitting_60
+  - first:
+      213: 7655795357463695044
+    second: worker_Sitting_61
+  - first:
+      213: 3968121962717481755
+    second: worker_Sitting_62
+  - first:
+      213: -2006845858887108983
+    second: worker_Sitting_63
+  - first:
+      213: -7485833336464865217
+    second: worker_Sitting_64
+  - first:
+      213: -8621756178944488046
+    second: worker_Sitting_65
+  - first:
+      213: 9216013516887622675
+    second: worker_Sitting_66
+  - first:
+      213: 2385056748733789335
+    second: worker_Sitting_67
+  - first:
+      213: -3408992152142622761
+    second: worker_Sitting_68
+  - first:
+      213: -8439297303827503720
+    second: worker_Sitting_69
+  - first:
+      213: -1503390117930046396
+    second: worker_Sitting_70
+  - first:
+      213: 2072186425957545182
+    second: worker_Sitting_71
+  - first:
+      213: -5710691454873399270
+    second: worker_Sitting_72
+  - first:
+      213: 2418440951886014696
+    second: worker_Sitting_73
+  - first:
+      213: 5818267453071919191
+    second: worker_Sitting_74
+  - first:
+      213: 4695883781724842732
+    second: worker_Sitting_75
+  - first:
+      213: 7897592420168756449
+    second: worker_Sitting_76
+  - first:
+      213: 7465421789697478843
+    second: worker_Sitting_77
+  - first:
+      213: -7827795327152054047
+    second: worker_Sitting_78
+  - first:
+      213: 1306440912851649081
+    second: worker_Sitting_79
+  - first:
+      213: -2061581126490559597
+    second: worker_Sitting_80
+  - first:
+      213: -1965439121765181160
+    second: worker_Sitting_81
+  - first:
+      213: -4730385069436027720
+    second: worker_Sitting_82
+  - first:
+      213: 5324803603502070073
+    second: worker_Sitting_83
+  - first:
+      213: -6501271353533200075
+    second: worker_Sitting_84
+  - first:
+      213: 1734810509536749836
+    second: worker_Sitting_85
+  - first:
+      213: -957107532306113303
+    second: worker_Sitting_86
+  - first:
+      213: -9127425112684441436
+    second: worker_Sitting_87
+  - first:
+      213: -6086727596797153911
+    second: worker_Sitting_88
+  - first:
+      213: -6292662274576291591
+    second: worker_Sitting_89
+  - first:
+      213: 6698789257381223837
+    second: worker_Sitting_90
+  - first:
+      213: 7774920488900092392
+    second: worker_Sitting_91
+  - first:
+      213: 2353901783213805808
+    second: worker_Sitting_92
+  - first:
+      213: -4556596209159877400
+    second: worker_Sitting_93
+  - first:
+      213: 3460346474503080299
+    second: worker_Sitting_94
+  - first:
+      213: 3676814085929794962
+    second: worker_Sitting_95
+  - first:
+      213: -4409441636918413224
+    second: worker_Sitting_96
+  - first:
+      213: 392084051634359760
+    second: worker_Sitting_97
+  - first:
+      213: 1946421128164069546
+    second: worker_Sitting_98
+  - first:
+      213: -4201866673257161545
+    second: worker_Sitting_99
+  - first:
+      213: -8054118059614216708
+    second: worker_Sitting_100
+  - first:
+      213: 5760852298478083178
+    second: worker_Sitting_101
+  - first:
+      213: -4663961100760047404
+    second: worker_Sitting_102
+  - first:
+      213: 8336240958972958378
+    second: worker_Sitting_103
+  - first:
+      213: -4713551892947273006
+    second: worker_Sitting_104
+  - first:
+      213: -4806237700890438542
+    second: worker_Sitting_105
+  - first:
+      213: -6658717617679679154
+    second: worker_Sitting_106
+  - first:
+      213: 7122109887353322295
+    second: worker_Sitting_107
+  - first:
+      213: 5709077952181687635
+    second: worker_Sitting_108
+  - first:
+      213: -5406457271284021087
+    second: worker_Sitting_109
+  - first:
+      213: -31009708185629649
+    second: worker_Sitting_110
+  - first:
+      213: 7877926403511957039
+    second: worker_Sitting_111
+  - first:
+      213: -7842221462595503468
+    second: worker_Sitting_112
+  - first:
+      213: -3903862500091818775
+    second: worker_Sitting_113
+  - first:
+      213: -8036094654468192305
+    second: worker_Sitting_114
+  - first:
+      213: 2956066294777596259
+    second: worker_Sitting_115
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: worker_Sitting_0
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 6122
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 606b0de02ee17da60800000000000000
+      internalID: 7698656044273153542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_1
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 6019
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ff2057dc54cb79c0800000000000000
+      internalID: -3928330346922233863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_2
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 6022
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bccf3a1bf08081450800000000000000
+      internalID: 6059602162124848331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_3
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 5922
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b9706933f2a0daa0800000000000000
+      internalID: -6138227126582609488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_4
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5889
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75dbcd9226ab14ff0800000000000000
+      internalID: -53556789779841705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_5
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 5856
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19e02d591c1f75940800000000000000
+      internalID: 5284958501487120017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_6
+      rect:
+        serializedVersion: 2
+        x: 4204
+        y: 5856
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64cce66a1880d6650800000000000000
+      internalID: 6227643212659346502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_7
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5756
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0194368613ef727e0800000000000000
+      internalID: -1790182838698292976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_8
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5689
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37175665eacf4a810800000000000000
+      internalID: 1775821978794815859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_9
+      rect:
+        serializedVersion: 2
+        x: 4287
+        y: 5689
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1b4b9425aa51b3f0800000000000000
+      internalID: -886827986285016293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_10
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5623
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0469b14fda0e66710800000000000000
+      internalID: 1686282148226242112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_11
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 5589
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa8f3906358fc7a20800000000000000
+      internalID: 3061594883691378858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_12
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 5573
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba5ff211e77c6dec0800000000000000
+      internalID: -3542424712612153941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_13
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5489
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82c5aca30d09bce30800000000000000
+      internalID: 4524869474637732904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_14
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 5456
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 980656f6a2dd25d70800000000000000
+      internalID: 9030523377158545545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_15
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5356
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a056118207fba54a0800000000000000
+      internalID: -6603755415155940086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_16
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 5256
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a66a34f6b46a6fb40800000000000000
+      internalID: 5473745240034879082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_17
+      rect:
+        serializedVersion: 2
+        x: 1306
+        y: 5256
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb42ec614c8d6db10800000000000000
+      internalID: 2006029020747932863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_18
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 5220
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc9a8f7b57c0bbdb0800000000000000
+      internalID: -4775209280159045173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_19
+      rect:
+        serializedVersion: 2
+        x: 1234
+        y: 947
+        width: 2182
+        height: 4286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d50cc26d48bfdc2a0800000000000000
+      internalID: -6715434921392029603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_20
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5157
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6d00df5c7ee22b20800000000000000
+      internalID: 3108308910789889386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_21
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 5123
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e19f2707090e79f0800000000000000
+      internalID: -468927385409973784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_22
+      rect:
+        serializedVersion: 2
+        x: 4054
+        y: 5107
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a2bb2f04aa83fd20800000000000000
+      internalID: 3311142588281238178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_23
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5090
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92a588aef0687d6d0800000000000000
+      internalID: -2965754426682746327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_24
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 5057
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95a9614181f9b0dd0800000000000000
+      internalID: -2518744640818603431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_25
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 5023
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 108831fae65270830800000000000000
+      internalID: 4037236748274862081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_26
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 4973
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3c3a4563561378c0800000000000000
+      internalID: -4002831096364778438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_27
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 4990
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70c17832ec10bdb00800000000000000
+      internalID: 854278539187788807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_28
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 4957
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18078f032374284d0800000000000000
+      internalID: -3133864109800918911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_29
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 4890
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3f2fca221b547f80800000000000000
+      internalID: -8109756895401660611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_30
+      rect:
+        serializedVersion: 2
+        x: 4287
+        y: 4890
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fde43b5ca23b96310800000000000000
+      internalID: 1398846155562110687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_31
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 4823
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b7c88770e73a2390800000000000000
+      internalID: -7842394363894642759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_32
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 4690
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6d32043a4eced1b0800000000000000
+      internalID: -5629835666071077525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_33
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 4490
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62f528374e21f01b0800000000000000
+      internalID: -5688307031945879770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_34
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 4440
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89552b5b12238a3a0800000000000000
+      internalID: -6654013329076234856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_35
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 4457
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69e46c87238b33730800000000000000
+      internalID: 3977725422812417686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_36
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 4424
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9576fc0ac0a87ddd0800000000000000
+      internalID: -2461346884492499111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_37
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 4324
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 634b273f578852bd0800000000000000
+      internalID: -2655566365088107466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_38
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 4291
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b66ae918415462c0800000000000000
+      internalID: -4439333962566179151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_39
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 4291
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0202fce1391b1e680800000000000000
+      internalID: -8727499357432111072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_40
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 4257
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 889ac31f7e2707db0800000000000000
+      internalID: -4796207262639281784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_41
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 4191
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65d8db4b90245b920800000000000000
+      internalID: 3005380935794134358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_42
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 4157
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72f2ed41718b42e50800000000000000
+      internalID: 6783749348000673575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_43
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 4057
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b54f9856f5c0b4520800000000000000
+      internalID: 2687255206521599067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_44
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 4021
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b8abe38f8f4db450800000000000000
+      internalID: 6106124147596437687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_45
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 3891
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e9d7b087a320b300800000000000000
+      internalID: 265751580340902375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_46
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 3755
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e14ac1d961aeb7c20800000000000000
+      internalID: 3205412942650319902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_47
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 3724
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 580439a2dfb89d3c0800000000000000
+      internalID: -4334279246910111611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_48
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 3625
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47a984dd56aff46f0800000000000000
+      internalID: -698064101807973772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_49
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 3521
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d461391c72a035a40800000000000000
+      internalID: 5355635547741296205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_50
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 3491
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38c8c14f6128c1170800000000000000
+      internalID: 8150532460730158211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_51
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 3358
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f427ca906a9a0650800000000000000
+      internalID: 6199937576733189362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_52
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 3225
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68cbfef491e46b110800000000000000
+      internalID: 1276293415028374662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_53
+      rect:
+        serializedVersion: 2
+        x: 4187
+        y: 3242
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bf4eb398b56bb570800000000000000
+      internalID: 8483486166509572019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_54
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 3092
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60762195f5156fd10800000000000000
+      internalID: 2159002541328852742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_55
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 2855
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95781bcb75d4ca5e0800000000000000
+      internalID: -1897056303806576807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_56
+      rect:
+        serializedVersion: 2
+        x: 4320
+        y: 2842
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9841a8e49ef577f0800000000000000
+      internalID: -615305858554705764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_57
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 2825
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ebb6e0a62c06ac90800000000000000
+      internalID: -7159021197611058204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_58
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 2692
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 769ff3e7630143780800000000000000
+      internalID: -8704314353567925913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_59
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 2526
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3bfa8f71ce934d0800000000000000
+      internalID: -3154230476295654445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_60
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 2422
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da411494c6126e480800000000000000
+      internalID: -8870365667090426707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_61
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 2359
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ce45b2c059de3a60800000000000000
+      internalID: 7655795357463695044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_62
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 2292
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1b833da6e9911730800000000000000
+      internalID: 3968121962717481755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_63
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 2259
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 986f116f2504624e0800000000000000
+      internalID: -2006845858887108983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_64
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 2193
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f380c3cfd3afc1890800000000000000
+      internalID: -7485833336464865217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_65
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 2156
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29d0cfd6f6e595880800000000000000
+      internalID: -8621756178944488046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_66
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 2126
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 314094f077bd5ef70800000000000000
+      internalID: 9216013516887622675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_67
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 2089
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 794fc65f97c691120800000000000000
+      internalID: 2385056748733789335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_68
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 2043
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dfc17103b3d0b0d0800000000000000
+      internalID: -3408992152142622761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_69
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 2059
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8952373c0d791ea80800000000000000
+      internalID: -8439297303827503720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_70
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1893
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44c62fd27a2e22be0800000000000000
+      internalID: -1503390117930046396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_71
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 1859
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed4f5935392e1cc10800000000000000
+      internalID: 2072186425957545182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_72
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1760
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a10996ad06c8fb0b0800000000000000
+      internalID: -5710691454873399270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_73
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 1623
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e86c677b37009120800000000000000
+      internalID: 2418440951886014696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_74
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1493
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 758819c0c63aeb050800000000000000
+      internalID: 5818267453071919191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_75
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1360
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cea2a3c6b612b2140800000000000000
+      internalID: 4695883781724842732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_76
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1227
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ece9f08672e99d60800000000000000
+      internalID: 7897592420168756449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_77
+      rect:
+        serializedVersion: 2
+        x: 4204
+        y: 1193
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb0116170918a9760800000000000000
+      internalID: 7465421789697478843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_78
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1160
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e0a3a69f951e5390800000000000000
+      internalID: -7827795327152054047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_79
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 1110
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9324f82a619612210800000000000000
+      internalID: 1306440912851649081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_80
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 1127
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39b61ef53eac363e0800000000000000
+      internalID: -2061581126490559597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_81
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 1093
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 819d787388b59b4e0800000000000000
+      internalID: -1965439121765181160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_82
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 1027
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bc347d87db4a5eb0800000000000000
+      internalID: -4730385069436027720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_83
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 960
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 939f5755aa085e940800000000000000
+      internalID: 5324803603502070073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_84
+      rect:
+        serializedVersion: 2
+        x: 1606
+        y: 944
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5390b303628d6c5a0800000000000000
+      internalID: -6501271353533200075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_85
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 924
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c096d8d87f8431810800000000000000
+      internalID: 1734810509536749836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_86
+      rect:
+        serializedVersion: 2
+        x: 1589
+        y: 894
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ec1b0535cba7b2f0800000000000000
+      internalID: -957107532306113303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_87
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 860
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a0d67c183fd45180800000000000000
+      internalID: -9127425112684441436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_88
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 860
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98da654ef79978ba0800000000000000
+      internalID: -6086727596797153911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_89
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 824
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f8e0605009fba8a0800000000000000
+      internalID: -6292662274576291591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_90
+      rect:
+        serializedVersion: 2
+        x: 4204
+        y: 794
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9d196f7651e6fc50800000000000000
+      internalID: 6698789257381223837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_91
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 711
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e1ebc9cdf016eb60800000000000000
+      internalID: 7774920488900092392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_92
+      rect:
+        serializedVersion: 2
+        x: 1306
+        y: 727
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f01e98433dbaa020800000000000000
+      internalID: 2353901783213805808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_93
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 691
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ec4220c3e7b3c0c0800000000000000
+      internalID: -4556596209159877400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_94
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 661
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b69088ce8ce950030800000000000000
+      internalID: 3460346474503080299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_95
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 594
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29d7ff83eeaa60330800000000000000
+      internalID: 3676814085929794962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_96
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 594
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85839a581348ec2c0800000000000000
+      internalID: -4409441636918413224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_97
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 561
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dd03cb1e56f07500800000000000000
+      internalID: 392084051634359760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_98
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 427
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa0d88714b3130b10800000000000000
+      internalID: 1946421128164069546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_99
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 394
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bc54fae588ffa5c0800000000000000
+      internalID: -4201866673257161545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_100
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 328
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfdd2ad1c460a3090800000000000000
+      internalID: -8054118059614216708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_101
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 229
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6c5746a4a8a2ff40800000000000000
+      internalID: 5760852298478083178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_102
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 194
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d025fee618464fb0800000000000000
+      internalID: -4663961100760047404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_103
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 194
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa615a12cf640b370800000000000000
+      internalID: 8336240958972958378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_104
+      rect:
+        serializedVersion: 2
+        x: 3837
+        y: 194
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2daf18ed689169eb0800000000000000
+      internalID: -4713551892947273006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_105
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 161
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 274d55c8640dc4db0800000000000000
+      internalID: -4806237700890438542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_106
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 161
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e41419a2b9b7793a0800000000000000
+      internalID: -6658717617679679154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_107
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 128
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73bfdfe3531d6d260800000000000000
+      internalID: 7122109887353322295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_108
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 128
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 355ddc64628ba3f40800000000000000
+      internalID: 5709077952181687635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_109
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 78
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a8c9c3a1c768f4b0800000000000000
+      internalID: -5406457271284021087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_110
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 61
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2cc10fa5d4d19ff0800000000000000
+      internalID: -31009708185629649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_111
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 25
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2630003354045d60800000000000000
+      internalID: 7877926403511957039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_112
+      rect:
+        serializedVersion: 2
+        x: 1656
+        y: 44
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49afc003125da2390800000000000000
+      internalID: -7842221462595503468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_113
+      rect:
+        serializedVersion: 2
+        x: 4054
+        y: 44
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ec0f0e5db1b2d9c0800000000000000
+      internalID: -3903862500091818775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_114
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 0
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc702032d7e0a7090800000000000000
+      internalID: -8036094654468192305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worker_Sitting_115
+      rect:
+        serializedVersion: 2
+        x: 3002
+        y: 0
+        width: 28
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36949b812ae060920800000000000000
+      internalID: 2956066294777596259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      worker_Sitting_0: 7698656044273153542
+      worker_Sitting_1: -3928330346922233863
+      worker_Sitting_10: 1686282148226242112
+      worker_Sitting_100: -8054118059614216708
+      worker_Sitting_101: 5760852298478083178
+      worker_Sitting_102: -4663961100760047404
+      worker_Sitting_103: 8336240958972958378
+      worker_Sitting_104: -4713551892947273006
+      worker_Sitting_105: -4806237700890438542
+      worker_Sitting_106: -6658717617679679154
+      worker_Sitting_107: 7122109887353322295
+      worker_Sitting_108: 5709077952181687635
+      worker_Sitting_109: -5406457271284021087
+      worker_Sitting_11: 3061594883691378858
+      worker_Sitting_110: -31009708185629649
+      worker_Sitting_111: 7877926403511957039
+      worker_Sitting_112: -7842221462595503468
+      worker_Sitting_113: -3903862500091818775
+      worker_Sitting_114: -8036094654468192305
+      worker_Sitting_115: 2956066294777596259
+      worker_Sitting_12: -3542424712612153941
+      worker_Sitting_13: 4524869474637732904
+      worker_Sitting_14: 9030523377158545545
+      worker_Sitting_15: -6603755415155940086
+      worker_Sitting_16: 5473745240034879082
+      worker_Sitting_17: 2006029020747932863
+      worker_Sitting_18: -4775209280159045173
+      worker_Sitting_19: -6715434921392029603
+      worker_Sitting_2: 6059602162124848331
+      worker_Sitting_20: 3108308910789889386
+      worker_Sitting_21: -468927385409973784
+      worker_Sitting_22: 3311142588281238178
+      worker_Sitting_23: -2965754426682746327
+      worker_Sitting_24: -2518744640818603431
+      worker_Sitting_25: 4037236748274862081
+      worker_Sitting_26: -4002831096364778438
+      worker_Sitting_27: 854278539187788807
+      worker_Sitting_28: -3133864109800918911
+      worker_Sitting_29: -8109756895401660611
+      worker_Sitting_3: -6138227126582609488
+      worker_Sitting_30: 1398846155562110687
+      worker_Sitting_31: -7842394363894642759
+      worker_Sitting_32: -5629835666071077525
+      worker_Sitting_33: -5688307031945879770
+      worker_Sitting_34: -6654013329076234856
+      worker_Sitting_35: 3977725422812417686
+      worker_Sitting_36: -2461346884492499111
+      worker_Sitting_37: -2655566365088107466
+      worker_Sitting_38: -4439333962566179151
+      worker_Sitting_39: -8727499357432111072
+      worker_Sitting_4: -53556789779841705
+      worker_Sitting_40: -4796207262639281784
+      worker_Sitting_41: 3005380935794134358
+      worker_Sitting_42: 6783749348000673575
+      worker_Sitting_43: 2687255206521599067
+      worker_Sitting_44: 6106124147596437687
+      worker_Sitting_45: 265751580340902375
+      worker_Sitting_46: 3205412942650319902
+      worker_Sitting_47: -4334279246910111611
+      worker_Sitting_48: -698064101807973772
+      worker_Sitting_49: 5355635547741296205
+      worker_Sitting_5: 5284958501487120017
+      worker_Sitting_50: 8150532460730158211
+      worker_Sitting_51: 6199937576733189362
+      worker_Sitting_52: 1276293415028374662
+      worker_Sitting_53: 8483486166509572019
+      worker_Sitting_54: 2159002541328852742
+      worker_Sitting_55: -1897056303806576807
+      worker_Sitting_56: -615305858554705764
+      worker_Sitting_57: -7159021197611058204
+      worker_Sitting_58: -8704314353567925913
+      worker_Sitting_59: -3154230476295654445
+      worker_Sitting_6: 6227643212659346502
+      worker_Sitting_60: -8870365667090426707
+      worker_Sitting_61: 7655795357463695044
+      worker_Sitting_62: 3968121962717481755
+      worker_Sitting_63: -2006845858887108983
+      worker_Sitting_64: -7485833336464865217
+      worker_Sitting_65: -8621756178944488046
+      worker_Sitting_66: 9216013516887622675
+      worker_Sitting_67: 2385056748733789335
+      worker_Sitting_68: -3408992152142622761
+      worker_Sitting_69: -8439297303827503720
+      worker_Sitting_7: -1790182838698292976
+      worker_Sitting_70: -1503390117930046396
+      worker_Sitting_71: 2072186425957545182
+      worker_Sitting_72: -5710691454873399270
+      worker_Sitting_73: 2418440951886014696
+      worker_Sitting_74: 5818267453071919191
+      worker_Sitting_75: 4695883781724842732
+      worker_Sitting_76: 7897592420168756449
+      worker_Sitting_77: 7465421789697478843
+      worker_Sitting_78: -7827795327152054047
+      worker_Sitting_79: 1306440912851649081
+      worker_Sitting_8: 1775821978794815859
+      worker_Sitting_80: -2061581126490559597
+      worker_Sitting_81: -1965439121765181160
+      worker_Sitting_82: -4730385069436027720
+      worker_Sitting_83: 5324803603502070073
+      worker_Sitting_84: -6501271353533200075
+      worker_Sitting_85: 1734810509536749836
+      worker_Sitting_86: -957107532306113303
+      worker_Sitting_87: -9127425112684441436
+      worker_Sitting_88: -6086727596797153911
+      worker_Sitting_89: -6292662274576291591
+      worker_Sitting_9: -886827986285016293
+      worker_Sitting_90: 6698789257381223837
+      worker_Sitting_91: 7774920488900092392
+      worker_Sitting_92: 2353901783213805808
+      worker_Sitting_93: -4556596209159877400
+      worker_Sitting_94: 3460346474503080299
+      worker_Sitting_95: 3676814085929794962
+      worker_Sitting_96: -4409441636918413224
+      worker_Sitting_97: 392084051634359760
+      worker_Sitting_98: 1946421128164069546
+      worker_Sitting_99: -4201866673257161545
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

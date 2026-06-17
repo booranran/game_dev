@@ -1,0 +1,159 @@
+using UnityEngine;
+using System;
+
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance;
+
+    public enum CharacterType { Student, Worker }
+    public enum LineType { Line9, Line7 }
+    public enum ConditionLevel { Great, Good, Normal, Bad, Worst }
+    public enum PlayerState { Sitting, Standing }
+    public enum EndingType { Good, NormalA, NormalB, Bad, GameOver }
+
+    [Header("Game State")]
+    public int currentTurn = 0;
+    public const int MaxTurns = 15;
+    public PlayerState playerState = PlayerState.Sitting;
+
+    [Header("Character Setup")]
+    public CharacterType characterType;
+    public LineType lineType;
+
+    [Header("Stats")]
+    public int maxHealth;
+    public int currentHealth;
+    public int healthRecoveryPerTurn;
+    public int baseConsiderationGain;
+    public float consideration = 0f;
+    public int comboCount = 0;
+    public ConditionLevel condition = ConditionLevel.Normal;
+
+    public static event Action OnTurnProcessed;
+    public static event Action OnGameOver;
+    public static event Action<EndingType> OnGameEnd;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else Destroy(gameObject);
+    }
+
+    void Start()
+    {
+        InitializeGame(CharacterType.Student, LineType.Line9);
+        if (playerState == PlayerState.Sitting)
+            SeatManager.Instance?.HidePlayerSeat();
+    }
+
+    public void InitializeGame(CharacterType character, LineType line)
+    {
+        characterType = character;
+        lineType = line;
+        currentTurn = 0;
+        consideration = 0f;
+        comboCount = 0;
+        condition = ConditionLevel.Normal;
+        playerState = PlayerState.Sitting;
+
+        if (character == CharacterType.Student)
+        {
+            maxHealth = 200;
+            healthRecoveryPerTurn = 8;
+            baseConsiderationGain = 5;
+        }
+        else if (character == CharacterType.Worker)
+        {
+            maxHealth = 150;
+            healthRecoveryPerTurn = 4;
+            baseConsiderationGain = 7;
+        }
+        currentHealth = maxHealth;
+    }
+
+    public void ProcessTurn()
+    {
+        if (playerState == PlayerState.Sitting)
+            currentHealth = Mathf.Min(currentHealth + healthRecoveryPerTurn, maxHealth);
+        else
+        {
+            currentHealth -= GetHealthDrain();
+            comboCount = Mathf.Min(comboCount + 1, MaxTurns);
+        }
+
+        currentTurn++;
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            OnGameOver?.Invoke();
+            return;
+        }
+
+        if (currentTurn >= MaxTurns)
+        {
+            OnGameEnd?.Invoke(DetermineEnding());
+            return;
+        }
+
+        OnTurnProcessed?.Invoke();
+    }
+
+    int GetHealthDrain()
+    {
+        switch (condition)
+        {
+            case ConditionLevel.Great:  return 1;
+            case ConditionLevel.Good:   return 2;
+            case ConditionLevel.Normal: return 4;
+            case ConditionLevel.Bad:    return 8;
+            case ConditionLevel.Worst:  return 16;
+            default: return 4;
+        }
+    }
+
+    public void Sit()
+    {
+        playerState = PlayerState.Sitting;
+    }
+
+    public void StandIntentionally()
+    {
+        playerState = PlayerState.Standing;
+    }
+
+    public void Yield()
+    {
+        float multiplier = 1f + comboCount * 0.2f;
+        consideration = Mathf.Min(consideration + baseConsiderationGain * multiplier, 100f);
+        playerState = PlayerState.Standing;
+        SeatManager.Instance?.ClearPlayerSeat();
+    }
+
+    public void YieldInEyeGame()
+    {
+        ChangeCondition(-1);
+    }
+
+    public void ChangeCondition(int delta)
+    {
+        int next = Mathf.Clamp((int)condition - delta, 0, 4);
+        condition = (ConditionLevel)next;
+    }
+
+    EndingType DetermineEnding()
+    {
+        float healthPercent = (float)currentHealth / maxHealth * 100f;
+        bool healthOk = healthPercent >= 60f;
+        bool considerationOk = consideration >= 60f;
+
+        if (healthOk && considerationOk)  return EndingType.Good;
+        if (healthOk && !considerationOk) return EndingType.NormalA;
+        if (!healthOk && considerationOk) return EndingType.NormalB;
+        return EndingType.Bad;
+    }
+}

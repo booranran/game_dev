@@ -29,16 +29,13 @@ public class CharacterDisplay : MonoBehaviour
     void OnEnable()
     {
         GameManager.OnTurnProcessed += UpdateSprite;
+        GameManager.OnGameInitialized += UpdateSprite;
     }
 
     void OnDisable()
     {
         GameManager.OnTurnProcessed -= UpdateSprite;
-    }
-
-    void Start()
-    {
-        UpdateSprite();
+        GameManager.OnGameInitialized -= UpdateSprite;
     }
 
     public void UpdateSprite()

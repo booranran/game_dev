@@ -15,6 +15,9 @@ public class ElbowGameController : MonoBehaviour
     public TextMeshProUGUI roundText;
     public TextMeshProUGUI resultText;
 
+    [Header("디버그")]
+    public bool debugMode = false;
+
     [Header("게임 설정")]
     public float roundDuration = 3f;
     public float basePushSpeed = 0.15f;
@@ -26,6 +29,7 @@ public class ElbowGameController : MonoBehaviour
     private float gaugeValue;
     private float roundTimer;
     private bool isPlaying;
+    public bool IsPlaying => isPlaying;
 
     void Awake()
     {
@@ -55,6 +59,9 @@ public class ElbowGameController : MonoBehaviour
 
     void Update()
     {
+        if (debugMode && Keyboard.current != null && Keyboard.current[Key.Digit2].wasPressedThisFrame)
+            StartElbowGame();
+
         if (!isPlaying) return;
 
         float pushSpeed = basePushSpeed + speedIncreasePerRound * currentRound;
@@ -90,6 +97,15 @@ public class ElbowGameController : MonoBehaviour
             Invoke(nameof(EndGameDelayed), 1f);
         else
             Invoke(nameof(StartRound), 1f);
+    }
+
+    public void ForceEnd()
+    {
+        isPlaying = false;
+        CancelInvoke();
+        StopAllCoroutines();
+        elbowGamePanel.SetActive(false);
+        Debug.Log("[팔꿈치] 강제 종료");
     }
 
     void EndGameDelayed()

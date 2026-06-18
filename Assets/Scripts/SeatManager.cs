@@ -14,6 +14,7 @@ public class SeatManager : MonoBehaviour
         public GameObject silhouette;
         [HideInInspector] public bool isOccupied = true;
         [HideInInspector] public GameObject seatedNPCObject;
+        [HideInInspector] public GameObject spawnedIcon; // 동적으로 생성된 선택 아이콘 인스턴스
         [HideInInspector] public int index;
     }
 
@@ -21,10 +22,17 @@ public class SeatManager : MonoBehaviour
     public bool randomizePlayerSeat = false;
     public int playerStartSeatIndex = 0;
 
+    [Header("좌석 실루엣 랜덤 스프라이트 풀 (좌석 수보다 많아도 됨, 시작 시 중복 없이 배정)")]
+    public Sprite[] silhouetteSpritePool;
+
+    [Header("빈자리 선택 아이콘")]
+    public GameObject selectableIconPrefab; // 좌석 위에 동적으로 생성될 프리팹 하나로 통일
+    public float selectableIconOffsetX = 0f; // 좌석 x좌표에 더해지는 오프셋 (좌석마다 다름)
+    public float selectableIconFixedY = 0.5f; // y좌표는 좌석과 무관하게 항상 이 값 사용
+
     public SeatSlot currentEmptySeat { get; private set; }
     public SeatSlot playerCurrentSeat { get; private set; }
-
-    public static event Action<bool> OnSeatOpened;
+    public List<SeatSlot> openSeats { get; } = new List<SeatSlot>(); // 선택 대기 중인 빈자리들 (1개 이상)
 
     void Awake()
     {
@@ -32,11 +40,30 @@ public class SeatManager : MonoBehaviour
         else Destroy(gameObject);
 
         currentEmptySeat = null;
+        AssignRandomSilhouetteSprites();
         for (int i = 0; i < seats.Length; i++)
         {
             seats[i].index = i;
             seats[i].isOccupied = true;
             SetupSeatClickDetection(seats[i]);
+        }
+    }
+
+    // 게임 시작 시 풀에서 중복 없이 랜덤하게 뽑아서 좌석마다 다른 스프라이트로 배정
+    void AssignRandomSilhouetteSprites()
+    {
+        if (silhouetteSpritePool == null || silhouetteSpritePool.Length == 0) return;
+
+        var pool = new List<Sprite>(silhouetteSpritePool);
+        foreach (var seat in seats)
+        {
+            if (seat.silhouette == null || pool.Count == 0) continue;
+            var sr = seat.silhouette.GetComponentInChildren<SpriteRenderer>(true);
+            if (sr == null) continue;
+
+            int r = UnityEngine.Random.Range(0, pool.Count);
+            sr.sprite = pool[r];
+            pool.RemoveAt(r);
         }
     }
 
@@ -67,33 +94,140 @@ public class SeatManager : MonoBehaviour
         Debug.Log($"[SeatManager] 플레이어 시작 자리 숨김 → index {playerStartSeatIndex}");
     }
 
-    public void OpenRandomSeat(bool hasCompetingNPC)
+    // 한 번에 여러 자리를 동시에 열어서 openSeats에 등록 (플레이어가 그중 하나를 클릭해서 선택)
+    public void OpenSeats(int count)
     {
         List<SeatSlot> occupied = new List<SeatSlot>();
         foreach (var seat in seats)
             if (seat.isOccupied) occupied.Add(seat);
 
-        Debug.Log($"[SeatManager] OpenRandomSeat 호출 | 점유된 자리: {occupied.Count}/{seats.Length}");
-
-        if (occupied.Count == 0)
+        int n = Mathf.Min(count, occupied.Count);
+        for (int i = 0; i < n; i++)
         {
-            Debug.LogWarning("[SeatManager] 점유된 자리 없음 → 빈자리 못 열었음");
-            return;
+            int r = UnityEngine.Random.Range(0, occupied.Count);
+            var seat = occupied[r];
+            occupied.RemoveAt(r);
+
+            seat.isOccupied = false;
+            if (seat.silhouette) seat.silhouette.SetActive(false);
+            if (seat.seatedNPCObject)
+            {
+                Destroy(seat.seatedNPCObject);
+                seat.seatedNPCObject = null;
+            }
+
+            openSeats.Add(seat);
+            ActivateSelectableIcon(seat);
+            Debug.Log($"[SeatManager] OpenSeats → index {seat.index} 열림, 아이콘 생성 {(seat.spawnedIcon != null ? "성공" : "실패(prefab/seatPosition 확인)")}");
         }
 
-        currentEmptySeat = occupied[UnityEngine.Random.Range(0, occupied.Count)];
-        currentEmptySeat.isOccupied = false;
-        if (currentEmptySeat.silhouette)
-            currentEmptySeat.silhouette.SetActive(false);
-        if (currentEmptySeat.seatedNPCObject)
-        {
-            Destroy(currentEmptySeat.seatedNPCObject);
-            currentEmptySeat.seatedNPCObject = null;
-        }
-
-        Debug.Log($"[SeatManager] 빈자리 열림 → {currentEmptySeat.silhouette?.name}");
-        OnSeatOpened?.Invoke(hasCompetingNPC);
+        Debug.Log($"[SeatManager] 빈자리 {n}개 열림 (요청 {count}개)");
     }
+
+    // 열린 자리 중 하나를 플레이어가 선택 - 그 자리만 currentEmptySeat로 넘기고 나머지는 openSeats에 남음
+    public void SelectOpenSeat(SeatSlot seat)
+    {
+        if (!openSeats.Remove(seat)) return;
+        DeactivateSelectableIcon(seat);
+        currentEmptySeat = seat;
+    }
+
+    // 좌석 하나를 선택한 직후, 남은 빈자리 아이콘들도 더 못 누르게 전부 비활성화 (중복 선택 방지)
+    public void DeactivateAllOpenSeatIcons()
+    {
+        foreach (var seat in openSeats)
+            DeactivateSelectableIcon(seat);
+    }
+
+    // openSeats에 남아있는 자리들을 전부 다른 랜덤 NPC로 채움 (서있기 선택 시 즉시, 다음 턴 시작 시 자동)
+    public void FillAllOpenSeats()
+    {
+        foreach (var seat in openSeats)
+        {
+            DeactivateSelectableIcon(seat);
+            FillSeatWithRandomNPC(seat);
+        }
+        openSeats.Clear();
+    }
+
+    // 특정 좌석에 다른 점유 좌석에서 빌려온 스프라이트로 랜덤 NPC를 채워 앉힘
+    public void FillSeatWithRandomNPC(SeatSlot seat)
+    {
+        Debug.Log($"[SeatManager] FillSeatWithRandomNPC 호출 → index {seat.index} (호출 스택은 Console에서 이 로그 클릭하면 확인 가능)");
+        if (seat.seatPosition == null) return;
+
+        var pool = new List<GameObject>();
+        foreach (var s in seats)
+        {
+            if (s.index == seat.index) continue;
+            if (s.isOccupied && s.silhouette != null)
+            {
+                var sr = s.silhouette.GetComponentInChildren<SpriteRenderer>(true);
+                if (sr && sr.sprite != null) pool.Add(s.silhouette);
+            }
+        }
+        if (pool.Count == 0) return;
+
+        if (seat.silhouette) seat.silhouette.SetActive(false);
+        if (seat.seatedNPCObject)
+        {
+            Destroy(seat.seatedNPCObject);
+            seat.seatedNPCObject = null;
+        }
+
+        var source = pool[UnityEngine.Random.Range(0, pool.Count)];
+        var sourceSr = source.GetComponentInChildren<SpriteRenderer>(true);
+
+        var go = new GameObject("FilledNPC");
+        go.transform.position = seat.seatPosition.position;
+        go.transform.localScale = source.transform.localScale; // 빌려온 원본 실루엣과 동일한 크기로 보이게
+        var sr2 = go.AddComponent<SpriteRenderer>();
+        sr2.sprite = sourceSr.sprite;
+        sr2.sortingOrder = -29;
+
+        seat.seatedNPCObject = go;
+        seat.isOccupied = true;
+        SetupSeatClickDetection(seat);
+    }
+
+    // 좌석 위치에 선택 아이콘을 생성 (Phase1 후보 표시, 빈자리 선택 등 공용으로 사용)
+    // extraY: 좌석에 사람이 앉아있는 경우처럼 기본 높이보다 더 올려야 할 때 추가로 더하는 값
+    public GameObject SpawnSeatIcon(SeatSlot seat, float extraY = 0f)
+    {
+        if (selectableIconPrefab == null || seat.seatPosition == null) return null;
+        if (seat.spawnedIcon != null) return seat.spawnedIcon;
+
+        Vector3 iconPos = seat.seatPosition.position;
+        iconPos.x += selectableIconOffsetX;
+        iconPos.y = selectableIconFixedY + extraY;
+
+        var icon = Instantiate(selectableIconPrefab, iconPos, Quaternion.identity);
+        if (icon.GetComponent<BoxCollider2D>() == null)
+            icon.AddComponent<BoxCollider2D>(); // 프리팹에 미리 붙여놨으면 그 크기 그대로 사용됨
+
+        seat.spawnedIcon = icon;
+        return icon;
+    }
+
+    public void RemoveSeatIcon(SeatSlot seat)
+    {
+        if (seat.spawnedIcon == null) return;
+        Destroy(seat.spawnedIcon);
+        seat.spawnedIcon = null;
+    }
+
+    void ActivateSelectableIcon(SeatSlot seat)
+    {
+        var icon = SpawnSeatIcon(seat);
+        if (icon == null) return;
+
+        var detector = icon.GetComponent<OpenSeatClickDetector>();
+        if (detector == null)
+            detector = icon.AddComponent<OpenSeatClickDetector>();
+        detector.seat = seat;
+    }
+
+    void DeactivateSelectableIcon(SeatSlot seat) => RemoveSeatIcon(seat);
 
     public void OccupySeat()
     {
@@ -122,28 +256,6 @@ public class SeatManager : MonoBehaviour
             currentEmptySeat.isOccupied = true;
             currentEmptySeat = null;
         }
-    }
-
-    public void RestoreCurrentEmptySeat()
-    {
-        if (currentEmptySeat == null) return;
-        if (currentEmptySeat.seatedNPCObject != null)
-        {
-            Destroy(currentEmptySeat.seatedNPCObject);
-            currentEmptySeat.seatedNPCObject = null;
-        }
-        currentEmptySeat.isOccupied = true;
-        if (currentEmptySeat.silhouette)
-            currentEmptySeat.silhouette.SetActive(true);
-        currentEmptySeat = null;
-    }
-
-    public int GetCurrentEmptySeatCount()
-    {
-        int count = 0;
-        foreach (var seat in seats)
-            if (!seat.isOccupied) count++;
-        return count;
     }
 
     public SeatSlot[] GetCandidateSeats(int count)
@@ -176,7 +288,9 @@ public class SeatManager : MonoBehaviour
         {
             seat.isOccupied = true;
             if (seat.silhouette) seat.silhouette.SetActive(true);
+            DeactivateSelectableIcon(seat);
         }
+        openSeats.Clear();
         currentEmptySeat = null;
     }
 }

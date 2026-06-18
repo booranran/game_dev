@@ -13,21 +13,29 @@ public class HUDManager : MonoBehaviour
     public TextMeshProUGUI healthValueText;
     public TextMeshProUGUI considerationValueText;
 
+    [Header("콤보 텍스트 - 캐릭터 위치 따라다님")]
+    public Transform characterTransform; // 플레이어 캐릭터(CharacterDisplay) Transform
+    public Vector2 comboTextOffset = new Vector2(80f, 0f); // 캐릭터 오른쪽으로 떨어진 거리 (스크린 픽셀)
+
     void OnEnable()
     {
         GameManager.OnTurnProcessed += UpdateHUD;
         GameManager.OnGameOver += UpdateHUD;
+        GameManager.OnGameInitialized += UpdateHUD;
     }
 
     void OnDisable()
     {
         GameManager.OnTurnProcessed -= UpdateHUD;
         GameManager.OnGameOver -= UpdateHUD;
+        GameManager.OnGameInitialized -= UpdateHUD;
     }
 
-    void Start()
+    void Update()
     {
-        UpdateHUD();
+        if (characterTransform == null || comboText == null || Camera.main == null) return;
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(characterTransform.position);
+        comboText.rectTransform.position = screenPos + (Vector3)comboTextOffset;
     }
 
     public void UpdateHUD()

@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public static event Action OnTurnProcessed;
     public static event Action OnGameOver;
     public static event Action<EndingType> OnGameEnd;
+    public static event Action OnGameInitialized;
 
     void Awake()
     {
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
         InitializeGame(CharacterType.Student, LineType.Line9);
         if (playerState == PlayerState.Sitting)
             SeatManager.Instance?.HidePlayerSeat();
+        OnGameInitialized?.Invoke();
     }
 
     public void InitializeGame(CharacterType character, LineType line)

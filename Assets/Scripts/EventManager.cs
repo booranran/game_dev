@@ -6,12 +6,11 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
 
-    public enum EventType { None, YieldNPC, EmptySeat, TriggerNPC, ElbowGame }
+    public enum EventType { None, YieldNPC, EmptySeat, TriggerNPC, ElbowGame, BagDefense }
     public enum NPCType
     {
         Elderly,
-        Crush,
-        // Pregnant,
+        Pregnant,
         // Passenger,
         // Dog,
         // BabyHappy,
@@ -35,15 +34,29 @@ public class EventManager : MonoBehaviour
     public int noneWeightSitting = 1;
 
     [Header("TriggerNPC 가중치")]
-    [Tooltip("Crush 이벤트 등장 가중치 (0이면 비활성화)")]
+    [Tooltip("TriggerNPC 이벤트 등장 가중치 (0이면 비활성화)")]
     public int triggerNPCWeight = 1;
 
     [Header("ElbowGame 가중치")]
     [Tooltip("팔꿈치 게임 등장 가중치 (0이면 비활성화)")]
     public int elbowGameWeight = 1;
 
+    [Header("BagDefense 설정 (보딩 인원수 기반)")]
+    [Tooltip("가방 방어 게임이 등장하기 시작하는 턴")]
+    public int bagGameStartTurn = 5;
+    [Tooltip("이번 정거장 보딩 인원 1명당 추가되는 가중치 (인원 0이면 BagDefense 안 나옴)")]
+    public int bagDefenseWeightPerBoardingPerson = 1;
+
+    [Header("미니게임 쿨다운 (각자 따로 적용)")]
+    [Tooltip("ElbowGame이 발생하면, 이후 최소 이만큼 턴이 지나야 ElbowGame이 다시 발생함")]
+    public int elbowGameCooldownTurns = 2;
+    [Tooltip("BagDefense가 발생하면, 이후 최소 이만큼 턴이 지나야 BagDefense가 다시 발생함")]
+    public int bagDefenseCooldownTurns = 2;
+
     private int emptySeatCount = 0;
     private int yieldNPCCount = 0;
+    private int lastElbowGameTurn = -1000; // 충분히 큰 음수로, currentTurn과 빼도 오버플로우 안 나게
+    private int lastBagDefenseTurn = -1000;
 
     public static event Action<EventType, NPCType> OnEventGenerated;
 
@@ -64,23 +77,28 @@ public class EventManager : MonoBehaviour
         if (currentEvent == EventType.YieldNPC)
         {
             yieldNPCCount++;
-            currentNPC = NPCType.Elderly;
-            Debug.Log($"[EventManager] YieldNPC 발생 ({yieldNPCCount}/{maxYieldNPCs})");
+            currentNPC = PickYieldNPC();
+            Debug.Log($"[EventManager] YieldNPC 발생 ({yieldNPCCount}/{maxYieldNPCs}) | NPC: {currentNPC}");
         }
         else if (currentEvent == EventType.EmptySeat)
         {
             emptySeatCount++;
             Debug.Log($"[EventManager] EmptySeat 발생 ({emptySeatCount}/{maxEmptySeats})");
-            // OpenRandomSeat 여기서 호출 안 함 - HandleEmptySeat에서 빈자리 수 확인 후 분기
+            // 좌석 오픈은 여기서 안 함 - TurnController.HandleEmptySeat에서 처리
         }
         else if (currentEvent == EventType.TriggerNPC)
         {
-            currentNPC = NPCType.Crush;
-            Debug.Log("[EventManager] TriggerNPC 발생 → Crush 탑승");
+            Debug.Log("[EventManager] TriggerNPC 발생");
         }
         else if (currentEvent == EventType.ElbowGame)
         {
+            lastElbowGameTurn = gm.currentTurn;
             Debug.Log("[EventManager] ElbowGame 발생");
+        }
+        else if (currentEvent == EventType.BagDefense)
+        {
+            lastBagDefenseTurn = gm.currentTurn;
+            Debug.Log("[EventManager] BagDefense 발생");
         }
 
         OnEventGenerated?.Invoke(currentEvent, currentNPC);
@@ -89,6 +107,8 @@ public class EventManager : MonoBehaviour
     EventType PickEventType(GameManager.PlayerState state)
     {
         List<EventType> pool = new List<EventType>();
+        bool elbowOnCooldown = GameManager.Instance.currentTurn - lastElbowGameTurn < elbowGameCooldownTurns;
+        bool bagOnCooldown = GameManager.Instance.currentTurn - lastBagDefenseTurn < bagDefenseCooldownTurns;
 
         if (state == GameManager.PlayerState.Sitting)
         {
@@ -98,7 +118,8 @@ public class EventManager : MonoBehaviour
                 pool.Add(EventType.YieldNPC);
                 pool.Add(EventType.YieldNPC);
             }
-            for (int i = 0; i < elbowGameWeight; i++) pool.Add(EventType.ElbowGame);
+            if (!elbowOnCooldown)
+                for (int i = 0; i < elbowGameWeight; i++) pool.Add(EventType.ElbowGame);
             for (int i = 0; i < noneWeightSitting; i++) pool.Add(EventType.None);
         }
         else
@@ -108,10 +129,16 @@ public class EventManager : MonoBehaviour
                 pool.Add(EventType.EmptySeat);
                 pool.Add(EventType.EmptySeat);
             }
+            if (!bagOnCooldown && GameManager.Instance.currentTurn >= bagGameStartTurn && BoardingController.Instance != null)
+            {
+                int bagWeight = BoardingController.Instance.CurrentBoardingCount * bagDefenseWeightPerBoardingPerson;
+                for (int i = 0; i < bagWeight; i++) pool.Add(EventType.BagDefense);
+            }
             for (int i = 0; i < noneWeightStanding; i++) pool.Add(EventType.None);
         }
 
-        for (int i = 0; i < triggerNPCWeight; i++) pool.Add(EventType.TriggerNPC);
+        if (TriggerEventController.Instance != null && TriggerEventController.Instance.HasAvailableEvent())
+            for (int i = 0; i < triggerNPCWeight; i++) pool.Add(EventType.TriggerNPC);
 
         return pool[UnityEngine.Random.Range(0, pool.Count)];
     }
@@ -126,8 +153,7 @@ public class EventManager : MonoBehaviour
 
     NPCType PickYieldNPC()
     {
-        return NPCType.Elderly;
-        // 추가 NPC 준비되면 랜덤 선택으로 변경
+        return UnityEngine.Random.value < 0.5f ? NPCType.Elderly : NPCType.Pregnant;
     }
 
     public void ResolveYield()
@@ -147,9 +173,4 @@ public class EventManager : MonoBehaviour
         GameManager.Instance.StandIntentionally();
     }
 
-    public void ResolveTriggerNPC()
-    {
-        GameManager.Instance.ChangeCondition(1);
-        Debug.Log("[EventManager] TriggerNPC 처리 → 컨디션 +1 (설렘)");
-    }
 }

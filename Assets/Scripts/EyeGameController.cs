@@ -116,15 +116,7 @@ public class EyeGameController : MonoBehaviour
 
         Debug.Log($"[EyeGame] Phase1 후보: {string.Join(", ", System.Array.ConvertAll(candidates, c => c.index.ToString()))} | 정답: {candidates[correctIndex].index}");
 
-        for (int i = 0; i < candidates.Length; i++)
-        {
-            var obj = (candidates[i].seatedNPCObject != null)
-                ? candidates[i].seatedNPCObject
-                : candidates[i].silhouette;
-            if (obj == null) continue;
-            var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
-            if (sr) sr.color = hintColor;
-        }
+        HighlightCandidates();
     }
 
     public void StartEyeGame(EventManager.NPCType competitor)
@@ -143,17 +135,40 @@ public class EyeGameController : MonoBehaviour
         isObserving = true;
         observePanel.SetActive(true);
 
-        for (int i = 0; i < candidates.Length; i++)
+        HighlightCandidates();
+    }
+
+    // 후보 좌석들에 힌트 색 입히고, 기존 스프라이트 클릭은 끈 채로 선택 아이콘을 띄움
+    void HighlightCandidates()
+    {
+        foreach (var seat in candidates)
         {
-            var obj = (candidates[i].seatedNPCObject != null)
-                ? candidates[i].seatedNPCObject
-                : candidates[i].silhouette;
+            var obj = (seat.seatedNPCObject != null) ? seat.seatedNPCObject : seat.silhouette;
             if (obj != null)
             {
                 var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
                 if (sr) sr.color = hintColor;
+
+                var col = obj.GetComponent<Collider2D>();
+                if (col) col.enabled = false; // 아이콘 클릭과 겹쳐서 헷갈리지 않도록 비활성화
+            }
+
+            var icon = SeatManager.Instance.SpawnSeatIcon(seat, 1.1f); // 사람이 앉아있어서 기본 높이보다 더 올림
+            if (icon != null)
+            {
+                var detector = icon.GetComponent<CandidateClickDetector>();
+                if (detector == null) detector = icon.AddComponent<CandidateClickDetector>();
+                detector.seat = seat;
             }
         }
+    }
+
+    // 이미 정해진 빈자리(SeatManager.currentEmptySeat)에 바로 경쟁 NPC를 붙일 때 사용 - 관찰 단계 없음
+    public void StartCompetitionForCurrentSeat()
+    {
+        isPhase1 = false;
+        currentCompetitor = PickCompetitor();
+        StartCompetition();
     }
 
     public void OnSelectCandidate(int index)
@@ -172,8 +187,7 @@ public class EyeGameController : MonoBehaviour
             if (isPhase1)
             {
                 var seat = candidates[correctIndex];
-                if (seat.silhouette) seat.silhouette.SetActive(false);
-                SpawnCompetitorAt(seat);
+                SeatManager.Instance.FillSeatWithRandomNPC(seat);
                 Invoke(nameof(AdvanceTurnDelayed), phase1FailDelay);
             }
             else
@@ -211,8 +225,7 @@ public class EyeGameController : MonoBehaviour
         GameManager.Instance.StandIntentionally();
 
         var seat = candidates[correctIndex];
-        if (seat.silhouette) seat.silhouette.SetActive(false);
-        SpawnCompetitorAt(seat);
+        SeatManager.Instance.FillSeatWithRandomNPC(seat);
         Invoke(nameof(AdvanceTurnDelayed), phase1FailDelay);
     }
 
@@ -364,9 +377,15 @@ public class EyeGameController : MonoBehaviour
         foreach (var seat in candidates)
         {
             var obj = (seat.seatedNPCObject != null) ? seat.seatedNPCObject : seat.silhouette;
-            if (obj == null) continue;
-            var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
-            if (sr) sr.color = Color.white;
+            if (obj != null)
+            {
+                var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
+                if (sr) sr.color = Color.white;
+
+                var col = obj.GetComponent<Collider2D>();
+                if (col) col.enabled = true;
+            }
+            SeatManager.Instance.RemoveSeatIcon(seat);
         }
     }
 
@@ -378,31 +397,6 @@ public class EyeGameController : MonoBehaviour
     }
 
     void AdvanceTurnDelayed() => TurnController.Instance?.AdvanceTurn();
-
-    void SpawnCompetitorAt(SeatManager.SeatSlot seat)
-    {
-        if (seat.seatPosition == null) return;
-
-        var pool = new System.Collections.Generic.List<Sprite>();
-        foreach (var s in SeatManager.Instance.seats)
-        {
-            if (s.index == seat.index) continue;
-            if (s.isOccupied && s.silhouette != null)
-            {
-                var sr = s.silhouette.GetComponentInChildren<SpriteRenderer>(true);
-                if (sr && sr.sprite != null) pool.Add(sr.sprite);
-            }
-        }
-        if (pool.Count == 0) return;
-
-        var go = new GameObject("Competitor");
-        go.transform.position = seat.seatPosition.position;
-        go.transform.localScale = Vector3.one * 0.09f;
-        var comp = go.AddComponent<SpriteRenderer>();
-        comp.sprite = pool[UnityEngine.Random.Range(0, pool.Count)];
-        comp.sortingOrder = -29;
-        seat.seatedNPCObject = go;
-    }
 
     EventManager.NPCType PickCompetitor()
     {

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class TurnController : MonoBehaviour
@@ -9,11 +8,13 @@ public class TurnController : MonoBehaviour
     [Header("Event Panels")]
     public GameObject yieldPanel;
     public GameObject emptySeatPanel;
-    public GameObject triggerPanel;
     public GameObject noEventPanel;
 
     [Header("빈자리 이벤트 설정")]
     [Range(0f, 1f)] public float phase1Chance = 0.5f;
+    [Range(0f, 1f)] public float seatCompetitionChance = 0.3f;
+    [Range(0f, 1f)] public float extraSeatChance = 0.3f; // 빈자리가 추가로 하나 더 열릴 확률 (누적 적용)
+    public int maxSeatsPerOpen = 3;
 
     [Header("TriggerNPC 설정")]
     public float triggerPanelDelay = 1.5f;
@@ -22,6 +23,7 @@ public class TurnController : MonoBehaviour
     public HUDManager hudManager;
     public CharacterDisplay characterDisplay;
     public TextMeshProUGUI characterMonologueText;
+    public ResultPanelController resultPanelController;
 
     void Awake()
     {
@@ -34,9 +36,11 @@ public class TurnController : MonoBehaviour
         GameManager.OnTurnProcessed += OnTurnStart;
         GameManager.OnGameOver += GoToResult;
         GameManager.OnGameEnd += GoToResult;
+        GameManager.OnGameInitialized += OnGameStart;
         EventManager.OnEventGenerated += ShowEventUI;
         EyeGameController.OnEyeGameEnd += OnEyeGameEnd;
         ElbowGameController.OnElbowGameEnd += OnElbowGameResult;
+        BagDefenseController.OnBagGameEnd += OnBagGameResult;
     }
 
     void OnDisable()
@@ -44,26 +48,38 @@ public class TurnController : MonoBehaviour
         GameManager.OnTurnProcessed -= OnTurnStart;
         GameManager.OnGameOver -= GoToResult;
         GameManager.OnGameEnd -= GoToResult;
+        GameManager.OnGameInitialized -= OnGameStart;
         EventManager.OnEventGenerated -= ShowEventUI;
         EyeGameController.OnEyeGameEnd -= OnEyeGameEnd;
         ElbowGameController.OnElbowGameEnd -= OnElbowGameResult;
+        BagDefenseController.OnBagGameEnd -= OnBagGameResult;
     }
 
-    void Start()
+    void OnGameStart()
     {
+        // OnGameInitialized 구독 순서는 보장 안 되니, 여기서 직접 한번 더 갱신해서
+        // 플레이어 위치가 확정된 후에 NPC 배치/보딩이 일어나게 함
+        characterDisplay.UpdateSprite();
         HideAllPanels();
+        BoardingController.Instance?.RollBoarding();
         EventManager.Instance.GenerateEvent();
+        BoardingController.Instance?.PlaceBoardingNPCs();
     }
 
     void OnTurnStart()
     {
+        // CharacterDisplay도 같은 OnTurnProcessed를 구독하고 있어서 순서가 보장 안 됨 - 직접 먼저 갱신
+        characterDisplay.UpdateSprite();
+        if (SeatManager.Instance.openSeats.Count > 0)
+            Debug.Log($"[TurnController] OnTurnStart 시점 openSeats에 {SeatManager.Instance.openSeats.Count}개 남아있음 → 자동 채움 (선택 안 됐던 자리)");
+        SeatManager.Instance.FillAllOpenSeats(); // 전 턴에 선택 안 된 빈자리들 다른 NPC로 채움
         HideAllPanels();
-        if (SeatManager.Instance.currentEmptySeat != null)
-        {
+        BoardingController.Instance?.RollBoarding();
+        if (SeatManager.Instance.currentEmptySeat == null)
+            EventManager.Instance.GenerateEvent();
+        else
             emptySeatPanel.SetActive(true);
-            return;
-        }
-        EventManager.Instance.GenerateEvent();
+        BoardingController.Instance?.PlaceBoardingNPCs();
     }
 
     void ShowEventUI(EventManager.EventType eventType, EventManager.NPCType npcType)
@@ -78,10 +94,14 @@ public class TurnController : MonoBehaviour
                 HandleEmptySeat();
                 break;
             case EventManager.EventType.TriggerNPC:
+                TriggerEventController.Instance.PickRandom();
                 Invoke(nameof(ShowTriggerPanel), triggerPanelDelay);
                 break;
             case EventManager.EventType.ElbowGame:
                 ElbowGameController.Instance.StartElbowGame();
+                break;
+            case EventManager.EventType.BagDefense:
+                BagDefenseController.Instance.StartBagGame();
                 break;
             case EventManager.EventType.None:
                 noEventPanel.SetActive(true);
@@ -93,6 +113,7 @@ public class TurnController : MonoBehaviour
     // 양보 패널 버튼
     public void OnYieldButton()
     {
+        HideAllPanels(); // 바로 숨겨서 AdvanceTurn 전까지 중복 클릭으로 다시 실행되는 것 방지
         var yieldedSeat = SeatManager.Instance.playerCurrentSeat;
         NPCManager.Instance.ShowNPC(EventManager.Instance.currentNPC, true);
         EventManager.Instance.ResolveYield();
@@ -119,9 +140,25 @@ public class TurnController : MonoBehaviour
         Invoke(nameof(ClearMonologueAndAdvance), 1f);
     }
 
-    // 빈자리 패널 버튼
-    public void OnSitButton()
+    // 빈자리 위 아이콘 클릭 시 호출 - 그 자리에 앉으려고 시도 (나머지 빈자리는 openSeats에 남아 다음 턴에 채워짐)
+    public void OnOpenSeatSelected(SeatManager.SeatSlot seat)
     {
+        Debug.Log($"[TurnController] OnOpenSeatSelected 호출 → index {seat.index}");
+        SeatManager.Instance.SelectOpenSeat(seat);
+        SeatManager.Instance.DeactivateAllOpenSeatIcons(); // 남은 빈자리 아이콘도 중복 선택 못 하게 정리
+        emptySeatPanel.SetActive(false);
+        AttemptSit();
+    }
+
+    void AttemptSit()
+    {
+        if (UnityEngine.Random.value < seatCompetitionChance)
+        {
+            Debug.Log("[TurnController] 빈자리 경쟁 발생 → Phase2");
+            EyeGameController.Instance.StartCompetitionForCurrentSeat();
+            return;
+        }
+
         EventManager.Instance.ResolveSit();
         SeatManager.Instance.OccupySeat();
         characterDisplay.UpdateSprite();
@@ -129,9 +166,12 @@ public class TurnController : MonoBehaviour
         Invoke(nameof(AdvanceTurn), 0.5f);
     }
 
+    // 빈자리 패널의 "서있기" 버튼 - 열려있던 빈자리들 전부 다른 NPC로 즉시 채움
     public void OnStandIntentionallyButton()
     {
-        SeatManager.Instance.RestoreCurrentEmptySeat();
+        Debug.Log("[TurnController] OnStandIntentionallyButton 호출");
+        HideAllPanels(); // 바로 숨겨서 AdvanceTurn 전까지 중복 클릭으로 다시 실행되는 것 방지
+        SeatManager.Instance.FillAllOpenSeats();
         EventManager.Instance.ResolveStandIntentionally();
         hudManager.UpdateHUD();
         Invoke(nameof(AdvanceTurn), 0.5f);
@@ -157,27 +197,25 @@ public class TurnController : MonoBehaviour
 
     void HandleEmptySeat()
     {
-        int emptyCount = SeatManager.Instance.GetCurrentEmptySeatCount();
+        if (UnityEngine.Random.value < phase1Chance)
+        {
+            Debug.Log("[TurnController] Phase 1 시작 (누가 내릴지)");
+            EyeGameController.Instance.StartPhase1();
+            return;
+        }
 
-        if (emptyCount == 0)
-        {
-            if (UnityEngine.Random.value < phase1Chance)
-            {
-                Debug.Log("[TurnController] Phase 1 시작 (누가 내릴지)");
-                EyeGameController.Instance.StartPhase1();
-            }
-            else
-            {
-                Debug.Log("[TurnController] 랜덤 빈자리 오픈");
-                SeatManager.Instance.OpenRandomSeat(false);
-                emptySeatPanel.SetActive(true);
-            }
-        }
-        else if (emptyCount == 1)
-        {
-            Debug.Log("[TurnController] 빈자리 1개 → 앉기/서있기 선택");
-            emptySeatPanel.SetActive(true);
-        }
+        int count = RollSeatOpenCount();
+        SeatManager.Instance.OpenSeats(count);
+        emptySeatPanel.SetActive(true);
+        Debug.Log($"[TurnController] 빈자리 {count}개 오픈 → 좌석 선택 또는 서있기");
+    }
+
+    int RollSeatOpenCount()
+    {
+        int count = 1;
+        while (count < maxSeatsPerOpen && UnityEngine.Random.value < extraSeatChance)
+            count++;
+        return count;
     }
 
     bool IsCompetingNPC(EventManager.NPCType npc)
@@ -193,7 +231,7 @@ public class TurnController : MonoBehaviour
         AdvanceTurn();
     }
 
-    void ShowTriggerPanel() => triggerPanel.SetActive(true);
+    void ShowTriggerPanel() => TriggerEventController.Instance.ShowPanel();
 
     void OnElbowGameResult(bool playerWon)
     {
@@ -202,9 +240,16 @@ public class TurnController : MonoBehaviour
         AdvanceTurn();
     }
 
+    void OnBagGameResult(int conditionDelta)
+    {
+        GameManager.Instance.ChangeCondition(conditionDelta);
+        hudManager.UpdateHUD();
+        AdvanceTurn();
+    }
+
     public void OnTriggerContinueButton()
     {
-        EventManager.Instance.ResolveTriggerNPC();
+        TriggerEventController.Instance.ResolveCurrent();
         hudManager.UpdateHUD();
         AdvanceTurn();
     }
@@ -222,10 +267,9 @@ public class TurnController : MonoBehaviour
     {
         if (yieldPanel)     yieldPanel.SetActive(false);
         if (emptySeatPanel) emptySeatPanel.SetActive(false);
-        if (triggerPanel)   triggerPanel.SetActive(false);
         if (noEventPanel)   noEventPanel.SetActive(false);
     }
 
-    void GoToResult() => SceneManager.LoadScene("ResultScene");
-    void GoToResult(GameManager.EndingType _) => SceneManager.LoadScene("ResultScene");
+    void GoToResult() => resultPanelController.Show(GameManager.Instance.characterType, GameManager.EndingType.GameOver);
+    void GoToResult(GameManager.EndingType ending) => resultPanelController.Show(GameManager.Instance.characterType, ending);
 }

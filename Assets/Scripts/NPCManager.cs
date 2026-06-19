@@ -56,13 +56,14 @@ public class NPCManager : MonoBehaviour
     {
         if (eventType == EventManager.EventType.TriggerNPC) return; // TriggerEventController가 전담
 
-        if (eventType == EventManager.EventType.EmptySeat ||
-            eventType == EventManager.EventType.None)
+        // YieldNPC일 때만 서있는 NPC를 보여줌 - 그 외(EmptySeat/None/ElbowGame/BagDefense 등)는 항상 숨김
+        // (예전엔 EmptySeat/None만 따로 체크하다가 ElbowGame/BagDefense가 빠져서 기본값 NPCType.Elderly가 그대로 노출되는 버그가 있었음)
+        if (eventType == EventManager.EventType.YieldNPC)
         {
-            HideNPC();
+            ShowNPC(npcType, false);
             return;
         }
-        ShowNPC(npcType, false);
+        HideNPC();
     }
 
     // 트리거 이벤트 등 동적 데이터로 NPC를 보여줄 때 사용

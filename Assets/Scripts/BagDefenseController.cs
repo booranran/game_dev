@@ -44,6 +44,11 @@ public class BagDefenseController : MonoBehaviour
     public float gradeB = 50f;
     public float gradeC = 30f;
 
+    [Header("독백 (TurnController가 메인 화면에 표시 - 턴 전환 분리용)")]
+    [TextArea] public string[] startMonologues;
+    [TextArea] public string[] winMonologues;
+    [TextArea] public string[] loseMonologues;
+
     private float gameTimer;
     private bool isPlaying;
     private int totalNotes;
@@ -58,6 +63,15 @@ public class BagDefenseController : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+
+    public string GetStartLine() => PickLine(startMonologues);
+    public string GetEndLine(bool won) => PickLine(won ? winMonologues : loseMonologues);
+
+    string PickLine(string[] lines)
+    {
+        if (lines == null || lines.Length == 0) return "";
+        return lines[UnityEngine.Random.Range(0, lines.Length)];
     }
 
     public void StartBagGame()

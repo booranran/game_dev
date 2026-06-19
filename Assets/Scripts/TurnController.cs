@@ -19,11 +19,17 @@ public class TurnController : MonoBehaviour
     [Header("TriggerNPC 설정")]
     public float triggerPanelDelay = 1.5f;
 
+    [Header("미니게임 독백 (턴 전환 분리용)")]
+    public float preMinigameMonologueDelay = 1.5f;
+    public float postMinigameMonologueDelay = 1.5f;
+
     [Header("References")]
     public HUDManager hudManager;
     public CharacterDisplay characterDisplay;
     public TextMeshProUGUI characterMonologueText;
     public ResultPanelController resultPanelController;
+
+    private System.Action pendingMinigameStart;
 
     void Awake()
     {
@@ -98,10 +104,10 @@ public class TurnController : MonoBehaviour
                 Invoke(nameof(ShowTriggerPanel), triggerPanelDelay);
                 break;
             case EventManager.EventType.ElbowGame:
-                ElbowGameController.Instance.StartElbowGame();
+                ShowPreMinigameMonologue(ElbowGameController.Instance.GetStartLine(), ElbowGameController.Instance.StartElbowGame);
                 break;
             case EventManager.EventType.BagDefense:
-                BagDefenseController.Instance.StartBagGame();
+                ShowPreMinigameMonologue(BagDefenseController.Instance.GetStartLine(), BagDefenseController.Instance.StartBagGame);
                 break;
             case EventManager.EventType.None:
                 noEventPanel.SetActive(true);
@@ -233,18 +239,43 @@ public class TurnController : MonoBehaviour
 
     void ShowTriggerPanel() => TriggerEventController.Instance.ShowPanel();
 
+    // 미니게임 패널이 뜨기 전, 메인 화면에서 캐릭터 독백 먼저 보여주고 그 다음에 실제로 게임 시작
+    void ShowPreMinigameMonologue(string line, System.Action startAction)
+    {
+        if (characterMonologueText) characterMonologueText.text = line;
+        if (noEventPanel) noEventPanel.SetActive(true); // characterMonologueText가 이 패널의 자식이라 같이 켜야 보임
+        pendingMinigameStart = startAction;
+        Invoke(nameof(RunPendingMinigameStart), preMinigameMonologueDelay);
+    }
+
+    void RunPendingMinigameStart()
+    {
+        if (characterMonologueText) characterMonologueText.text = "";
+        if (noEventPanel) noEventPanel.SetActive(false);
+        pendingMinigameStart?.Invoke();
+        pendingMinigameStart = null;
+    }
+
+    // 미니게임 패널이 닫힌 후, 메인 화면에서 캐릭터 독백 보여주고 그 다음에야 턴 진행
+    void ShowPostMinigameMonologue(string line)
+    {
+        if (characterMonologueText) characterMonologueText.text = line;
+        if (noEventPanel) noEventPanel.SetActive(true); // characterMonologueText가 이 패널의 자식이라 같이 켜야 보임
+        Invoke(nameof(ClearMonologueAndAdvance), postMinigameMonologueDelay);
+    }
+
     void OnElbowGameResult(bool playerWon)
     {
         GameManager.Instance.ChangeCondition(playerWon ? 1 : -1);
         hudManager.UpdateHUD();
-        AdvanceTurn();
+        ShowPostMinigameMonologue(ElbowGameController.Instance.GetEndLine(playerWon));
     }
 
     void OnBagGameResult(int conditionDelta)
     {
         GameManager.Instance.ChangeCondition(conditionDelta);
         hudManager.UpdateHUD();
-        AdvanceTurn();
+        ShowPostMinigameMonologue(BagDefenseController.Instance.GetEndLine(conditionDelta >= 0));
     }
 
     public void OnTriggerContinueButton()

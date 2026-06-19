@@ -24,6 +24,11 @@ public class ElbowGameController : MonoBehaviour
     public float speedIncreasePerRound = 0.05f;
     public float tapAmount = 0.1f;
 
+    [Header("독백 (TurnController가 메인 화면에 표시 - 턴 전환 분리용)")]
+    [TextArea] public string[] startMonologues;
+    [TextArea] public string[] winMonologues;
+    [TextArea] public string[] loseMonologues;
+
     private int currentRound;
     private int playerWins;
     private float gaugeValue;
@@ -35,6 +40,15 @@ public class ElbowGameController : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+    }
+
+    public string GetStartLine() => PickLine(startMonologues);
+    public string GetEndLine(bool won) => PickLine(won ? winMonologues : loseMonologues);
+
+    string PickLine(string[] lines)
+    {
+        if (lines == null || lines.Length == 0) return "";
+        return lines[UnityEngine.Random.Range(0, lines.Length)];
     }
 
     public void StartElbowGame()

@@ -19,12 +19,17 @@ public class ResultPanelController : MonoBehaviour
     public Image illustrationImage;
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI healthScoreText;
+    public TextMeshProUGUI considerationScoreText;
 
     [Header("엔딩 데이터 (캐릭터 x 엔딩 조합별로 등록)")]
     public ResultData[] resultEntries;
 
     public void Show(GameManager.CharacterType character, GameManager.EndingType ending)
     {
+        if (healthScoreText) healthScoreText.text = $"체력 {Mathf.RoundToInt(GameManager.Instance.GetHealthScore())}점";
+        if (considerationScoreText) considerationScoreText.text = $"배려심 {Mathf.RoundToInt(GameManager.Instance.GetConsiderationScore())}점";
+
         foreach (var entry in resultEntries)
         {
             if (entry.character != character || entry.ending != ending) continue;

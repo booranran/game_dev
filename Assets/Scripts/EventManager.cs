@@ -27,6 +27,10 @@ public class EventManager : MonoBehaviour
     public int maxEmptySeats = 10;
     public int maxYieldNPCs = 9;
 
+    [Header("YieldNPC 가중치")]
+    [Tooltip("Sitting 상태 풀에서 YieldNPC가 차지하는 비율 (높을수록 양보 기회 자주 생김) - 기존엔 3으로 하드코딩돼있었음")]
+    public int yieldNPCWeight = 4;
+
     [Header("None 이벤트 가중치")]
     [Tooltip("Standing 상태에서 None 이벤트 비율 (낮을수록 EmptySeat 자주 발생)")]
     public int noneWeightStanding = 1;
@@ -113,11 +117,7 @@ public class EventManager : MonoBehaviour
         if (state == GameManager.PlayerState.Sitting)
         {
             if (yieldNPCCount < maxYieldNPCs)
-            {
-                pool.Add(EventType.YieldNPC);
-                pool.Add(EventType.YieldNPC);
-                pool.Add(EventType.YieldNPC);
-            }
+                for (int i = 0; i < yieldNPCWeight; i++) pool.Add(EventType.YieldNPC);
             if (!elbowOnCooldown)
                 for (int i = 0; i < elbowGameWeight; i++) pool.Add(EventType.ElbowGame);
             for (int i = 0; i < noneWeightSitting; i++) pool.Add(EventType.None);

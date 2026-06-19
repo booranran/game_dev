@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game State")]
     public int currentTurn = 0;
-    public const int MaxTurns = 15;
+    public int MaxTurns = 25; // 기존 15 - 게임이 3분도 안 걸려서 늘림, 양보 기회도 같이 늘어남
     public PlayerState playerState = PlayerState.Sitting;
 
     [Header("Character Setup")]
@@ -66,13 +66,13 @@ public class GameManager : MonoBehaviour
         {
             maxHealth = 200;
             healthRecoveryPerTurn = 8;
-            baseConsiderationGain = 5;
+            baseConsiderationGain = 8; // 기존 5 - 안전하게 앉아만 있는 플레이로는 배려심 60 못 넘던 문제 픽스
         }
         else if (character == CharacterType.Worker)
         {
             maxHealth = 150;
             healthRecoveryPerTurn = 4;
-            baseConsiderationGain = 7;
+            baseConsiderationGain = 10; // 기존 7
         }
         currentHealth = maxHealth;
     }
@@ -158,4 +158,8 @@ public class GameManager : MonoBehaviour
         if (!healthOk && considerationOk) return EndingType.NormalB;
         return EndingType.Bad;
     }
+
+    // 캐릭터마다 maxHealth가 달라서(학생 200, 직장인 150), 100점 만점으로 정규화해서 보여줌
+    public float GetHealthScore() => (float)currentHealth / maxHealth * 100f;
+    public float GetConsiderationScore() => consideration; // 이미 0~100 척도
 }

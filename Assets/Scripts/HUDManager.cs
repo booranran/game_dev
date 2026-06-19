@@ -45,10 +45,10 @@ public class HUDManager : MonoBehaviour
 
         healthBar.value = (float)gm.currentHealth / gm.maxHealth;
         considerationBar.value = gm.consideration / 100f;
-        if (healthValueText) healthValueText.text = gm.currentHealth + " / " + gm.maxHealth;
-        if (considerationValueText) considerationValueText.text = Mathf.FloorToInt(gm.consideration) + " / 100";
+        if (healthValueText) healthValueText.text = Mathf.RoundToInt(gm.GetHealthScore()) + " / 100";
+        if (considerationValueText) considerationValueText.text = Mathf.FloorToInt(gm.GetConsiderationScore()) + " / 100";
         conditionText.text = "컨디션: " + GetConditionText(gm.condition);
-        turnText.text = "남은 역: " + (GameManager.MaxTurns - gm.currentTurn);
+        turnText.text = "남은 역: " + (gm.MaxTurns - gm.currentTurn);
         comboText.text = gm.comboCount > 0 ? "콤보: x" + gm.comboCount : "";
     }
 

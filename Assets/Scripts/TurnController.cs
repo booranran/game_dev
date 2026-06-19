@@ -30,6 +30,7 @@ public class TurnController : MonoBehaviour
     public ResultPanelController resultPanelController;
 
     private System.Action pendingMinigameStart;
+    private string pendingTurnStartMonologue;
 
     void Awake()
     {
@@ -76,6 +77,25 @@ public class TurnController : MonoBehaviour
     {
         // CharacterDisplay도 같은 OnTurnProcessed를 구독하고 있어서 순서가 보장 안 됨 - 직접 먼저 갱신
         characterDisplay.UpdateSprite();
+
+        // 이전 턴에 (Phase1 실패 등) 다음 턴 시작 시 보여줄 독백이 예약돼있으면, 그것부터 보여주고 나머지는 미룸
+        if (!string.IsNullOrEmpty(pendingTurnStartMonologue))
+        {
+            string line = pendingTurnStartMonologue;
+            pendingTurnStartMonologue = null;
+            HideAllPanels();
+            if (characterMonologueText) characterMonologueText.text = line;
+            if (noEventPanel) noEventPanel.SetActive(true);
+            Invoke(nameof(ContinueTurnStart), postMinigameMonologueDelay);
+            return;
+        }
+
+        ContinueTurnStart();
+    }
+
+    void ContinueTurnStart()
+    {
+        if (characterMonologueText) characterMonologueText.text = "";
         if (SeatManager.Instance.openSeats.Count > 0)
             Debug.Log($"[TurnController] OnTurnStart 시점 openSeats에 {SeatManager.Instance.openSeats.Count}개 남아있음 → 자동 채움 (선택 안 됐던 자리)");
         SeatManager.Instance.FillAllOpenSeats(); // 전 턴에 선택 안 된 빈자리들 다른 NPC로 채움
@@ -86,6 +106,13 @@ public class TurnController : MonoBehaviour
         else
             emptySeatPanel.SetActive(true);
         BoardingController.Instance?.PlaceBoardingNPCs();
+    }
+
+    // Phase1 실패 등 - 지금 당장이 아니라 "다음 턴이 시작될 때" 독백을 보여주고 싶을 때 사용
+    public void AdvanceTurnWithMonologue(string monologue)
+    {
+        pendingTurnStartMonologue = monologue;
+        AdvanceTurn();
     }
 
     void ShowEventUI(EventManager.EventType eventType, EventManager.NPCType npcType)

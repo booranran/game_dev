@@ -13,6 +13,9 @@ public class EyeGameController : MonoBehaviour
     public float phase1FailDelay = 1.5f;
     public Color hintColor = new Color(1f, 1f, 0.5f, 1f);
 
+    [Header("Phase1 실패 독백 (다음 턴 시작 시 TurnController가 메인 화면에 표시)")]
+    [TextArea] public string[] phase1FailMonologues;
+
     // ── Phase 2: 경쟁 ─────────────────────────────────
     [Header("Phase 2 - 경쟁 패널")]
     public GameObject competitionPanel;
@@ -73,7 +76,7 @@ public class EyeGameController : MonoBehaviour
                 ClearHints();
                 observePanel.SetActive(false);
                 if (isPhase1)
-                    TurnController.Instance?.AdvanceTurn();
+                    TurnController.Instance?.AdvanceTurnWithMonologue(GetPhase1FailLine());
                 else
                     OnEyeGameEnd?.Invoke(false);
             }
@@ -396,7 +399,15 @@ public class EyeGameController : MonoBehaviour
         competitorRenderer.enabled = false;
     }
 
-    void AdvanceTurnDelayed() => TurnController.Instance?.AdvanceTurn();
+    void AdvanceTurnDelayed() => TurnController.Instance?.AdvanceTurnWithMonologue(GetPhase1FailLine());
+
+    public string GetPhase1FailLine() => PickLine(phase1FailMonologues);
+
+    string PickLine(string[] lines)
+    {
+        if (lines == null || lines.Length == 0) return "";
+        return lines[UnityEngine.Random.Range(0, lines.Length)];
+    }
 
     EventManager.NPCType PickCompetitor()
     {

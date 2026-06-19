@@ -118,6 +118,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [Header("컨디션별 외부 데미지 배율 (가방방어 등, Normal 기준 1배)")]
+    public float conditionMultGreat = 0.25f;
+    public float conditionMultGood = 0.5f;
+    public float conditionMultNormal = 1f;
+    public float conditionMultBad = 2f;
+    public float conditionMultWorst = 4f;
+
+    // GetHealthDrain()과 같은 비율 구조(1/2/4/8/16) - 컨디션이 나쁠수록 외부 데미지에도 더 취약해짐
+    public float GetConditionDamageMultiplier()
+    {
+        switch (condition)
+        {
+            case ConditionLevel.Great:  return conditionMultGreat;
+            case ConditionLevel.Good:   return conditionMultGood;
+            case ConditionLevel.Normal: return conditionMultNormal;
+            case ConditionLevel.Bad:    return conditionMultBad;
+            case ConditionLevel.Worst:  return conditionMultWorst;
+            default: return 1f;
+        }
+    }
+
     public void Sit()
     {
         playerState = PlayerState.Sitting;
@@ -132,6 +153,7 @@ public class GameManager : MonoBehaviour
     {
         float multiplier = 1f + comboCount * 0.2f;
         consideration = Mathf.Min(consideration + baseConsiderationGain * multiplier, 100f);
+        comboCount = 0; // 양보로 콤보 소진 - 그냥 쌓이기만 하는 스택이 아니라 다시 서있어야 콤보가 쌓이게
         playerState = PlayerState.Standing;
         SeatManager.Instance?.ClearPlayerSeat();
     }
@@ -145,6 +167,11 @@ public class GameManager : MonoBehaviour
     {
         int next = Mathf.Clamp((int)condition - delta, 0, 4);
         condition = (ConditionLevel)next;
+    }
+
+    public void ChangeHealth(int delta)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + delta, 0, maxHealth);
     }
 
     EndingType DetermineEnding()

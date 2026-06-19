@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class BagDefenseController : MonoBehaviour
 {
     public static BagDefenseController Instance;
-    public static event Action<int> OnBagGameEnd;
+    public static event Action<int, int> OnBagGameEnd; // (conditionDelta, healthDamage)
 
     [Header("UI 참조")]
     public GameObject bagDefensePanel;
@@ -44,6 +44,13 @@ public class BagDefenseController : MonoBehaviour
     public float gradeB = 50f;
     public float gradeC = 30f;
 
+    [Header("등급별 체력 데미지 (항상 마이너스, 잘할수록 적게 깎임)")]
+    public int healthDamageS = -2;
+    public int healthDamageA = -4;
+    public int healthDamageB = -6;
+    public int healthDamageC = -8;
+    public int healthDamageD = -10;
+
     [Header("독백 (TurnController가 메인 화면에 표시 - 턴 전환 분리용)")]
     [TextArea] public string[] startMonologues;
     [TextArea] public string[] winMonologues;
@@ -54,6 +61,7 @@ public class BagDefenseController : MonoBehaviour
     private int totalNotes;
     private int hitNotes;
     private int _pendingDelta;
+    private int _pendingHealthDamage;
     private float hitZoneY;
     private float hitZoneTop;
     private float hitZoneBottom;
@@ -225,10 +233,11 @@ public class BagDefenseController : MonoBehaviour
 
         float hitRate = totalNotes > 0 ? (float)hitNotes / totalNotes * 100f : 0f;
         _pendingDelta = GetConditionDelta(hitRate);
+        _pendingHealthDamage = GetHealthDamage(hitRate);
         string grade = _pendingDelta >= 2 ? "S" : _pendingDelta == 1 ? "A" : _pendingDelta == 0 ? "B" : _pendingDelta == -1 ? "C" : "D";
 
         if (resultText) resultText.text = $"등급 {grade}\n{hitNotes} / {totalNotes} 방어";
-        Debug.Log($"[가방] 종료 | 히트율: {hitRate:F1}% | 등급: {grade} | 컨디션: {_pendingDelta:+0;-0}");
+        Debug.Log($"[가방] 종료 | 히트율: {hitRate:F1}% | 등급: {grade} | 컨디션: {_pendingDelta:+0;-0} | 체력: {_pendingHealthDamage}");
 
         Invoke(nameof(EndGameDelayed), 1.5f);
     }
@@ -236,7 +245,7 @@ public class BagDefenseController : MonoBehaviour
     void EndGameDelayed()
     {
         bagDefensePanel.SetActive(false);
-        OnBagGameEnd?.Invoke(_pendingDelta);
+        OnBagGameEnd?.Invoke(_pendingDelta, _pendingHealthDamage);
     }
 
     int GetConditionDelta(float hitRate)
@@ -246,5 +255,14 @@ public class BagDefenseController : MonoBehaviour
         if (hitRate >= gradeB) return 0;
         if (hitRate >= gradeC) return -1;
         return -2;
+    }
+
+    int GetHealthDamage(float hitRate)
+    {
+        if (hitRate >= gradeS) return healthDamageS;
+        if (hitRate >= gradeA) return healthDamageA;
+        if (hitRate >= gradeB) return healthDamageB;
+        if (hitRate >= gradeC) return healthDamageC;
+        return healthDamageD;
     }
 }

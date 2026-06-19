@@ -271,9 +271,13 @@ public class TurnController : MonoBehaviour
         ShowPostMinigameMonologue(ElbowGameController.Instance.GetEndLine(playerWon));
     }
 
-    void OnBagGameResult(int conditionDelta)
+    void OnBagGameResult(int conditionDelta, int healthDamage)
     {
-        GameManager.Instance.ChangeCondition(conditionDelta);
+        // 가방방어는 체력만 담당(컨디션은 안 건드림) - 팔꿈치 게임이 컨디션 전담
+        float multiplier = GameManager.Instance.GetConditionDamageMultiplier();
+        int scaledDamage = Mathf.RoundToInt(healthDamage * multiplier);
+
+        GameManager.Instance.ChangeHealth(scaledDamage);
         hudManager.UpdateHUD();
         ShowPostMinigameMonologue(BagDefenseController.Instance.GetEndLine(conditionDelta >= 0));
     }

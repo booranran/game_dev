@@ -30,6 +30,10 @@ public class SeatManager : MonoBehaviour
     public float selectableIconOffsetX = 0f; // 좌석 x좌표에 더해지는 오프셋 (좌석마다 다름)
     public float selectableIconFixedY = 0.5f; // y좌표는 좌석과 무관하게 항상 이 값 사용
 
+    [Header("빈자리 선택 콜리더 (의도적으로 좌석까지 덮도록 넓게 잡음 - 아이콘뿐 아니라 좌석 클릭도 선택되게)")]
+    public Vector2 selectableIconColliderSize = new Vector2(2.8f, 5f); // 기존 프리팹에 박혀있던 값 그대로 이식
+    public Vector2 selectableIconColliderOffset = new Vector2(-0.1f, -1.8f);
+
     public SeatSlot currentEmptySeat { get; private set; }
     public SeatSlot playerCurrentSeat { get; private set; }
     public List<SeatSlot> openSeats { get; } = new List<SeatSlot>(); // 선택 대기 중인 빈자리들 (1개 이상)
@@ -202,8 +206,12 @@ public class SeatManager : MonoBehaviour
         iconPos.y = selectableIconFixedY + extraY;
 
         var icon = Instantiate(selectableIconPrefab, iconPos, Quaternion.identity);
-        if (icon.GetComponent<BoxCollider2D>() == null)
-            icon.AddComponent<BoxCollider2D>(); // 프리팹에 미리 붙여놨으면 그 크기 그대로 사용됨
+        var col = icon.GetComponent<BoxCollider2D>();
+        if (col == null) col = icon.AddComponent<BoxCollider2D>();
+
+        // 아이콘뿐 아니라 그 아래 좌석까지 클릭 영역으로 잡기 위해 의도적으로 넓게 설정 (인스펙터에서 조절)
+        col.size = selectableIconColliderSize;
+        col.offset = selectableIconColliderOffset;
 
         seat.spawnedIcon = icon;
         return icon;

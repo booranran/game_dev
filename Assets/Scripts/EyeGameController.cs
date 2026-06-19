@@ -229,7 +229,7 @@ public class EyeGameController : MonoBehaviour
 
         var seat = candidates[correctIndex];
         SeatManager.Instance.FillSeatWithRandomNPC(seat);
-        Invoke(nameof(AdvanceTurnDelayed), phase1FailDelay);
+        Invoke(nameof(AdvanceTurnDelayedNoMonologue), phase1FailDelay);
     }
 
     // ── Phase 2 경쟁 ──────────────────────────────────
@@ -400,6 +400,7 @@ public class EyeGameController : MonoBehaviour
     }
 
     void AdvanceTurnDelayed() => TurnController.Instance?.AdvanceTurnWithMonologue(GetPhase1FailLine());
+    void AdvanceTurnDelayedNoMonologue() => TurnController.Instance?.AdvanceTurn();
 
     public string GetPhase1FailLine() => PickLine(phase1FailMonologues);
 

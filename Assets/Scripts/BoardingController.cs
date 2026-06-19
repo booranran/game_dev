@@ -26,10 +26,15 @@ public class BoardingController : MonoBehaviour
     public Transform playerTransform;
     public float exclusionRadius = 1f;
 
+    [Header("가방방어 시작 전 연출 (실제 보딩 데이터와 무관, slotOccupants에 등록 안 됨)")]
+    public int surgeNPCCount = 18;
+    public float surgeInterval = 0.1f;
+
     public int CurrentBoardingCount { get; private set; }
 
     private Vector3[] slotPositions;
     private GameObject[] slotOccupants;
+    private System.Collections.Generic.List<GameObject> surgeNPCs = new System.Collections.Generic.List<GameObject>();
 
     void Awake()
     {
@@ -168,6 +173,43 @@ public class BoardingController : MonoBehaviour
         if (slotOccupants[slotIndex] == null) return;
         Destroy(slotOccupants[slotIndex]);
         slotOccupants[slotIndex] = null;
+    }
+
+    // 가방방어 시작 전 드라마틱 연출 - boardingSprites만 빌려서 빠르게 늘어나는 임시 NPC (실제 보딩 상태와 무관)
+    public void TriggerBoardingSurge() => StartCoroutine(PlayBoardingSurge());
+
+    System.Collections.IEnumerator PlayBoardingSurge()
+    {
+        for (int i = 0; i < surgeNPCCount; i++)
+        {
+            SpawnSurgeNPC();
+            yield return new WaitForSeconds(surgeInterval);
+        }
+    }
+
+    void SpawnSurgeNPC()
+    {
+        if (boardingAreaCenter == null || boardingSprites == null || boardingSprites.Length == 0) return;
+
+        float x = Random.Range(-boardingAreaSize.x * 0.5f, boardingAreaSize.x * 0.5f);
+        float y = Random.Range(-boardingAreaSize.y * 0.5f, boardingAreaSize.y * 0.5f);
+        Vector3 pos = boardingAreaCenter.position + new Vector3(x, y, 0f);
+
+        var go = new GameObject("SurgeNPC");
+        go.transform.position = pos;
+        go.transform.localScale = Vector3.one * boardingScale;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = boardingSprites[Random.Range(0, boardingSprites.Length)];
+        sr.sortingOrder = baseSortingOrder - Mathf.RoundToInt(pos.y * sortingOrderYScale);
+        surgeNPCs.Add(go);
+    }
+
+    // 가방방어 패널이 실제로 열리는 시점에 호출 - 연출용 임시 NPC 전부 제거 (진짜 보딩 NPC는 건드린 적 없어서 그대로 남음)
+    public void ClearSurgeNPCs()
+    {
+        foreach (var go in surgeNPCs)
+            if (go) Destroy(go);
+        surgeNPCs.Clear();
     }
 
     void OnDrawGizmosSelected()

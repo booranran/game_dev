@@ -2,13 +2,19 @@ using UnityEngine;
 
 public class CharacterDisplay : MonoBehaviour
 {
+    public enum PoseOverride { None, Yielding, ElbowDefense }
+
     [Header("Student Sprites")]
     public Sprite studentStanding;
     public Sprite studentSitting;
+    public Sprite studentYielding; // 양보하는 순간(이번 턴)만 잠깐 표시되는 포즈 (서있을 때)
+    public Sprite studentElbowDefense; // 팔꿈치 게임 중(앉은 채로) 표시되는 포즈
 
     [Header("Worker Sprites")]
     public Sprite workerStanding;
     public Sprite workerSitting;
+    public Sprite workerYielding;
+    public Sprite workerElbowDefense;
 
     [Header("Student Positions")]
     public Vector3 studentStandingPosition;
@@ -38,7 +44,10 @@ public class CharacterDisplay : MonoBehaviour
         GameManager.OnGameInitialized -= UpdateSprite;
     }
 
-    public void UpdateSprite()
+    // OnTurnProcessed/OnGameInitialized가 Action(무파라미터)이라서 구독용으로 별도 오버로드 필요
+    public void UpdateSprite() => UpdateSprite(PoseOverride.None);
+
+    public void UpdateSprite(PoseOverride pose)
     {
         GameManager gm = GameManager.Instance;
         if (gm == null) return;
@@ -46,9 +55,13 @@ public class CharacterDisplay : MonoBehaviour
         bool isSitting = gm.playerState == GameManager.PlayerState.Sitting;
 
         if (gm.characterType == GameManager.CharacterType.Student)
-            spriteRenderer.sprite = isSitting ? studentSitting : studentStanding;
+            spriteRenderer.sprite = isSitting
+                ? (pose == PoseOverride.ElbowDefense ? studentElbowDefense : studentSitting)
+                : (pose == PoseOverride.Yielding ? studentYielding : studentStanding);
         else
-            spriteRenderer.sprite = isSitting ? workerSitting : workerStanding;
+            spriteRenderer.sprite = isSitting
+                ? (pose == PoseOverride.ElbowDefense ? workerElbowDefense : workerSitting)
+                : (pose == PoseOverride.Yielding ? workerYielding : workerStanding);
 
         if (isSitting)
         {

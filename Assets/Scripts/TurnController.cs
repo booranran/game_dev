@@ -26,11 +26,14 @@ public class TurnController : MonoBehaviour
     [Header("References")]
     public HUDManager hudManager;
     public CharacterDisplay characterDisplay;
-    public TextMeshProUGUI characterMonologueText;
+    public GameObject characterMonologueText; // Image 박스 (보이기/숨기기용)
+    public TextMeshProUGUI characterMonologueTMP; // 위 박스의 자식 TMP (실제 텍스트)
     public ResultPanelController resultPanelController;
 
     private System.Action pendingMinigameStart;
     private string pendingTurnStartMonologue;
+    private EventManager.NPCType? pendingSeatedNPCType;
+    private SeatManager.SeatSlot pendingSeatedNPCSeat;
 
     void Awake()
     {
@@ -78,13 +81,23 @@ public class TurnController : MonoBehaviour
         // CharacterDisplay도 같은 OnTurnProcessed를 구독하고 있어서 순서가 보장 안 됨 - 직접 먼저 갱신
         characterDisplay.UpdateSprite();
 
+        // 양보 다음 턴이면 - 그제서야 실제로 좌석에 앉히기 (서있는 미리보기 정리 후)
+        if (pendingSeatedNPCType.HasValue)
+        {
+            NPCManager.Instance.HideNPC();
+            NPCManager.Instance.SeatNPCAt(pendingSeatedNPCType.Value, pendingSeatedNPCSeat);
+            pendingSeatedNPCType = null;
+            pendingSeatedNPCSeat = null;
+        }
+
         // 이전 턴에 (Phase1 실패 등) 다음 턴 시작 시 보여줄 독백이 예약돼있으면, 그것부터 보여주고 나머지는 미룸
         if (!string.IsNullOrEmpty(pendingTurnStartMonologue))
         {
             string line = pendingTurnStartMonologue;
             pendingTurnStartMonologue = null;
             HideAllPanels();
-            if (characterMonologueText) characterMonologueText.text = line;
+            if (characterMonologueTMP) characterMonologueTMP.text = line;
+            if (characterMonologueText) characterMonologueText.SetActive(true);
             if (noEventPanel) noEventPanel.SetActive(true);
             Invoke(nameof(ContinueTurnStart), postMinigameMonologueDelay);
             return;
@@ -95,7 +108,8 @@ public class TurnController : MonoBehaviour
 
     void ContinueTurnStart()
     {
-        if (characterMonologueText) characterMonologueText.text = "";
+        if (characterMonologueTMP) characterMonologueTMP.text = "";
+        if (characterMonologueText) characterMonologueText.SetActive(false);
         if (SeatManager.Instance.openSeats.Count > 0)
             Debug.Log($"[TurnController] OnTurnStart 시점 openSeats에 {SeatManager.Instance.openSeats.Count}개 남아있음 → 자동 채움 (선택 안 됐던 자리)");
         SeatManager.Instance.FillAllOpenSeats(); // 전 턴에 선택 안 된 빈자리들 다른 NPC로 채움
@@ -131,9 +145,11 @@ public class TurnController : MonoBehaviour
                 Invoke(nameof(ShowTriggerPanel), triggerPanelDelay);
                 break;
             case EventManager.EventType.ElbowGame:
+                characterDisplay.UpdateSprite(CharacterDisplay.PoseOverride.ElbowDefense);
                 ShowPreMinigameMonologue(ElbowGameController.Instance.GetStartLine(), ElbowGameController.Instance.StartElbowGame);
                 break;
             case EventManager.EventType.BagDefense:
+                BoardingController.Instance?.TriggerBoardingSurge(); // 독백 보여주는 동안 탑승객 확 늘어나는 연출
                 ShowPreMinigameMonologue(BagDefenseController.Instance.GetStartLine(), BagDefenseController.Instance.StartBagGame);
                 break;
             case EventManager.EventType.None:
@@ -148,11 +164,13 @@ public class TurnController : MonoBehaviour
     {
         HideAllPanels(); // 바로 숨겨서 AdvanceTurn 전까지 중복 클릭으로 다시 실행되는 것 방지
         var yieldedSeat = SeatManager.Instance.playerCurrentSeat;
-        NPCManager.Instance.ShowNPC(EventManager.Instance.currentNPC, true);
+        pendingSeatedNPCType = EventManager.Instance.currentNPC; // 다음 턴 시작할 때 이 자리에 앉힘
+        pendingSeatedNPCSeat = yieldedSeat;
+        NPCManager.Instance.ShowThankYouDialogue(EventManager.Instance.currentNPC); // NPC는 이번 턴엔 서있는 채 대사만 갱신
         EventManager.Instance.ResolveYield();
         if (yieldedSeat?.standingInFrontPosition != null)
             characterDisplay.SetStandingOverride(yieldedSeat.standingInFrontPosition.position);
-        characterDisplay.UpdateSprite();
+        characterDisplay.UpdateSprite(CharacterDisplay.PoseOverride.Yielding);
         hudManager.UpdateHUD();
         Invoke(nameof(AdvanceTurn), 1f);
     }
@@ -166,7 +184,8 @@ public class TurnController : MonoBehaviour
         var npc = EventManager.Instance.currentNPC;
         if (npc == EventManager.NPCType.Elderly)
         {
-            if (characterMonologueText) characterMonologueText.text = "양보하지 않아 죄책감이 느껴졌다.";
+            if (characterMonologueTMP) characterMonologueTMP.text = "양보하지 않아 죄책감이 느껴졌다.";
+            if (characterMonologueText) characterMonologueText.SetActive(true);
             noEventPanel.SetActive(true);
         }
 
@@ -260,7 +279,8 @@ public class TurnController : MonoBehaviour
 
     void ClearMonologueAndAdvance()
     {
-        if (characterMonologueText) characterMonologueText.text = "";
+        if (characterMonologueTMP) characterMonologueTMP.text = "";
+        if (characterMonologueText) characterMonologueText.SetActive(false);
         AdvanceTurn();
     }
 
@@ -269,15 +289,17 @@ public class TurnController : MonoBehaviour
     // 미니게임 패널이 뜨기 전, 메인 화면에서 캐릭터 독백 먼저 보여주고 그 다음에 실제로 게임 시작
     void ShowPreMinigameMonologue(string line, System.Action startAction)
     {
-        if (characterMonologueText) characterMonologueText.text = line;
-        if (noEventPanel) noEventPanel.SetActive(true); // characterMonologueText가 이 패널의 자식이라 같이 켜야 보임
+        if (characterMonologueTMP) characterMonologueTMP.text = line;
+        if (characterMonologueText) characterMonologueText.SetActive(true);
+        if (noEventPanel) noEventPanel.SetActive(true);
         pendingMinigameStart = startAction;
         Invoke(nameof(RunPendingMinigameStart), preMinigameMonologueDelay);
     }
 
     void RunPendingMinigameStart()
     {
-        if (characterMonologueText) characterMonologueText.text = "";
+        if (characterMonologueTMP) characterMonologueTMP.text = "";
+        if (characterMonologueText) characterMonologueText.SetActive(false);
         if (noEventPanel) noEventPanel.SetActive(false);
         pendingMinigameStart?.Invoke();
         pendingMinigameStart = null;
@@ -286,14 +308,16 @@ public class TurnController : MonoBehaviour
     // 미니게임 패널이 닫힌 후, 메인 화면에서 캐릭터 독백 보여주고 그 다음에야 턴 진행
     void ShowPostMinigameMonologue(string line)
     {
-        if (characterMonologueText) characterMonologueText.text = line;
-        if (noEventPanel) noEventPanel.SetActive(true); // characterMonologueText가 이 패널의 자식이라 같이 켜야 보임
+        if (characterMonologueTMP) characterMonologueTMP.text = line;
+        if (characterMonologueText) characterMonologueText.SetActive(true);
+        if (noEventPanel) noEventPanel.SetActive(true);
         Invoke(nameof(ClearMonologueAndAdvance), postMinigameMonologueDelay);
     }
 
     void OnElbowGameResult(bool playerWon)
     {
         GameManager.Instance.ChangeCondition(playerWon ? 1 : -1);
+        characterDisplay.UpdateSprite(); // 기존 앉은 스프라이트로 복귀
         hudManager.UpdateHUD();
         ShowPostMinigameMonologue(ElbowGameController.Instance.GetEndLine(playerWon));
     }
@@ -327,9 +351,10 @@ public class TurnController : MonoBehaviour
 
     void HideAllPanels()
     {
-        if (yieldPanel)     yieldPanel.SetActive(false);
-        if (emptySeatPanel) emptySeatPanel.SetActive(false);
-        if (noEventPanel)   noEventPanel.SetActive(false);
+        if (yieldPanel)            yieldPanel.SetActive(false);
+        if (emptySeatPanel)        emptySeatPanel.SetActive(false);
+        if (noEventPanel)          noEventPanel.SetActive(false);
+        if (characterMonologueText) characterMonologueText.SetActive(false);
     }
 
     void GoToResult() => resultPanelController.Show(GameManager.Instance.characterType, GameManager.EndingType.GameOver);

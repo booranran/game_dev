@@ -15,6 +15,11 @@ public class ElbowGameController : MonoBehaviour
     public TextMeshProUGUI roundText;
     public TextMeshProUGUI resultText;
 
+    [Header("엘보우 비주얼 (두 엘보우를 하나의 부모로 묶은 RectTransform)")]
+    public RectTransform elbowGroupTransform;
+    public RectTransform leftBoundMarker; // gaugeValue=0(완전히 밀림) - 이 마커의 X 위치를 그대로 씀, Scene에서 직접 배치
+    public RectTransform rightBoundMarker; // gaugeValue=1(완전히 이김)
+
     [Header("디버그")]
     public bool debugMode = false;
 
@@ -66,6 +71,7 @@ public class ElbowGameController : MonoBehaviour
         roundTimer = roundDuration;
         isPlaying = true;
         if (gaugeSlider) gaugeSlider.value = gaugeValue;
+        UpdateElbowGroupPosition();
         if (roundText) roundText.text = $"{currentRound + 1} / 3 라운드";
         if (resultText) resultText.text = "";
         Debug.Log($"[팔꿈치] 라운드 {currentRound + 1} 시작 | 밀기 속도: {basePushSpeed + speedIncreasePerRound * currentRound:F2}");
@@ -81,6 +87,7 @@ public class ElbowGameController : MonoBehaviour
         float pushSpeed = basePushSpeed + speedIncreasePerRound * currentRound;
         gaugeValue = Mathf.Clamp01(gaugeValue - pushSpeed * Time.deltaTime);
         if (gaugeSlider) gaugeSlider.value = gaugeValue;
+        UpdateElbowGroupPosition();
 
         if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
             OnTapButton();
@@ -90,11 +97,20 @@ public class ElbowGameController : MonoBehaviour
             EndRound();
     }
 
+    void UpdateElbowGroupPosition()
+    {
+        if (!elbowGroupTransform || !leftBoundMarker || !rightBoundMarker) return;
+        Vector2 pos = elbowGroupTransform.anchoredPosition;
+        pos.x = Mathf.Lerp(leftBoundMarker.anchoredPosition.x, rightBoundMarker.anchoredPosition.x, gaugeValue);
+        elbowGroupTransform.anchoredPosition = pos;
+    }
+
     public void OnTapButton()
     {
         if (!isPlaying) return;
         gaugeValue = Mathf.Clamp01(gaugeValue + tapAmount);
         if (gaugeSlider) gaugeSlider.value = gaugeValue;
+        UpdateElbowGroupPosition();
     }
 
     void EndRound()

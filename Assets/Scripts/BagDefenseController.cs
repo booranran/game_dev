@@ -84,6 +84,8 @@ public class BagDefenseController : MonoBehaviour
 
     public void StartBagGame()
     {
+        BoardingController.Instance?.ClearSurgeNPCs(); // 연출용 임시 NPC 정리 (진짜 보딩 NPC는 그대로 유지됨)
+
         // 버튼 위치에서 레인 X 자동 계산
         if (laneButtonRects != null && laneButtonRects.Length == 4)
         {

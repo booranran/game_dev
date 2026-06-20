@@ -16,7 +16,7 @@ public class EventManager : MonoBehaviour
         // BabyHappy,
         // BabyCrying,
         TiredWorker,
-        YoungPassenger,
+        Girl,
         SmartphonePassenger,
     }
 
@@ -147,7 +147,7 @@ public class EventManager : MonoBehaviour
     {
         int r = UnityEngine.Random.Range(0, 3);
         if (r == 0) return NPCType.TiredWorker;
-        if (r == 1) return NPCType.YoungPassenger;
+        if (r == 1) return NPCType.Girl;
         return NPCType.SmartphonePassenger;
     }
 

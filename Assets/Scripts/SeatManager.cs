@@ -288,6 +288,11 @@ public class SeatManager : MonoBehaviour
         currentEmptySeat = seat;
         seat.isOccupied = false;
         if (seat.silhouette) seat.silhouette.SetActive(false);
+        if (seat.seatedNPCObject) // 그 자리가 FillSeatWithRandomNPC 등으로 이미 채워져있던 경우 - 실루엣만 꺼서는 안 사라짐
+        {
+            Destroy(seat.seatedNPCObject);
+            seat.seatedNPCObject = null;
+        }
     }
 
     public void ResetAllSeats()

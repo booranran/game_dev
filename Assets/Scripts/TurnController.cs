@@ -34,6 +34,8 @@ public class TurnController : MonoBehaviour
     private string pendingTurnStartMonologue;
     private EventManager.NPCType? pendingSeatedNPCType;
     private SeatManager.SeatSlot pendingSeatedNPCSeat;
+    private SeatManager.SeatSlot pendingNormalizeSeat; // 눈치게임 승리로 막 앉은 NPC - 다음 턴에 정착 포즈로 교체
+    private EventManager.NPCType pendingNormalizeNPCType; // 위 좌석에 앉은 NPC가 어떤 타입인지 (정착 포즈 조회용)
 
     void Awake()
     {
@@ -88,6 +90,19 @@ public class TurnController : MonoBehaviour
             NPCManager.Instance.SeatNPCAt(pendingSeatedNPCType.Value, pendingSeatedNPCSeat);
             pendingSeatedNPCType = null;
             pendingSeatedNPCSeat = null;
+        }
+
+        // 눈치게임에서 진 다음 턴이면 - 막 앉은 포즈에서 평소 정착 포즈로 교체
+        if (pendingNormalizeSeat != null)
+        {
+            var npcObj = pendingNormalizeSeat.seatedNPCObject;
+            if (npcObj != null) // Unity fake null 주의 - ?. 대신 명시적 체크
+            {
+                var sr = npcObj.GetComponent<SpriteRenderer>();
+                var seatedSprite = EyeGameController.Instance.GetSeatedSprite(pendingNormalizeNPCType);
+                if (sr != null && seatedSprite != null) sr.sprite = seatedSprite;
+            }
+            pendingNormalizeSeat = null;
         }
 
         // 이전 턴에 (Phase1 실패 등) 다음 턴 시작 시 보여줄 독백이 예약돼있으면, 그것부터 보여주고 나머지는 미룸
@@ -242,15 +257,16 @@ public class TurnController : MonoBehaviour
         {
             EventManager.Instance.ResolveSit();
             SeatManager.Instance.OccupySeat();
-            characterDisplay.UpdateSprite();
+            characterDisplay.UpdateSprite(CharacterDisplay.PoseOverride.JustSat); // 다음 턴 OnTurnStart()에서 자동으로 평소 포즈로 복귀
         }
         else
         {
+            pendingNormalizeSeat = SeatManager.Instance.currentEmptySeat; // NPCOccupySeat()가 null로 비우기 전에 미리 캡쳐
+            pendingNormalizeNPCType = EyeGameController.Instance.CurrentCompetitor;
             SeatManager.Instance.NPCOccupySeat();
         }
         hudManager.UpdateHUD();
-        Debug.Log($"[TurnController] AdvanceTurn 호출 → 다음 턴으로");
-        AdvanceTurn();
+        ShowPostMinigameMonologue(EyeGameController.Instance.GetEndLine(playerWon));
     }
 
     void HandleEmptySeat()
@@ -279,7 +295,7 @@ public class TurnController : MonoBehaviour
     bool IsCompetingNPC(EventManager.NPCType npc)
     {
         return npc == EventManager.NPCType.TiredWorker ||
-               npc == EventManager.NPCType.YoungPassenger ||
+               npc == EventManager.NPCType.Girl ||
                npc == EventManager.NPCType.SmartphonePassenger;
     }
 

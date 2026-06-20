@@ -30,3 +30,6 @@ Thumbs.db
 # 에셋 임포트 캐시
 Assets/AssetStoreTools*
 Assets/Sprite/background.png
+
+# Unity 크래시 복구 씬
+Assets/_Recovery/

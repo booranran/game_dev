@@ -83,7 +83,7 @@ public class ElbowGameController : MonoBehaviour
         isPlaying = true;
         if (gaugeSlider) gaugeSlider.value = gaugeValue;
         UpdateElbowGroupPosition();
-        if (roundText) roundText.text = $"{currentRound + 1} / 3 라운드";
+        if (roundText) roundText.text = $"{currentRound + 1} 라운드";
         if (resultText) resultText.text = "";
         Debug.Log($"[팔꿈치] 라운드 {currentRound + 1} 시작 | 밀기 속도: {BasePushSpeed + SpeedIncreasePerRound * currentRound:F2}");
     }

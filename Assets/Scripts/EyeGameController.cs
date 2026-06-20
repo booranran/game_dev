@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System;
 
 public class EyeGameController : MonoBehaviour
@@ -16,26 +15,47 @@ public class EyeGameController : MonoBehaviour
     [Header("Phase1 실패 독백 (다음 턴 시작 시 TurnController가 메인 화면에 표시)")]
     [TextArea] public string[] phase1FailMonologues;
 
+    [Header("눈치게임(Phase2) 승패 독백 (TurnController가 메인 화면에 표시 - 턴 전환 분리용)")]
+    [TextArea] public string[] winMonologues;
+    [TextArea] public string[] loseMonologues;
+
+    public string GetEndLine(bool won) => PickLine(won ? winMonologues : loseMonologues);
+
     // ── Phase 2: 경쟁 ─────────────────────────────────
     [Header("Phase 2 - 경쟁 패널")]
     public GameObject competitionPanel;
     public SpriteRenderer competitorRenderer;
 
+    [Header("경쟁 NPC 위치 (플레이어 기준 오프셋 - NPCManager 양보NPC와 동일한 패턴)")]
+    public Transform playerTransform;
+    public Vector3 competitorStandingOffset;
+
     [Header("Phase 2 - 타이밍 게임")]
     public float phase2Duration = 5f;
-    public Color whiteColor = Color.white;
-    public Color redColor = Color.red;
-    public Color yellowColor = Color.yellow;
+    public float seatedCompetitorScale = 0.09f; // 경쟁에서 진 NPC가 자리에 앉을 때 스프라이트 배율
 
-    [Header("NPC별 빨강 등장 확률")]
-    public float redChanceTired = 0.4f;
-    public float redChanceYoung = 0.25f;
-    public float redChanceSmartphone = 0.15f;
+    [Serializable]
+    public struct CompetitorConfig
+    {
+        public EventManager.NPCType npcType;
+        public float redChance;
+        public float redDuration;
+        [Header("이 NPC의 신호 사진 (타이밍용)")]
+        public Sprite whiteSprite;
+        public Sprite redSprite;
+        public Sprite yellowSprite;
+        [Header("이 NPC가 자리에 앉을 때 사진")]
+        public Sprite justSatSprite; // 앉은 그 턴에만 표시
+        public Sprite seatedSprite;  // 다음 턴부터 이걸로 전환 (TurnController가 처리)
+    }
 
-    [Header("NPC별 빨강 구간 길이 (초)")]
-    public float redDurationTired = 0.6f;
-    public float redDurationYoung = 0.4f;
-    public float redDurationSmartphone = 0.2f;
+    [Header("경쟁 NPC 설정 (이 배열에 추가하면 PickCompetitor() 풀에도 자동으로 포함됨)")]
+    public CompetitorConfig[] competitorConfigs = new CompetitorConfig[]
+    {
+        new CompetitorConfig { npcType = EventManager.NPCType.TiredWorker, redChance = 0.4f, redDuration = 0.6f },
+        new CompetitorConfig { npcType = EventManager.NPCType.Girl, redChance = 0.25f, redDuration = 0.4f },
+        new CompetitorConfig { npcType = EventManager.NPCType.SmartphonePassenger, redChance = 0.15f, redDuration = 0.2f },
+    };
 
     [Header("호선별 경쟁 확률")]
     public float line9CompetitionRate = 0.7f;
@@ -48,13 +68,14 @@ public class EyeGameController : MonoBehaviour
     private bool isObserving = false;
     private bool isPhase1 = false;
 
-    private struct ColorSegment { public Color color; public float duration; public bool isRed; }
-    private ColorSegment[] segments;
+    private struct Segment { public Sprite sprite; public float duration; public bool isRed; }
+    private Segment[] segments;
     private int segmentIndex;
     private float segmentTimer;
     private bool isRedNow;
     private bool isCompeting = false;
     private EventManager.NPCType currentCompetitor;
+    public EventManager.NPCType CurrentCompetitor => currentCompetitor;
 
     public static event Action<bool> OnEyeGameEnd;
 
@@ -81,9 +102,6 @@ public class EyeGameController : MonoBehaviour
                     OnEyeGameEnd?.Invoke(false);
             }
         }
-
-        if (debugMode && Keyboard.current != null && Keyboard.current[Key.Digit1].wasPressedThisFrame)
-            DebugStartPhase2();
 
         if (isCompeting)
         {
@@ -240,53 +258,63 @@ public class EyeGameController : MonoBehaviour
         isCompeting = true;
         Debug.Log($"[Phase2] 시작 | NPC: {currentCompetitor} | 세그먼트 수: {segments.Length} | competitionPanel: {competitionPanel != null} | competitorRenderer: {competitorRenderer != null}");
         competitionPanel.SetActive(true);
-        if (competitorRenderer) competitorRenderer.enabled = true;
+        if (competitorRenderer)
+        {
+            competitorRenderer.enabled = true;
+            competitorRenderer.transform.position = playerTransform != null
+                ? playerTransform.position + competitorStandingOffset
+                : competitorStandingOffset;
+        }
         Debug.Log($"[Phase2] competitionPanel 활성화: {competitionPanel.activeSelf}");
         ApplySegment(segments[0]);
     }
 
-    void ApplySegment(ColorSegment seg)
+    void ApplySegment(Segment seg)
     {
         segmentTimer = seg.duration;
         isRedNow = seg.isRed;
-        Debug.Log($"[Phase2] 세그먼트 {segmentIndex}: 색={seg.color} isRed={seg.isRed} 길이={seg.duration:F2}s");
-        if (competitorRenderer) competitorRenderer.color = seg.color;
+        Debug.Log($"[Phase2] 세그먼트 {segmentIndex}: 사진={(seg.sprite ? seg.sprite.name : "null")} isRed={seg.isRed} 길이={seg.duration:F2}s");
+        if (competitorRenderer) competitorRenderer.sprite = seg.sprite;
         else Debug.LogWarning("[Phase2] competitorRenderer가 null!");
     }
 
-    ColorSegment[] GenerateSegments(EventManager.NPCType npcType)
+    CompetitorConfig GetCompetitorConfig(EventManager.NPCType npcType)
     {
-        float redChance = npcType == EventManager.NPCType.TiredWorker ? redChanceTired
-                        : npcType == EventManager.NPCType.YoungPassenger ? redChanceYoung
-                        : redChanceSmartphone;
-        float redDur = npcType == EventManager.NPCType.TiredWorker ? redDurationTired
-                     : npcType == EventManager.NPCType.YoungPassenger ? redDurationYoung
-                     : redDurationSmartphone;
+        foreach (var c in competitorConfigs)
+            if (c.npcType == npcType) return c;
+        return new CompetitorConfig { npcType = npcType, redChance = 0.25f, redDuration = 0.4f }; // 배열에 등록 안 된 타입 - 폴백
+    }
 
-        var list = new System.Collections.Generic.List<ColorSegment>();
+    Segment[] GenerateSegments(EventManager.NPCType npcType)
+    {
+        var config = GetCompetitorConfig(npcType);
+        float redChance = config.redChance;
+        float redDur = config.redDuration;
+
+        var list = new System.Collections.Generic.List<Segment>();
         float remaining = phase2Duration;
         bool lastWasRed = false;
 
         while (remaining > 0.05f)
         {
             bool makeRed = !lastWasRed && UnityEngine.Random.value < redChance;
-            Color c;
+            Sprite s;
             float dur;
 
             if (makeRed)
             {
-                c = redColor;
+                s = config.redSprite;
                 dur = Mathf.Min(UnityEngine.Random.Range(redDur * 0.7f, redDur * 1.3f), remaining);
                 lastWasRed = true;
             }
             else
             {
-                c = UnityEngine.Random.value < 0.5f ? whiteColor : yellowColor;
+                s = UnityEngine.Random.value < 0.5f ? config.whiteSprite : config.yellowSprite;
                 dur = Mathf.Min(UnityEngine.Random.Range(0.4f, 2f), remaining);
                 lastWasRed = false;
             }
 
-            list.Add(new ColorSegment { color = c, duration = dur, isRed = makeRed });
+            list.Add(new Segment { sprite = s, duration = dur, isRed = makeRed });
             remaining -= dur;
         }
 
@@ -335,43 +363,22 @@ public class EyeGameController : MonoBehaviour
     {
         var seat = SeatManager.Instance.currentEmptySeat;
         if (seat == null || seat.seatPosition == null) return;
-        if (competitorRenderer == null || competitorRenderer.sprite == null) return;
+
+        var config = GetCompetitorConfig(currentCompetitor);
+        var initialSprite = config.justSatSprite != null ? config.justSatSprite : config.seatedSprite;
+        if (initialSprite == null) return;
 
         var go = new GameObject("SeatedCompetitor");
         go.transform.position = seat.seatPosition.position;
-        go.transform.localScale = Vector3.one * 0.09f;
+        go.transform.localScale = Vector3.one * seatedCompetitorScale;
         var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = competitorRenderer.sprite;
+        sr.sprite = initialSprite; // 막 앉은 포즈 - 다음 턴 시작 시 TurnController가 seatedSprite로 교체
         sr.sortingOrder = -29;
         seat.seatedNPCObject = go;
     }
 
-    // ── 디버그 ────────────────────────────────────────
-    [Header("디버그")]
-    public bool debugMode = false;
-    public EventManager.NPCType debugCompetitor = EventManager.NPCType.TiredWorker;
-    public int debugSeatIndex = 0;
-
-    [ContextMenu("테스트: Phase 2 시작")]
-    public void DebugStartPhase2()
-    {
-        Debug.Log("[Debug] Phase2 디버그 시작");
-
-        isObserving = false;
-        isCompeting = false;
-        CancelInvoke();
-
-        TurnController.Instance?.HideAllPanelsPublic();
-        if (observePanel) observePanel.SetActive(false);
-
-        var seats = SeatManager.Instance.seats;
-        int idx = Mathf.Clamp(debugSeatIndex, 0, seats.Length - 1);
-        SeatManager.Instance.SetCurrentEmptySeat(seats[idx]);
-        Debug.Log($"[Debug] 지정 좌석: {idx}, currentEmptySeat: {SeatManager.Instance.currentEmptySeat?.silhouette?.name}");
-
-        currentCompetitor = debugCompetitor;
-        StartCompetition();
-    }
+    // 경쟁에서 진 다음 턴, TurnController가 해당 NPC의 "정착 포즈"로 교체할 때 사용
+    public Sprite GetSeatedSprite(EventManager.NPCType npcType) => GetCompetitorConfig(npcType).seatedSprite;
 
     // ── 공통 유틸 ─────────────────────────────────────
     void ClearHints()
@@ -412,9 +419,7 @@ public class EyeGameController : MonoBehaviour
 
     EventManager.NPCType PickCompetitor()
     {
-        int r = UnityEngine.Random.Range(0, 3);
-        if (r == 0) return EventManager.NPCType.TiredWorker;
-        if (r == 1) return EventManager.NPCType.YoungPassenger;
-        return EventManager.NPCType.SmartphonePassenger;
+        if (competitorConfigs == null || competitorConfigs.Length == 0) return EventManager.NPCType.TiredWorker;
+        return competitorConfigs[UnityEngine.Random.Range(0, competitorConfigs.Length)].npcType;
     }
 }

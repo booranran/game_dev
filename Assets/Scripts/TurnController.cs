@@ -182,9 +182,15 @@ public class TurnController : MonoBehaviour
         HideAllPanels();
 
         var npc = EventManager.Instance.currentNPC;
-        if (npc == EventManager.NPCType.Elderly)
+        string ignoreMonologue = null;
+        switch (npc)
         {
-            if (characterMonologueTMP) characterMonologueTMP.text = "양보하지 않아 죄책감이 느껴졌다.";
+            case EventManager.NPCType.Elderly: ignoreMonologue = "양보하지 않아 죄책감이 느껴졌다."; break;
+            case EventManager.NPCType.Pregnant: ignoreMonologue = "임산부에게 자리를 양보하지 않아 마음이 무거웠다."; break;
+        }
+        if (ignoreMonologue != null)
+        {
+            if (characterMonologueTMP) characterMonologueTMP.text = ignoreMonologue;
             if (characterMonologueText) characterMonologueText.SetActive(true);
             noEventPanel.SetActive(true);
         }

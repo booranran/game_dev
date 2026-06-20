@@ -33,10 +33,22 @@ public class BagDefenseController : MonoBehaviour
 
     [Header("게임 설정")]
     public float gameDuration = 15f;
-    public float noteSpeed = 400f;
-    public float minSpawnInterval = 0.4f;
-    public float maxSpawnInterval = 1.2f;
     public float spawnCutoffBuffer = 0.2f; // 마지막 노트가 끝까지 내려와 판정날 시간을 보장하는 여유분
+
+    [Header("노트 속도/스폰 간격 - 학생")]
+    public float studentNoteSpeed = 400f;
+    public float studentMinSpawnInterval = 0.4f;
+    public float studentMaxSpawnInterval = 1.2f;
+
+    [Header("노트 속도/스폰 간격 - 직장인")]
+    public float workerNoteSpeed = 480f;
+    public float workerMinSpawnInterval = 0.3f;
+    public float workerMaxSpawnInterval = 1.0f;
+
+    bool IsWorker => GameManager.Instance != null && GameManager.Instance.characterType == GameManager.CharacterType.Worker;
+    float NoteSpeed => IsWorker ? workerNoteSpeed : studentNoteSpeed;
+    float MinSpawnInterval => IsWorker ? workerMinSpawnInterval : studentMinSpawnInterval;
+    float MaxSpawnInterval => IsWorker ? workerMaxSpawnInterval : studentMaxSpawnInterval;
 
     [Header("등급 기준 (히트율 %)")]
     public float gradeS = 90f;
@@ -127,11 +139,11 @@ public class BagDefenseController : MonoBehaviour
     IEnumerator SpawnNotes()
     {
         // 마지막에 스폰된 노트도 끝까지 내려와 판정날 시간을 보장하기 위해, 그만큼 일찍 스폰을 멈춤
-        float fallTime = (spawnY - hitZoneBottom) / noteSpeed + spawnCutoffBuffer;
+        float fallTime = (spawnY - hitZoneBottom) / NoteSpeed + spawnCutoffBuffer;
 
         while (isPlaying && gameTimer > fallTime)
         {
-            float interval = UnityEngine.Random.Range(minSpawnInterval, maxSpawnInterval);
+            float interval = UnityEngine.Random.Range(MinSpawnInterval, MaxSpawnInterval);
             yield return new WaitForSeconds(interval);
             if (!isPlaying || gameTimer <= fallTime) break;
             SpawnNote(UnityEngine.Random.Range(0, 4));
@@ -159,7 +171,7 @@ public class BagDefenseController : MonoBehaviour
             rt.sizeDelta = noteSize;
         }
         var note = go.AddComponent<BagNote>();
-        note.Init(lane, noteSpeed, hitZoneY, hitZoneBottom, this);
+        note.Init(lane, NoteSpeed, hitZoneY, hitZoneBottom, this);
         activeNotes.Add(note);
         totalNotes++;
     }

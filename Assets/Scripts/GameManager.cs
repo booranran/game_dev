@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
     public CharacterType characterType;
     public LineType lineType;
 
+    [Header("디버그 (StartPanelController 없이 바로 테스트)")]
+    public bool debugMode = false;
+    public CharacterType debugCharacterType = CharacterType.Student;
+    public LineType debugLineType = LineType.Line9;
+
     [Header("Stats")]
     public int maxHealth;
     public int currentHealth;
@@ -46,7 +51,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        InitializeGame(CharacterType.Student, LineType.Line9);
+        if (debugMode)
+            BeginGame(debugCharacterType, debugLineType);
+    }
+
+    // StartPanelController가 캐릭터/모드 선택 + 시작 연출을 끝낸 뒤 호출 - 그 전까지 게임 로직은 시작 안 함
+    public void BeginGame(CharacterType character, LineType line)
+    {
+        InitializeGame(character, line);
         if (playerState == PlayerState.Sitting)
             SeatManager.Instance?.HidePlayerSeat();
         OnGameInitialized?.Invoke();

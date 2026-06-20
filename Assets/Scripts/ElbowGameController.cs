@@ -25,9 +25,20 @@ public class ElbowGameController : MonoBehaviour
 
     [Header("게임 설정")]
     public float roundDuration = 3f;
-    public float basePushSpeed = 0.15f;
-    public float speedIncreasePerRound = 0.05f;
     public float tapAmount = 0.1f;
+
+    [Header("밀기 속도 - 학생")]
+    public float studentBasePushSpeed = 0.15f;
+    public float studentSpeedIncreasePerRound = 0.05f;
+
+    [Header("밀기 속도 - 직장인")]
+    public float workerBasePushSpeed = 0.2f;
+    public float workerSpeedIncreasePerRound = 0.07f;
+
+    float BasePushSpeed => GameManager.Instance != null && GameManager.Instance.characterType == GameManager.CharacterType.Worker
+        ? workerBasePushSpeed : studentBasePushSpeed;
+    float SpeedIncreasePerRound => GameManager.Instance != null && GameManager.Instance.characterType == GameManager.CharacterType.Worker
+        ? workerSpeedIncreasePerRound : studentSpeedIncreasePerRound;
 
     [Header("독백 (TurnController가 메인 화면에 표시 - 턴 전환 분리용)")]
     [TextArea] public string[] startMonologues;
@@ -74,7 +85,7 @@ public class ElbowGameController : MonoBehaviour
         UpdateElbowGroupPosition();
         if (roundText) roundText.text = $"{currentRound + 1} / 3 라운드";
         if (resultText) resultText.text = "";
-        Debug.Log($"[팔꿈치] 라운드 {currentRound + 1} 시작 | 밀기 속도: {basePushSpeed + speedIncreasePerRound * currentRound:F2}");
+        Debug.Log($"[팔꿈치] 라운드 {currentRound + 1} 시작 | 밀기 속도: {BasePushSpeed + SpeedIncreasePerRound * currentRound:F2}");
     }
 
     void Update()
@@ -82,9 +93,13 @@ public class ElbowGameController : MonoBehaviour
         if (debugMode && Keyboard.current != null && Keyboard.current[Key.Digit2].wasPressedThisFrame)
             StartElbowGame();
 
+        // 디버그용 - debugMode 체크 없이 4 누르면 바로 강제 실행
+        if (Keyboard.current != null && Keyboard.current[Key.Digit4].wasPressedThisFrame)
+            StartElbowGame();
+
         if (!isPlaying) return;
 
-        float pushSpeed = basePushSpeed + speedIncreasePerRound * currentRound;
+        float pushSpeed = BasePushSpeed + SpeedIncreasePerRound * currentRound;
         gaugeValue = Mathf.Clamp01(gaugeValue - pushSpeed * Time.deltaTime);
         if (gaugeSlider) gaugeSlider.value = gaugeValue;
         UpdateElbowGroupPosition();

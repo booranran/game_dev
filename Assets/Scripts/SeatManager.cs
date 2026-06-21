@@ -8,6 +8,14 @@ public class SeatManager : MonoBehaviour
 
     public enum SeatType { Normal, PregnantSeat, ElderlySeat }
 
+    // 실루엣 풀의 한 항목 - 평소 스프라이트와 Phase1 후보로 뜰 때 보여줄 강조 스프라이트가 짝으로 묶임
+    [Serializable]
+    public struct SilhouetteSprite
+    {
+        public Sprite normal;
+        public Sprite highlighted;
+    }
+
     [Serializable]
     public class SeatSlot
     {
@@ -19,6 +27,8 @@ public class SeatManager : MonoBehaviour
         [HideInInspector] public GameObject seatedNPCObject;
         [HideInInspector] public GameObject spawnedIcon; // 동적으로 생성된 선택 아이콘 인스턴스
         [HideInInspector] public int index;
+        [HideInInspector] public Sprite currentSilhouetteSprite; // 지금 이 자리에 보이는 평소 스프라이트
+        [HideInInspector] public Sprite currentHighlightSprite;  // 위와 짝이 되는 Phase1 후보 강조 스프라이트
     }
 
     // 특수석 타입이 전담하는 NPC 타입 (배려점수 페널티 매칭, 좌석 채움 시 사용)
@@ -57,8 +67,8 @@ public class SeatManager : MonoBehaviour
     public bool randomizePlayerSeat = false;
     public int playerStartSeatIndex = 0;
 
-    [Header("좌석 실루엣 랜덤 스프라이트 풀 (좌석 수보다 많아도 됨, 시작 시 중복 없이 배정)")]
-    public Sprite[] silhouetteSpritePool;
+    [Header("좌석 실루엣 랜덤 스프라이트 풀 (좌석 수보다 많아도 됨, 시작 시 중복 없이 배정 - 평소/강조 스프라이트 짝으로 등록)")]
+    public SilhouetteSprite[] silhouetteSpritePool;
 
     [Header("빈자리 선택 아이콘")]
     public GameObject selectableIconPrefab; // 좌석 위에 동적으로 생성될 프리팹 하나로 통일
@@ -131,7 +141,7 @@ public class SeatManager : MonoBehaviour
     {
         if (silhouetteSpritePool == null || silhouetteSpritePool.Length == 0) return;
 
-        var pool = new List<Sprite>(silhouetteSpritePool);
+        var pool = new List<SilhouetteSprite>(silhouetteSpritePool);
         foreach (var seat in seats)
         {
             if (seat.seatType != SeatType.Normal) continue;
@@ -140,7 +150,9 @@ public class SeatManager : MonoBehaviour
             if (sr == null) continue;
 
             int r = UnityEngine.Random.Range(0, pool.Count);
-            sr.sprite = pool[r];
+            sr.sprite = pool[r].normal;
+            seat.currentSilhouetteSprite = pool[r].normal;
+            seat.currentHighlightSprite = pool[r].highlighted;
             pool.RemoveAt(r);
         }
     }
@@ -241,14 +253,14 @@ public class SeatManager : MonoBehaviour
             return;
         }
 
-        var pool = new List<GameObject>();
+        var pool = new List<SeatSlot>();
         foreach (var s in seats)
         {
             if (s.index == seat.index) continue;
             if (s.isOccupied && s.silhouette != null)
             {
                 var sr = s.silhouette.GetComponentInChildren<SpriteRenderer>(true);
-                if (sr && sr.sprite != null) pool.Add(s.silhouette);
+                if (sr && sr.sprite != null) pool.Add(s);
             }
         }
         if (pool.Count == 0) return;
@@ -260,18 +272,20 @@ public class SeatManager : MonoBehaviour
             seat.seatedNPCObject = null;
         }
 
-        var source = pool[UnityEngine.Random.Range(0, pool.Count)];
-        var sourceSr = source.GetComponentInChildren<SpriteRenderer>(true);
+        var sourceSeat = pool[UnityEngine.Random.Range(0, pool.Count)];
+        var sourceSr = sourceSeat.silhouette.GetComponentInChildren<SpriteRenderer>(true);
 
         var go = new GameObject("FilledNPC");
         go.transform.position = seat.seatPosition.position;
-        go.transform.localScale = source.transform.localScale; // 빌려온 원본 실루엣과 동일한 크기로 보이게
+        go.transform.localScale = sourceSeat.silhouette.transform.localScale; // 빌려온 원본 실루엣과 동일한 크기로 보이게
         var sr2 = go.AddComponent<SpriteRenderer>();
         sr2.sprite = sourceSr.sprite;
         sr2.sortingOrder = -29;
 
         seat.seatedNPCObject = go;
         seat.isOccupied = true;
+        seat.currentSilhouetteSprite = sourceSeat.currentSilhouetteSprite; // 빌려온 실루엣과 짝이 맞는 평소/강조 스프라이트도 같이 가져옴
+        seat.currentHighlightSprite = sourceSeat.currentHighlightSprite;
     }
 
     // 특수석은 일반 풀에서 빌려오지 않고 그 좌석이 전담하는 NPC 타입만, 그것도 낮은 확률로만 채움

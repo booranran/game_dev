@@ -12,11 +12,11 @@ public class PanelBGMPlayer : MonoBehaviour
             AudioManager.Instance?.PlayBGM(bgm, fadeStyle);
     }
 
-    // 패널이 꺼지면 본게임 브금으로 복귀 - 곧바로 다른 패널이 켜져서 그 BGM으로 또 바뀌어도
-    // 같은 프레임 안에서 코루틴이 교체되는 거라 들리는 끊김 없음
+    // 패널이 꺼지면 본게임 브금으로 복귀 시도 - 단, 같은 프레임에 다른 패널이 곧바로 켜지면서
+    // BGM을 새로 요청하면(같은 곡이든 다른 곡이든) 그 요청이 우선이라 복귀 안 하고 그대로 이어짐
     void OnDisable()
     {
         if (bgm != null)
-            AudioManager.Instance?.PlayMainGameBGM();
+            AudioManager.Instance?.RequestReturnToMainGameIfUnclaimed();
     }
 }

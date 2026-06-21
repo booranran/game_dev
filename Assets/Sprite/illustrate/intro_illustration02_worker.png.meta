@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c8a1a58ad89b1418d845b95ec1efc254
+guid: 6727518670d0e446f9ec955c300ae9e3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -259746862263957874
-    second: npc03-3_0
+      213: 435279530093437403
+    second: intro_illustration02_worker_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: npc03-3_0
+      name: intro_illustration02_worker_0
       rect:
         serializedVersion: 2
-        x: 90
-        y: 28
-        width: 82
-        height: 204
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e860c3fda91356cf0800000000000000
-      internalID: -259746862263957874
+      spriteID: bd1e7392d6c6a0600800000000000000
+      internalID: 435279530093437403
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      npc03-3_0: -259746862263957874
+      intro_illustration02_worker_0: 435279530093437403
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

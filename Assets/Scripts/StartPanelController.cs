@@ -21,6 +21,9 @@ public class StartPanelController : MonoBehaviour
 
     [Header("3. Intro - 플레이어 등장(IntroImage+character는 통째로 켜짐) + 독백 + 흰색 디밍 + 투두")]
     public GameObject introGroup;
+    public Image introCharacterImage; // 등장하는 캐릭터 일러스트 - 학생/직장인에 따라 교체
+    public Sprite studentIntroCharacter;
+    public Sprite workerIntroCharacter;
     [TextArea] public string studentIntroMonologue;
     [TextArea] public string workerIntroMonologue;
     public TextMeshProUGUI introMonologueText;
@@ -29,6 +32,11 @@ public class StartPanelController : MonoBehaviour
     public float introDimAlpha = 0.6f;
     public float introDimFadeDuration = 0.5f;
     public GameObject introTodo;
+    public TextMeshProUGUI introTodoText;
+    [TextArea] public string studentTodoText;
+    [TextArea] public string workerTodoText;
+    public AudioClip todoSFX;
+    [Range(0f, 1f)] public float todoBGMVolume = 0.4f; // Todo 떠있는 동안 배경음 볼륨
 
     [Header("4. Intro2 - 일러스트 슬라이드 (01·02·03 독백+클릭 / 04+Start 클릭)")]
     public GameObject intro2Group;
@@ -36,17 +44,23 @@ public class StartPanelController : MonoBehaviour
     public TextMeshProUGUI intro2MonologueText;
     public GameObject intro2MonologueBox;
     public GameObject intro2Start;
-    public Sprite illustration01;
+    public Sprite studentIllustration01;
+    public Sprite workerIllustration01;
     [TextArea] public string studentMonologue01;
     [TextArea] public string workerMonologue01;
-    public Sprite illustration02;
+    public Sprite studentIllustration02;
+    public Sprite workerIllustration02;
     [TextArea] public string studentMonologue02;
     [TextArea] public string workerMonologue02;
-    public Sprite illustration03;
+    public Sprite studentIllustration03;
+    public Sprite workerIllustration03;
     [TextArea] public string studentMonologue03;
     [TextArea] public string workerMonologue03;
-    public Sprite illustration04;
+    public Sprite illustration04; // 로고 슬라이드 - 캐릭터 구분 없이 공용
     public float startLogoDelay = 1f; // 일러스트04 뜨고 나서 Start 로고 뜨기까지 지연
+    public float logoBGMFadeOutDuration = 2f; // 일러스트03부터 BGM이 점점 작아지는 시간 (로고 뜰 때쯈 조용해지도록)
+    public AudioClip logoJingleSFX; // Start 로고 등장과 동시에 1회 재생되는 징글
+    public AudioClip gameStartSFX; // 로고에서 continue 눌러서 본게임으로 넘어가는 순간 1회 재생 (징글과는 별개)
 
     [Header("클릭 안내 (TriggerEventController의 continuePrompt와 동일한 구조 - 풀스크린 투명 버튼 OnClick에 OnContinueClicked() 연결 필요)")]
     public GameObject continuePrompt;
@@ -108,6 +122,7 @@ public class StartPanelController : MonoBehaviour
 
         // 2. Intro 노출 - 플레이어 등장 + 독백
         ShowOnly(introGroup);
+        if (introCharacterImage) introCharacterImage.sprite = IsWorker ? workerIntroCharacter : studentIntroCharacter;
         if (introMonologueText) introMonologueText.text = IsWorker ? workerIntroMonologue : studentIntroMonologue;
         if (introMonologueBox) introMonologueBox.SetActive(true);
         yield return FadeImage(fadeOverlay, 1f, 0f, fadeOutDuration);
@@ -119,34 +134,41 @@ public class StartPanelController : MonoBehaviour
         // 3. 흰색 디밍 + 투두 UI
         yield return FadeImage(introDimOverlay, 0f, introDimAlpha, introDimFadeDuration);
         if (introTodo) introTodo.SetActive(true);
+        if (introTodoText) introTodoText.text = IsWorker ? workerTodoText : studentTodoText;
+        AudioManager.Instance?.SetBGMVolume(todoBGMVolume);
+        AudioManager.Instance?.PlaySFX(todoSFX);
         yield return WaitForContinue();
         if (introTodo) introTodo.SetActive(false);
+        AudioManager.Instance?.SetBGMVolume(1f);
 
         // 4. Intro2 - 일러스트 슬라이드
         ShowOnly(intro2Group);
 
-        if (intro2Image) intro2Image.sprite = illustration01;
+        if (intro2Image) intro2Image.sprite = IsWorker ? workerIllustration01 : studentIllustration01;
         if (intro2MonologueText) intro2MonologueText.text = IsWorker ? workerMonologue01 : studentMonologue01;
         if (intro2MonologueBox) intro2MonologueBox.SetActive(true);
         yield return WaitForContinue();
         if (intro2MonologueBox) intro2MonologueBox.SetActive(false);
 
-        if (intro2Image) intro2Image.sprite = illustration02;
+        if (intro2Image) intro2Image.sprite = IsWorker ? workerIllustration02 : studentIllustration02;
         if (intro2MonologueText) intro2MonologueText.text = IsWorker ? workerMonologue02 : studentMonologue02;
         if (intro2MonologueBox) intro2MonologueBox.SetActive(true);
         yield return WaitForContinue();
         if (intro2MonologueBox) intro2MonologueBox.SetActive(false);
 
-        if (intro2Image) intro2Image.sprite = illustration03;
+        if (intro2Image) intro2Image.sprite = IsWorker ? workerIllustration03 : studentIllustration03;
         if (intro2MonologueText) intro2MonologueText.text = IsWorker ? workerMonologue03 : studentMonologue03;
         if (intro2MonologueBox) intro2MonologueBox.SetActive(true);
         yield return WaitForContinue();
         if (intro2MonologueBox) intro2MonologueBox.SetActive(false);
 
         if (intro2Image) intro2Image.sprite = illustration04;
+        AudioManager.Instance?.FadeOutBGM(logoBGMFadeOutDuration); // 04로 넘어온 뒤부터 BGM이 점점 작아짐
         yield return new WaitForSeconds(startLogoDelay);
         if (intro2Start) intro2Start.SetActive(true);
+        AudioManager.Instance?.PlaySFX(logoJingleSFX); // 로고 등장과 동시에 징글 1회 재생
         yield return WaitForContinue();
+        AudioManager.Instance?.PlaySFX(gameStartSFX); // 이 시점의 continue만 효과음 - 공용 버튼이라 다른 단계 클릭엔 안 울리게 코드로 직접 처리
 
         // 5. 최종 암전 → 암전 상태에서 게임 초기화 → 게임 노출
         if (fadeOverlay) fadeOverlay.gameObject.SetActive(true); // 다시 켜서 페이드 보이게

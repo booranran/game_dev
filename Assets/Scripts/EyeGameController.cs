@@ -13,7 +13,6 @@ public class EyeGameController : MonoBehaviour
     public GameObject observePanel;
     public float observeTimeLimit = 5f;
     public float phase1FailDelay = 1.5f;
-    public Color hintColor = new Color(1f, 1f, 0.5f, 1f);
 
     [Header("Phase1 실패 독백 (다음 턴 시작 시 TurnController가 메인 화면에 표시)")]
     [TextArea] public string[] phase1FailMonologues;
@@ -28,6 +27,7 @@ public class EyeGameController : MonoBehaviour
     [Header("Phase 2 - 경쟁 패널")]
     public GameObject competitionPanel;
     public SpriteRenderer competitorRenderer;
+    public int competitorSortingOrder = 2; // 좌석 실루엣(-29)/앉은 NPC보다 항상 앞에 보이게
 
     [Header("경쟁 NPC 위치 (플레이어 기준 오프셋 - NPCManager 양보NPC와 동일한 패턴)")]
     public Transform playerTransform;
@@ -163,16 +163,16 @@ public class EyeGameController : MonoBehaviour
         HighlightCandidates();
     }
 
-    // 후보 좌석들에 힌트 색 입히고, 기존 스프라이트 클릭은 끈 채로 선택 아이콘을 띄움
+    // 후보 좌석들을 강조용 스프라이트로 교체하고, 선택 아이콘을 띄움
     void HighlightCandidates()
     {
         foreach (var seat in candidates)
         {
             var obj = (seat.seatedNPCObject != null) ? seat.seatedNPCObject : seat.silhouette;
-            if (obj != null)
+            if (obj != null && seat.currentHighlightSprite != null)
             {
                 var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
-                if (sr) sr.color = hintColor;
+                if (sr) sr.sprite = seat.currentHighlightSprite;
             }
 
             var icon = SeatManager.Instance.SpawnSeatIcon(seat, 1.1f); // 사람이 앉아있어서 기본 높이보다 더 올림
@@ -268,6 +268,7 @@ public class EyeGameController : MonoBehaviour
         if (competitorRenderer)
         {
             competitorRenderer.enabled = true;
+            competitorRenderer.sortingOrder = competitorSortingOrder; // 주변 좌석 실루엣(-29)보다 항상 앞에 보이게 고정
             competitorRenderer.transform.position = playerTransform != null
                 ? playerTransform.position + competitorStandingOffset
                 : competitorStandingOffset;
@@ -394,10 +395,10 @@ public class EyeGameController : MonoBehaviour
         foreach (var seat in candidates)
         {
             var obj = (seat.seatedNPCObject != null) ? seat.seatedNPCObject : seat.silhouette;
-            if (obj != null)
+            if (obj != null && seat.currentSilhouetteSprite != null)
             {
                 var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
-                if (sr) sr.color = Color.white;
+                if (sr) sr.sprite = seat.currentSilhouetteSprite;
             }
             SeatManager.Instance.RemoveSeatIcon(seat);
         }

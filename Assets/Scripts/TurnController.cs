@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class TurnController : MonoBehaviour
 {
@@ -25,6 +26,10 @@ public class TurnController : MonoBehaviour
 
     [Header("사운드")]
     public AudioClip seatSelectSFX;
+
+    [Header("게임 종료 연출 (남은 턴 0 정상 종료일 때만 - GameOver는 즉시 전환)")]
+    public float exitWalkDistanceY = 2f; // Y축으로 이동할 거리
+    public float exitWalkDuration = 1f;
 
     [Header("References")]
     public HUDManager hudManager;
@@ -402,5 +407,28 @@ public class TurnController : MonoBehaviour
     }
 
     void GoToResult() => resultPanelController.Show(GameManager.Instance.characterType, GameManager.EndingType.GameOver);
-    void GoToResult(GameManager.EndingType ending) => resultPanelController.Show(GameManager.Instance.characterType, ending);
+    void GoToResult(GameManager.EndingType ending) => StartCoroutine(PlayExitWalkThenShowResult(ending));
+
+    // 마지막 턴이 화면에 반영될 틈 없이 바로 ResultPanel이 켜지던 문제 - 앞으로 걸어나가는 연출 하나 끼워넣음
+    IEnumerator PlayExitWalkThenShowResult(GameManager.EndingType ending)
+    {
+        // 마지막 턴이 양보/팔꿈치/JustSat/Phase1/Phase2 같은 특수 포즈로 끝났을 수 있어서
+        // 앉아있었든 아니든, 어떤 포즈였든 상관없이 무조건 평소 서있는 스프라이트로 강제 리셋
+        GameManager.Instance.playerState = GameManager.PlayerState.Standing;
+        characterDisplay.UpdateSprite();
+
+        Transform t = characterDisplay.transform;
+        Vector3 start = t.position;
+        Vector3 end = start + Vector3.down * exitWalkDistanceY;
+        float elapsed = 0f;
+        while (elapsed < exitWalkDuration)
+        {
+            elapsed += Time.deltaTime;
+            t.position = Vector3.Lerp(start, end, elapsed / exitWalkDuration);
+            yield return null;
+        }
+        t.position = end;
+
+        resultPanelController.Show(GameManager.Instance.characterType, ending);
+    }
 }

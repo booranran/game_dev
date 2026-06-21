@@ -796,7 +796,7 @@ Transform:
   m_GameObject: {fileID: 76313673}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.19, y: 0.27, z: 0}
+  m_LocalPosition: {x: 0.3200001, y: 0.27, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2028,6 +2028,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1576959431}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55bea12d178784c318b55b9de62093bf, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &216790116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2490,7 +2502,7 @@ Transform:
   m_GameObject: {fileID: 268480356}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.25, y: 0.30556, z: 0}
+  m_LocalPosition: {x: 7.1799994, y: 0.30556, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2669,6 +2681,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 423448389}
     standingInFrontPosition: {fileID: 310730283}
     silhouette: {fileID: 423448388}
@@ -2677,6 +2691,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 611567636}
     standingInFrontPosition: {fileID: 1059974671}
     silhouette: {fileID: 611567635}
@@ -2685,6 +2701,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 1472719553}
     standingInFrontPosition: {fileID: 80714375}
     silhouette: {fileID: 1472719552}
@@ -2693,6 +2711,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 76313674}
     standingInFrontPosition: {fileID: 1636128582}
     silhouette: {fileID: 76313673}
@@ -2701,6 +2721,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 2029635151}
     standingInFrontPosition: {fileID: 416725604}
     silhouette: {fileID: 2029635150}
@@ -2709,6 +2731,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 475823119}
     standingInFrontPosition: {fileID: 490003885}
     silhouette: {fileID: 475823118}
@@ -2717,6 +2741,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 1747589029}
     standingInFrontPosition: {fileID: 429889038}
     silhouette: {fileID: 1747589028}
@@ -2725,6 +2751,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 1716318537}
     standingInFrontPosition: {fileID: 898204793}
     silhouette: {fileID: 1716318536}
@@ -2733,6 +2761,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 268480357}
     standingInFrontPosition: {fileID: 1669120891}
     silhouette: {fileID: 268480356}
@@ -2741,6 +2771,8 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   - seatPosition: {fileID: 882313442}
     standingInFrontPosition: {fileID: 575987558}
     silhouette: {fileID: 882313441}
@@ -2749,23 +2781,39 @@ MonoBehaviour:
     seatedNPCObject: {fileID: 0}
     spawnedIcon: {fileID: 0}
     index: 0
+    currentSilhouetteSprite: {fileID: 0}
+    currentHighlightSprite: {fileID: 0}
   randomizePlayerSeat: 0
   playerStartSeatIndex: 4
   silhouetteSpritePool:
-  - {fileID: 21300000, guid: 44d6f366100be4c13bc6a9765897d5ed, type: 3}
-  - {fileID: 21300000, guid: 60b43f82ef18e4ef987bd99b0447dcb0, type: 3}
-  - {fileID: 21300000, guid: 3872191326a8942f1b61549d437fa587, type: 3}
-  - {fileID: 21300000, guid: 832fcad99f34d4fac93056d526f89032, type: 3}
-  - {fileID: 21300000, guid: c8a1a58ad89b1418d845b95ec1efc254, type: 3}
-  - {fileID: 21300000, guid: 6703bf36b771b4d008e916bcfcce38e3, type: 3}
-  - {fileID: 21300000, guid: 7a8fb6b0899a448d491506571b175f5b, type: 3}
-  - {fileID: 21300000, guid: 92efb417b1cf64134ab45475b459d7f6, type: 3}
-  - {fileID: 21300000, guid: f1bce30b39fa94e0fb0ec36fbd4270d8, type: 3}
-  - {fileID: 21300000, guid: 9a3d7da6a8ee8495ea43c857511c7357, type: 3}
-  - {fileID: 21300000, guid: 367f78918586140d6825dfcf12ad685b, type: 3}
-  - {fileID: 21300000, guid: 280d053944cca4539ad43b13f485c47d, type: 3}
-  - {fileID: 21300000, guid: 114f704ec248a4024aa583663dcd841d, type: 3}
-  - {fileID: 21300000, guid: a27fbeb24a21f481dba416d4f93ee301, type: 3}
+  - normal: {fileID: 21300000, guid: 44d6f366100be4c13bc6a9765897d5ed, type: 3}
+    highlighted: {fileID: 21300000, guid: 045e7a9f039894000853bee10ea148ea, type: 3}
+  - normal: {fileID: 21300000, guid: 60b43f82ef18e4ef987bd99b0447dcb0, type: 3}
+    highlighted: {fileID: 21300000, guid: ba1ff3b368abc457a8fc421a7a2ab495, type: 3}
+  - normal: {fileID: 21300000, guid: 3872191326a8942f1b61549d437fa587, type: 3}
+    highlighted: {fileID: 21300000, guid: ad0583a4fc6d74b24b9cf624758c9f25, type: 3}
+  - normal: {fileID: 21300000, guid: 832fcad99f34d4fac93056d526f89032, type: 3}
+    highlighted: {fileID: 21300000, guid: bbae4dc57873d4b0c9be9826142a6eb3, type: 3}
+  - normal: {fileID: 21300000, guid: c8a1a58ad89b1418d845b95ec1efc254, type: 3}
+    highlighted: {fileID: 21300000, guid: f1ead0ac9441243ccb68478ba258d900, type: 3}
+  - normal: {fileID: 21300000, guid: 6703bf36b771b4d008e916bcfcce38e3, type: 3}
+    highlighted: {fileID: 21300000, guid: dc4024ea4a93240cfa5aa2a07a8dd300, type: 3}
+  - normal: {fileID: 21300000, guid: 7a8fb6b0899a448d491506571b175f5b, type: 3}
+    highlighted: {fileID: 21300000, guid: 8b24d6034d8e845108dc0c657da24c26, type: 3}
+  - normal: {fileID: 21300000, guid: 92efb417b1cf64134ab45475b459d7f6, type: 3}
+    highlighted: {fileID: 21300000, guid: a45b56efbc44e48a6970b9e656429b73, type: 3}
+  - normal: {fileID: 21300000, guid: f1bce30b39fa94e0fb0ec36fbd4270d8, type: 3}
+    highlighted: {fileID: 21300000, guid: 827b84bf40bc54e88be5131739e76958, type: 3}
+  - normal: {fileID: 21300000, guid: 9a3d7da6a8ee8495ea43c857511c7357, type: 3}
+    highlighted: {fileID: 21300000, guid: f2e7ad8ee08614db29c18a631b80780d, type: 3}
+  - normal: {fileID: 21300000, guid: 367f78918586140d6825dfcf12ad685b, type: 3}
+    highlighted: {fileID: 21300000, guid: b808fc88c4d18464e88a44f324c27bd4, type: 3}
+  - normal: {fileID: 21300000, guid: 280d053944cca4539ad43b13f485c47d, type: 3}
+    highlighted: {fileID: 21300000, guid: c4bf3f51ee27e44b9a2e4a54eab39736, type: 3}
+  - normal: {fileID: 21300000, guid: 114f704ec248a4024aa583663dcd841d, type: 3}
+    highlighted: {fileID: 21300000, guid: 2282ce471556b456c80b183e6a291173, type: 3}
+  - normal: {fileID: 21300000, guid: a27fbeb24a21f481dba416d4f93ee301, type: 3}
+    highlighted: {fileID: 21300000, guid: 3dd2f6428e0814ba18f8dded5e4ecd8e, type: 3}
   selectableIconPrefab: {fileID: 328621318559455568, guid: 6735b2bb11d3640afb9f642400c80d7b, type: 3}
   selectableIconOffsetX: 0
   selectableIconFixedY: 0.8
@@ -2930,7 +2978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &330463221
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4169,7 +4217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a7300e6e3a4614ed6b3710dfca12afea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d87ea87889f28485194e1d7cea2a11ec, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4244,7 +4292,7 @@ Transform:
   m_GameObject: {fileID: 423448388}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.65, y: 0.27, z: 0}
+  m_LocalPosition: {x: -3.52, y: 0.27, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4844,7 +4892,7 @@ Transform:
   m_GameObject: {fileID: 475823118}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.99, y: 0.30556, z: 0}
+  m_LocalPosition: {x: 3.1200001, y: 0.30556, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -4966,7 +5014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3290615274953900433, guid: 1391e1d51686f42768916d867068d4d8, type: 3}
+  m_Sprite: {fileID: -5512910000578121504, guid: 4c1310318fd3a4fd09b27f601c21c18c, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5323,16 +5371,20 @@ MonoBehaviour:
   studentSitting: {fileID: 21300000, guid: 02f28346c678b4c3e8023574dcc0ac04, type: 3}
   studentYielding: {fileID: 21300000, guid: 2dd31cf2738c5447d81251afc6b7fdfb, type: 3}
   studentElbowDefense: {fileID: 21300000, guid: 88d3530771fc9417c89562380309804a, type: 3}
-  studentJustSat: {fileID: 21300000, guid: 02f28346c678b4c3e8023574dcc0ac04, type: 3}
+  studentJustSat: {fileID: 21300000, guid: 76ca4e2f4d60a4e8b84dec06d798ec67, type: 3}
+  studentPhase1: {fileID: 21300000, guid: 32235bbab8a0a456aa43ece4b29b02ff, type: 3}
+  studentPhase2: {fileID: 21300000, guid: 32235bbab8a0a456aa43ece4b29b02ff, type: 3}
   workerStanding: {fileID: 21300000, guid: d87ea87889f28485194e1d7cea2a11ec, type: 3}
   workerSitting: {fileID: 21300000, guid: eb531ffeded7842dba6b8422f55290ba, type: 3}
-  workerYielding: {fileID: 0}
-  workerElbowDefense: {fileID: 0}
-  workerJustSat: {fileID: 0}
+  workerYielding: {fileID: 21300000, guid: f298f210897e54cb783e636b98e8e59d, type: 3}
+  workerElbowDefense: {fileID: 21300000, guid: e0dd68284e4c74370baab9b928641fd7, type: 3}
+  workerJustSat: {fileID: 21300000, guid: 4f11e73878d3e40859cef872c110c8c6, type: 3}
+  workerPhase1: {fileID: 21300000, guid: 890fad36043874a68be792db3c77764e, type: 3}
+  workerPhase2: {fileID: 21300000, guid: 890fad36043874a68be792db3c77764e, type: 3}
   studentStandingPosition: {x: 0, y: -2.4, z: 0}
   studentSittingPosition: {x: -2.57, y: -1.13, z: 0}
-  workerStandingPosition: {x: 0, y: 0, z: 0}
-  workerSittingPosition: {x: 0, y: 0, z: 0}
+  workerStandingPosition: {x: 0, y: -2.4, z: 0}
+  workerSittingPosition: {x: -2.57, y: -1.13, z: 0}
 --- !u!212 &525003303
 SpriteRenderer:
   serializedVersion: 2
@@ -5382,7 +5434,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -19
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 88d3530771fc9417c89562380309804a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 32235bbab8a0a456aa43ece4b29b02ff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5401,7 +5453,7 @@ Transform:
   m_GameObject: {fileID: 525003301}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.35, y: -2.38, z: 0}
+  m_LocalPosition: {x: 7.35, y: -1.8, z: 0}
   m_LocalScale: {x: 0.054999996, y: 0.054999996, z: 0.054999996}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5828,7 +5880,7 @@ Transform:
   m_GameObject: {fileID: 611567635}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.35, y: 0.30556, z: 0}
+  m_LocalPosition: {x: -2.2199998, y: 0.30556, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5919,7 +5971,7 @@ Transform:
   m_GameObject: {fileID: 612956004}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.05, y: 0.27, z: 0}
+  m_LocalPosition: {x: -4.92, y: 0.27, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -6578,6 +6630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 689992162}
   - component: {fileID: 689992163}
+  - component: {fileID: 689992164}
   m_Layer: 5
   m_Name: SelectLineGroup
   m_TagString: Untagged
@@ -6622,6 +6675,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &689992164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689992161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80cd1a95ce874bafa29631532a78ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
+  bgm: {fileID: 8300000, guid: f5767e6d12aaa4ea992813a062eb6491, type: 3}
+  fadeStyle: 0
 --- !u!1 &701184621
 GameObject:
   m_ObjectHideFlags: 0
@@ -7708,7 +7775,7 @@ Transform:
   m_GameObject: {fileID: 882313441}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.68, y: 0.27, z: 0}
+  m_LocalPosition: {x: 8.46, y: 0.27, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8190,6 +8257,8 @@ MonoBehaviour:
   preMinigameMonologueDelay: 3
   postMinigameMonologueDelay: 3
   seatSelectSFX: {fileID: 8300000, guid: 0b4cd236fa7544ef3aa7bb8002520750, type: 3}
+  exitWalkDistanceY: 6
+  exitWalkDuration: 1
   hudManager: {fileID: 987531485}
   characterDisplay: {fileID: 525003302}
   characterMonologueText: {fileID: 2006913000}
@@ -8501,6 +8570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 959253648}
+  - component: {fileID: 959253649}
   m_Layer: 5
   m_Name: Intro
   m_TagString: Untagged
@@ -8533,6 +8603,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -22}
   m_SizeDelta: {x: 1250, y: 1036}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &959253649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959253647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80cd1a95ce874bafa29631532a78ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
+  bgm: {fileID: 8300000, guid: 548029eb85fc6404e9b799c9ce89aaa5, type: 3}
+  fadeStyle: 0
 --- !u!1 &967350131
 GameObject:
   m_ObjectHideFlags: 0
@@ -10126,6 +10210,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1576959431}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55bea12d178784c318b55b9de62093bf, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11812,6 +11908,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1576959431}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55bea12d178784c318b55b9de62093bf, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1279674869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12149,13 +12257,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1337540698}
   - component: {fileID: 1337540699}
+  - component: {fileID: 1337540700}
   m_Layer: 5
   m_Name: SelectCharacterGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1337540698
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12193,6 +12302,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1337540700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337540697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80cd1a95ce874bafa29631532a78ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
+  bgm: {fileID: 8300000, guid: f5767e6d12aaa4ea992813a062eb6491, type: 3}
+  fadeStyle: 0
 --- !u!1 &1365807943
 GameObject:
   m_ObjectHideFlags: 0
@@ -13149,7 +13272,7 @@ MonoBehaviour:
   currentTurn: 0
   MaxTurns: 20
   playerState: 0
-  characterType: 0
+  characterType: 1
   lineType: 0
   debugMode: 1
   debugCharacterType: 0
@@ -13584,7 +13707,7 @@ Transform:
   m_GameObject: {fileID: 1472719552}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0699999, y: 0.30556, z: 0}
+  m_LocalPosition: {x: -0.9399998, y: 0.30556, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -14685,10 +14808,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d59f813168ea4f1996eb0fd2e716456, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EyeGameController
+  characterDisplay: {fileID: 525003302}
   observePanel: {fileID: 2001120707}
   observeTimeLimit: 15
   phase1FailDelay: 1.5
-  hintColor: {r: 1, g: 0.2605207, b: 0, a: 1}
   phase1FailMonologues:
   - "\"\uB0B4\uB9AC\uC2E4 \uC904 \uC54C\uC558\uB294\uB370...\n\uC548\uB9AC\uC2DC\uB124\""
   winMonologues:
@@ -14697,6 +14820,7 @@ MonoBehaviour:
   - "\uC624\uB298 \uB418\uB294\uAC8C \uC5C6\uB124"
   competitionPanel: {fileID: 882426368}
   competitorRenderer: {fileID: 1448497639}
+  competitorSortingOrder: 30
   playerTransform: {fileID: 525003304}
   competitorStandingOffset: {x: -1.8, y: 0, z: 0}
   phase2Duration: 5
@@ -14977,7 +15101,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -257.4558, w: -54.78003}
+  m_margin: {x: -163.5794, y: 0, z: -409.7826, w: -54.78003}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -15596,8 +15720,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 151, y: -69}
-  m_SizeDelta: {x: 300, y: 650}
+  m_AnchoredPosition: {x: 151, y: -57}
+  m_SizeDelta: {x: 300, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1661628442
 MonoBehaviour:
@@ -15650,6 +15774,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1576959431}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 55bea12d178784c318b55b9de62093bf, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -16236,7 +16372,7 @@ Transform:
   m_GameObject: {fileID: 1716318536}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.8, y: 0.30556, z: 0}
+  m_LocalPosition: {x: 5.7299995, y: 0.30556, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -16440,7 +16576,7 @@ Transform:
   m_GameObject: {fileID: 1747589028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.27, y: 0.27, z: 0}
+  m_LocalPosition: {x: 4.4, y: 0.27, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16552,6 +16688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1762610604}
   - component: {fileID: 1762610605}
+  - component: {fileID: 1762610606}
   m_Layer: 5
   m_Name: Intro2
   m_TagString: Untagged
@@ -16594,6 +16731,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1762610606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762610603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80cd1a95ce874bafa29631532a78ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
+  bgm: {fileID: 8300000, guid: 548029eb85fc6404e9b799c9ce89aaa5, type: 3}
+  fadeStyle: 0
 --- !u!1 &1770751621
 GameObject:
   m_ObjectHideFlags: 0
@@ -17253,6 +17404,9 @@ MonoBehaviour:
   selectCharacterGroup: {fileID: 1337540697}
   selectLineGroup: {fileID: 689992161}
   introGroup: {fileID: 959253647}
+  introCharacterImage: {fileID: 478421925}
+  studentIntroCharacter: {fileID: 3290615274953900433, guid: 1391e1d51686f42768916d867068d4d8, type: 3}
+  workerIntroCharacter: {fileID: -5512910000578121504, guid: 4c1310318fd3a4fd09b27f601c21c18c, type: 3}
   studentIntroMonologue: "\"\uD559\uAD50 \uAC00\uC790\""
   workerIntroMonologue: "\"\uD68C\uC0AC \uAC00\uC790\""
   introMonologueText: {fileID: 1776532950}
@@ -17261,22 +17415,33 @@ MonoBehaviour:
   introDimAlpha: 0.6
   introDimFadeDuration: 0
   introTodo: {fileID: 1751882189}
+  introTodoText: {fileID: 1619248402}
+  studentTodoText: "\uBB34\uC0AC\uD788 \uD559\uAD50\uC5D0 \uB3C4\uCC29\uD558\uC790.."
+  workerTodoText: "\uCD5C\uC0C1\uC758 \uCEE8\uB514\uC158\uC73C\uB85C \uCD9C\uADFC\uD558\uC790.."
+  todoSFX: {fileID: 8300000, guid: 8e20605b7f915403fa3c6116ee6b1fe7, type: 3}
+  todoBGMVolume: 0.4
   intro2Group: {fileID: 1762610603}
   intro2Image: {fileID: 73551781}
   intro2MonologueText: {fileID: 1648095174}
   intro2MonologueBox: {fileID: 1429564895}
   intro2Start: {fileID: 1220458897}
-  illustration01: {fileID: -785824550649801789, guid: a39e58949572649d6abf15d5dddb33ab, type: 3}
+  studentIllustration01: {fileID: -785824550649801789, guid: a39e58949572649d6abf15d5dddb33ab, type: 3}
+  workerIllustration01: {fileID: -697403947745485728, guid: d41e87021d4f047d196694be2af30947, type: 3}
   studentMonologue01: "\"\uC544\uD734 \uAC00\uAE30\uC2EB\uC5B4\""
   workerMonologue01: "\"\uC5B4\uC6B0 \uAC00\uAE30 \uC2EB\uC5B4\""
-  illustration02: {fileID: -7766000268442828470, guid: 47b7fac013d9742e9b5bd88af9f3c7c6, type: 3}
+  studentIllustration02: {fileID: -7766000268442828470, guid: 47b7fac013d9742e9b5bd88af9f3c7c6, type: 3}
+  workerIllustration02: {fileID: 435279530093437403, guid: 6727518670d0e446f9ec955c300ae9e3, type: 3}
   studentMonologue02: "\uC800\uBC85\uC800\uBC85..."
   workerMonologue02: "\uC800\uBC85\uC800\uBC85..."
-  illustration03: {fileID: -5164767239028754399, guid: 90fc16b97ce534c63a84bb0c08e73a85, type: 3}
+  studentIllustration03: {fileID: -5164767239028754399, guid: 90fc16b97ce534c63a84bb0c08e73a85, type: 3}
+  workerIllustration03: {fileID: 3525828938959294436, guid: 2c65fdeae235340c4a17d14ec4bd7a9c, type: 3}
   studentMonologue03: "\"\uC549\uC544\uC11C \uAC08 \uC218 \uC788\uC73C\uB824\uB098?\""
   workerMonologue03: "\"\uC0AC\uB78C \uB9CE\uC740\uAC83 \uBD10 \uBBF8\uCE58\uACA0\uB2E4\""
   illustration04: {fileID: -9097523164657020129, guid: 37cbb7d4973a14db89474c4f824adb1f, type: 3}
   startLogoDelay: 1
+  logoBGMFadeOutDuration: 1
+  logoJingleSFX: {fileID: 8300000, guid: c5fb33b10e111445a8e0a81da1c0d59f, type: 3}
+  gameStartSFX: {fileID: 8300000, guid: c4b88430c1aa34b388c29ad4187f6410, type: 3}
   continuePrompt: {fileID: 341513401}
   continuePromptDelay: 2
 --- !u!4 &1817451029
@@ -18965,7 +19130,7 @@ Transform:
   m_GameObject: {fileID: 2029635150}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.49, y: 0.30556, z: 0}
+  m_LocalPosition: {x: 1.6200001, y: 0.30556, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children: []

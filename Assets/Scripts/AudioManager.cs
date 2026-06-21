@@ -27,6 +27,10 @@ public class AudioManager : MonoBehaviour
     private AudioSource activeSource;
     private AudioSource inactiveSource;
     private Coroutine fadeRoutine;
+    private AudioClip currentClip; // 페이드 완료 전에도 "지금 재생 요청된 클립"을 즉시 반영 (가드/claim 체크용)
+
+    // PlayBGM이 호출될 때마다(가드 통과 여부 상관없이) 올라감 - PanelBGMPlayer가 "내가 꺼진 뒤에 누가 BGM을 새로 요청했는지" 확인하는 용도
+    public int RequestVersion { get; private set; }
 
     void Awake()
     {
@@ -54,10 +58,27 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMainGameBGM() => PlayBGM(mainGameBGM, mainGameFadeStyle);
 
+    // 패널이 꺼질 때 호출 - 한 프레임 기다려서 그 사이 아무도 PlayBGM/FadeOutBGM을 새로 안 불렀으면(=다른 패널이 안 가져갔으면)만 본게임 브금으로 복귀
+    // (AudioManager는 항상 켜져있는 오브젝트라 여기서 코루틴을 돌려야 안전 - 꺼지는 패널 쪽에서 직접 코루틴 돌리면 한 프레임도 못 기다리고 같이 멈춰버림)
+    public void RequestReturnToMainGameIfUnclaimed()
+    {
+        StartCoroutine(DoReturnIfUnclaimed());
+    }
+
+    IEnumerator DoReturnIfUnclaimed()
+    {
+        int versionAtCall = RequestVersion;
+        yield return null;
+        if (RequestVersion == versionAtCall)
+            PlayMainGameBGM();
+    }
+
     // 패널/전환마다 원하는 페이드 방식을 직접 골라서 호출하면 됨
     public void PlayBGM(AudioClip clip, FadeStyle style)
     {
-        if (clip == null || activeSource.clip == clip) return;
+        RequestVersion++; // 가드를 통과하든 말든 "요청이 들어왔다"는 사실 자체는 항상 기록
+        if (clip == null || currentClip == clip) return;
+        currentClip = clip;
 
         if (fadeRoutine != null) StopCoroutine(fadeRoutine);
 
@@ -89,6 +110,37 @@ public class AudioManager : MonoBehaviour
     {
         if (bgmSourceA != null) bgmSourceA.mute = duck;
         if (bgmSourceB != null) bgmSourceB.mute = duck;
+    }
+
+    // DuckBGM은 완전 무음이라 다름 - Todo처럼 "완전히 안 들리는 게 아니라 살짝만 줄이고 싶을 때" 직접 볼륨 지정
+    // (진행 중인 페이드가 없을 때 쓰는 용도 - 페이드 코루틴이 매 프레임 볼륨을 덮어쓰는 중이면 같이 쓰지 말 것)
+    public void SetBGMVolume(float volume)
+    {
+        if (bgmSourceA != null) bgmSourceA.volume = volume;
+        if (bgmSourceB != null) bgmSourceB.volume = volume;
+    }
+
+    // 다른 클립으로 안 바꾸고 그냥 지금 BGM만 조용히 - 로고 등장처럼 "음악이 잦아드는" 연출용
+    public void FadeOutBGM(float duration)
+    {
+        RequestVersion++;
+        currentClip = null; // 다음에 어떤 클립이 와도(같은 클립이어도) 새로 재생되게
+        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+        fadeRoutine = StartCoroutine(DoFadeOut(duration));
+    }
+
+    IEnumerator DoFadeOut(float duration)
+    {
+        float fromVolume = activeSource.volume;
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            activeSource.volume = Mathf.Lerp(fromVolume, 0f, t / duration);
+            yield return null;
+        }
+        activeSource.Stop();
+        activeSource.volume = 1f; // 다음에 다시 쓸 때를 위해 원복
     }
 
     IEnumerator DoCrossfade(AudioClip clip)

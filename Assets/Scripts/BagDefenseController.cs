@@ -9,7 +9,7 @@ using System.Collections.Generic;
 public class BagDefenseController : MonoBehaviour
 {
     public static BagDefenseController Instance;
-    public static event Action<int, int, bool> OnBagGameEnd; // (conditionDamage, healthDamage, won)
+    public static event Action<int, int> OnBagGameEnd; // (conditionDamage, healthDamage)
 
     [Header("UI 참조")]
     public GameObject bagDefensePanel;
@@ -50,11 +50,12 @@ public class BagDefenseController : MonoBehaviour
     float MinSpawnInterval => IsWorker ? workerMinSpawnInterval : studentMinSpawnInterval;
     float MaxSpawnInterval => IsWorker ? workerMaxSpawnInterval : studentMaxSpawnInterval;
 
-    [Header("등급 기준 (히트율 %)")]
-    public float gradeS = 90f;
-    public float gradeA = 70f;
-    public float gradeB = 50f;
-    public float gradeC = 30f;
+    [Header("등급 기준 (히트율 % - 5단계, S는 100이라 풀콤보여야만 S)")]
+    public float gradeS = 100f;
+    public float gradeA = 90f;
+    public float gradeB = 70f;
+    public float gradeC = 50f;
+    public float gradeD = 30f;
 
     [Header("등급별 체력 데미지 (항상 마이너스, 잘할수록 적게 깎임)")]
     public int healthDamageS = -2;
@@ -70,10 +71,24 @@ public class BagDefenseController : MonoBehaviour
     public int conditionDamageC = -2;
     public int conditionDamageD = -3;
 
-    [Header("독백 (TurnController가 메인 화면에 표시 - 턴 전환 분리용)")]
+    [Header("독백 (등급별 5종 - TurnController가 메인 화면에 표시, 턴 전환 분리용)")]
     [TextArea] public string[] startMonologues;
-    [TextArea] public string[] winMonologues;
-    [TextArea] public string[] loseMonologues;
+    [TextArea] public string[] sMonologues;
+    [TextArea] public string[] aMonologues;
+    [TextArea] public string[] bMonologues;
+    [TextArea] public string[] cMonologues;
+    [TextArea] public string[] dMonologues;
+
+    [Header("노트 히트/미스 효과음")]
+    public AudioClip noteHitSFX;
+    public AudioClip noteMissSFX;
+
+    [Header("등급별 결과 효과음 (ResultText가 떠있는 동안 재생 - 효과음 끝나야 패널 닫힘)")]
+    public AudioClip resultSSFX;
+    public AudioClip resultASFX;
+    public AudioClip resultBSFX;
+    public AudioClip resultCSFX;
+    public AudioClip resultDSFX;
 
     private float gameTimer;
     private bool isPlaying;
@@ -81,7 +96,7 @@ public class BagDefenseController : MonoBehaviour
     private int hitNotes;
     private int _pendingConditionDamage;
     private int _pendingHealthDamage;
-    private bool _pendingWon;
+    private string _pendingGrade;
     private float hitZoneY;
     private float hitZoneTop;
     private float hitZoneBottom;
@@ -94,7 +109,19 @@ public class BagDefenseController : MonoBehaviour
     }
 
     public string GetStartLine() => PickLine(startMonologues);
-    public string GetEndLine(bool won) => PickLine(won ? winMonologues : loseMonologues);
+    public string GetEndLine() => PickLine(GetMonologuesForGrade(_pendingGrade));
+
+    string[] GetMonologuesForGrade(string grade)
+    {
+        switch (grade)
+        {
+            case "S": return sMonologues;
+            case "A": return aMonologues;
+            case "B": return bMonologues;
+            case "C": return cMonologues;
+            default: return dMonologues;
+        }
+    }
 
     string PickLine(string[] lines)
     {
@@ -205,6 +232,7 @@ public class BagDefenseController : MonoBehaviour
             hitNotes++;
             activeNotes.Remove(closest);
             Destroy(closest.gameObject);
+            AudioManager.Instance?.PlaySFX(noteHitSFX);
             Debug.Log($"[가방] 히트 레인{lane} | {hitNotes}/{totalNotes}");
         }
     }
@@ -213,6 +241,7 @@ public class BagDefenseController : MonoBehaviour
     {
         activeNotes.Remove(note);
         Destroy(note.gameObject);
+        AudioManager.Instance?.PlaySFX(noteMissSFX);
         Debug.Log($"[가방] 미스 레인{note.lane} | {hitNotes}/{totalNotes}");
     }
 
@@ -254,21 +283,40 @@ public class BagDefenseController : MonoBehaviour
         activeNotes.Clear();
 
         float hitRate = totalNotes > 0 ? (float)hitNotes / totalNotes * 100f : 0f;
-        _pendingConditionDamage = GetConditionDamage(hitRate);
-        _pendingHealthDamage = GetHealthDamage(hitRate);
-        _pendingWon = hitRate >= gradeB; // 등급 B 이상이면 성공 판정 (독백 선택용 - 컨디션은 등급과 무관하게 항상 깎임)
-        string grade = GetGradeString(hitRate);
+        _pendingGrade = GetGradeString(hitRate);
+        _pendingConditionDamage = GetConditionDamage(_pendingGrade);
+        _pendingHealthDamage = GetHealthDamage(_pendingGrade);
 
-        if (resultText) resultText.text = $"등급 {grade}\n{hitNotes} / {totalNotes} 방어";
-        Debug.Log($"[가방] 종료 | 히트율: {hitRate:F1}% | 등급: {grade} | 컨디션: {_pendingConditionDamage} | 체력: {_pendingHealthDamage}");
+        if (resultText) resultText.text = $"등급 {_pendingGrade}\n{hitNotes} / {totalNotes} 방어";
+        Debug.Log($"[가방] 종료 | 히트율: {hitRate:F1}% | 등급: {_pendingGrade} | 컨디션: {_pendingConditionDamage} | 체력: {_pendingHealthDamage}");
 
-        Invoke(nameof(EndGameDelayed), 1.5f);
+        StartCoroutine(ShowResultThenEnd());
+    }
+
+    // 결과 효과음이 재생되는 동안 패널 BGM은 잠깐 음소거 - 효과음이 끝나야 패널이 닫힘 (ElbowGameController와 동일한 연출)
+    IEnumerator ShowResultThenEnd()
+    {
+        AudioClip sfx = GetResultSFX(_pendingGrade);
+        AudioManager.Instance?.DuckBGM(true);
+
+        if (sfx != null)
+        {
+            AudioManager.Instance?.PlaySFX(sfx);
+            yield return new WaitForSeconds(sfx.length);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.5f); // 효과음 없으면 기존처럼 1.5초
+        }
+
+        AudioManager.Instance?.DuckBGM(false);
+        EndGameDelayed();
     }
 
     void EndGameDelayed()
     {
         bagDefensePanel.SetActive(false);
-        OnBagGameEnd?.Invoke(_pendingConditionDamage, _pendingHealthDamage, _pendingWon);
+        OnBagGameEnd?.Invoke(_pendingConditionDamage, _pendingHealthDamage);
     }
 
     string GetGradeString(float hitRate)
@@ -280,21 +328,39 @@ public class BagDefenseController : MonoBehaviour
         return "D";
     }
 
-    int GetConditionDamage(float hitRate)
+    int GetConditionDamage(string grade)
     {
-        if (hitRate >= gradeS) return conditionDamageS;
-        if (hitRate >= gradeA) return conditionDamageA;
-        if (hitRate >= gradeB) return conditionDamageB;
-        if (hitRate >= gradeC) return conditionDamageC;
-        return conditionDamageD;
+        switch (grade)
+        {
+            case "S": return conditionDamageS;
+            case "A": return conditionDamageA;
+            case "B": return conditionDamageB;
+            case "C": return conditionDamageC;
+            default: return conditionDamageD;
+        }
     }
 
-    int GetHealthDamage(float hitRate)
+    int GetHealthDamage(string grade)
     {
-        if (hitRate >= gradeS) return healthDamageS;
-        if (hitRate >= gradeA) return healthDamageA;
-        if (hitRate >= gradeB) return healthDamageB;
-        if (hitRate >= gradeC) return healthDamageC;
-        return healthDamageD;
+        switch (grade)
+        {
+            case "S": return healthDamageS;
+            case "A": return healthDamageA;
+            case "B": return healthDamageB;
+            case "C": return healthDamageC;
+            default: return healthDamageD;
+        }
+    }
+
+    AudioClip GetResultSFX(string grade)
+    {
+        switch (grade)
+        {
+            case "S": return resultSSFX;
+            case "A": return resultASFX;
+            case "B": return resultBSFX;
+            case "C": return resultCSFX;
+            default: return resultDSFX;
+        }
     }
 }

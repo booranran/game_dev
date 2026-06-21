@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 using System;
+using System.Collections;
 
 public class ElbowGameController : MonoBehaviour
 {
@@ -44,6 +45,10 @@ public class ElbowGameController : MonoBehaviour
     [TextArea] public string[] startMonologues;
     [TextArea] public string[] winMonologues;
     [TextArea] public string[] loseMonologues;
+
+    [Header("라운드 결과 효과음 (ResultText가 떠있는 동안 재생 - 효과음 끝나야 다음으로 넘어감)")]
+    public AudioClip roundWinSFX;
+    public AudioClip roundLoseSFX;
 
     private int currentRound;
     private int playerWins;
@@ -138,10 +143,32 @@ public class ElbowGameController : MonoBehaviour
         Debug.Log($"[팔꿈치] 라운드 {currentRound + 1} → {(roundWon ? "성공" : "실패")} (게이지: {gaugeValue:F2}) | 누적 승: {playerWins}");
 
         currentRound++;
-        if (currentRound >= 3)
-            Invoke(nameof(EndGameDelayed), 1f);
+        StartCoroutine(ShowResultThenContinue(roundWon));
+    }
+
+    // 결과 효과음이 재생되는 동안 패널 BGM은 잠깐 음소거 - 효과음이 끝나야 ResultText도 같이 사라지고 다음으로 넘어감
+    IEnumerator ShowResultThenContinue(bool roundWon)
+    {
+        AudioClip sfx = roundWon ? roundWinSFX : roundLoseSFX;
+        AudioManager.Instance?.DuckBGM(true);
+
+        if (sfx != null)
+        {
+            AudioManager.Instance?.PlaySFX(sfx);
+            yield return new WaitForSeconds(sfx.length);
+        }
         else
-            Invoke(nameof(StartRound), 1f);
+        {
+            yield return new WaitForSeconds(1f); // 효과음 없으면 기존처럼 1초
+        }
+
+        AudioManager.Instance?.DuckBGM(false);
+        if (resultText) resultText.text = "";
+
+        if (currentRound >= 3)
+            EndGameDelayed();
+        else
+            StartRound();
     }
 
     public void ForceEnd()
@@ -149,6 +176,7 @@ public class ElbowGameController : MonoBehaviour
         isPlaying = false;
         CancelInvoke();
         StopAllCoroutines();
+        AudioManager.Instance?.DuckBGM(false); // 결과 효과음 도중 강제 종료돼도 BGM 음소거 상태로 안 남게
         elbowGamePanel.SetActive(false);
         Debug.Log("[팔꿈치] 강제 종료");
     }

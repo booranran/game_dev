@@ -15,6 +15,7 @@ public class TriggerEventController : MonoBehaviour
         public Sprite illustration;   // 컷씬 패널 일러스트
         [TextArea] public string dialogue;
         public int conditionDelta; // 양수면 컨디션 호전, 음수면 악화
+        [TextArea] public string postMonologue; // 컷씬 닫힌 후 메인 화면에서 보여줄 후속 독백 (턴 전환 전 한 박자 쉬어가는 용도)
     }
 
     [Header("UI 참조")]
@@ -29,6 +30,7 @@ public class TriggerEventController : MonoBehaviour
 
     private bool[] used;
     private int currentIndex = -1;
+    private string _pendingPostMonologue;
 
     void Awake()
     {
@@ -84,9 +86,14 @@ public class TriggerEventController : MonoBehaviour
         CancelInvoke(nameof(ShowContinuePrompt));
 
         if (currentIndex >= 0 && currentIndex < events.Length)
+        {
             GameManager.Instance.ChangeCondition(events[currentIndex].conditionDelta);
+            _pendingPostMonologue = events[currentIndex].postMonologue;
+        }
 
         triggerPanel.SetActive(false);
         currentIndex = -1;
     }
+
+    public string GetPostMonologue() => _pendingPostMonologue;
 }

@@ -23,6 +23,9 @@ public class TurnController : MonoBehaviour
     public float preMinigameMonologueDelay = 1.5f;
     public float postMinigameMonologueDelay = 1.5f;
 
+    [Header("사운드")]
+    public AudioClip seatSelectSFX;
+
     [Header("References")]
     public HUDManager hudManager;
     public CharacterDisplay characterDisplay;
@@ -223,6 +226,7 @@ public class TurnController : MonoBehaviour
     public void OnOpenSeatSelected(SeatManager.SeatSlot seat)
     {
         Debug.Log($"[TurnController] OnOpenSeatSelected 호출 → index {seat.index}");
+        AudioManager.Instance?.PlaySFX(seatSelectSFX);
         SeatManager.Instance.SelectOpenSeat(seat);
         SeatManager.Instance.DeactivateAllOpenSeatIcons(); // 남은 빈자리 아이콘도 중복 선택 못 하게 정리
         emptySeatPanel.SetActive(false);
@@ -361,7 +365,7 @@ public class TurnController : MonoBehaviour
         ShowPostMinigameMonologue(ElbowGameController.Instance.GetEndLine(playerWon));
     }
 
-    void OnBagGameResult(int conditionDamage, int healthDamage, bool won)
+    void OnBagGameResult(int conditionDamage, int healthDamage)
     {
         // 체력은 컨디션에 따라 배율 적용, 컨디션 자체는 등급과 무관하게 항상 깎임(서서 방어한 피로)
         float multiplier = GameManager.Instance.GetConditionDamageMultiplier();
@@ -370,14 +374,14 @@ public class TurnController : MonoBehaviour
         GameManager.Instance.ChangeHealth(scaledHealthDamage);
         GameManager.Instance.ChangeCondition(conditionDamage);
         hudManager.UpdateHUD();
-        ShowPostMinigameMonologue(BagDefenseController.Instance.GetEndLine(won));
+        ShowPostMinigameMonologue(BagDefenseController.Instance.GetEndLine());
     }
 
     public void OnTriggerContinueButton()
     {
         TriggerEventController.Instance.ResolveCurrent();
         hudManager.UpdateHUD();
-        AdvanceTurn();
+        ShowPostMinigameMonologue(TriggerEventController.Instance.GetPostMonologue());
     }
 
     public void AdvanceTurn()

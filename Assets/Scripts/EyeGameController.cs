@@ -5,6 +5,9 @@ public class EyeGameController : MonoBehaviour
 {
     public static EyeGameController Instance;
 
+    [Header("참조")]
+    public CharacterDisplay characterDisplay; // Phase1/Phase2 중 플레이어 포즈 표시용
+
     // ── Phase 1: 관찰 ─────────────────────────────────
     [Header("Phase 1 - 관찰 패널")]
     public GameObject observePanel;
@@ -134,6 +137,7 @@ public class EyeGameController : MonoBehaviour
         observeTimer = observeTimeLimit;
         isObserving = true;
         observePanel.SetActive(true);
+        characterDisplay?.UpdateSprite(CharacterDisplay.PoseOverride.Phase1);
 
         Debug.Log($"[EyeGame] Phase1 후보: {string.Join(", ", System.Array.ConvertAll(candidates, c => c.index.ToString()))} | 정답: {candidates[correctIndex].index}");
 
@@ -260,6 +264,7 @@ public class EyeGameController : MonoBehaviour
         isCompeting = true;
         Debug.Log($"[Phase2] 시작 | NPC: {currentCompetitor} | 세그먼트 수: {segments.Length} | competitionPanel: {competitionPanel != null} | competitorRenderer: {competitorRenderer != null}");
         competitionPanel.SetActive(true);
+        characterDisplay?.UpdateSprite(CharacterDisplay.PoseOverride.Phase2);
         if (competitorRenderer)
         {
             competitorRenderer.enabled = true;

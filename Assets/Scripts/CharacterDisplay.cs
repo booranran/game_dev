@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CharacterDisplay : MonoBehaviour
 {
-    public enum PoseOverride { None, Yielding, ElbowDefense, JustSat }
+    public enum PoseOverride { None, Yielding, ElbowDefense, JustSat, Phase1, Phase2 }
 
     [Header("Student Sprites")]
     public Sprite studentStanding;
@@ -10,6 +10,8 @@ public class CharacterDisplay : MonoBehaviour
     public Sprite studentYielding; // 양보하는 순간(이번 턴)만 잠깐 표시되는 포즈 (서있을 때)
     public Sprite studentElbowDefense; // 팔꿈치 게임 중(앉은 채로) 표시되는 포즈
     public Sprite studentJustSat; // 눈치게임 승리로 막 앉은 그 턴에만 표시 (다음 턴부터 평소 앉은 포즈로)
+    public Sprite studentPhase1; // 눈치게임 Phase1(관찰) 중 표시 (서있을 때) - 다음 턴부터 평소 서있는 포즈로
+    public Sprite studentPhase2; // 눈치게임 Phase2(경쟁) 중 표시 (서있을 때) - 다음 턴부터 평소 서있는 포즈로
 
     [Header("Worker Sprites")]
     public Sprite workerStanding;
@@ -17,6 +19,8 @@ public class CharacterDisplay : MonoBehaviour
     public Sprite workerYielding;
     public Sprite workerElbowDefense;
     public Sprite workerJustSat;
+    public Sprite workerPhase1;
+    public Sprite workerPhase2;
 
     [Header("Student Positions")]
     public Vector3 studentStandingPosition;
@@ -59,11 +63,11 @@ public class CharacterDisplay : MonoBehaviour
         if (gm.characterType == GameManager.CharacterType.Student)
             spriteRenderer.sprite = isSitting
                 ? (pose == PoseOverride.ElbowDefense ? studentElbowDefense : pose == PoseOverride.JustSat ? studentJustSat : studentSitting)
-                : (pose == PoseOverride.Yielding ? studentYielding : studentStanding);
+                : (pose == PoseOverride.Yielding ? studentYielding : pose == PoseOverride.Phase1 ? studentPhase1 : pose == PoseOverride.Phase2 ? studentPhase2 : studentStanding);
         else
             spriteRenderer.sprite = isSitting
                 ? (pose == PoseOverride.ElbowDefense ? workerElbowDefense : pose == PoseOverride.JustSat ? workerJustSat : workerSitting)
-                : (pose == PoseOverride.Yielding ? workerYielding : workerStanding);
+                : (pose == PoseOverride.Yielding ? workerYielding : pose == PoseOverride.Phase1 ? workerPhase1 : pose == PoseOverride.Phase2 ? workerPhase2 : workerStanding);
 
         if (isSitting)
         {

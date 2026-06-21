@@ -28,6 +28,8 @@ public class NPCManager : MonoBehaviour
     [Header("NPC 표시")]
     public SpriteRenderer npcSpriteRenderer;
     public TextMeshProUGUI npcDialogueText;
+    public RectTransform npcDialogueBox; // 말풍선 박스 (npcDialogueText의 부모) - NPC 월드 위치를 따라다님
+    public Vector2 dialogueBoxScreenOffset = new Vector2(0f, 100f); // NPC 머리 위로 띄울 화면 픽셀 오프셋
 
     [Header("앉은 NPC 설정")]
     public int seatedNPCSortingOrder = -29;
@@ -78,11 +80,25 @@ public class NPCManager : MonoBehaviour
             npcSpriteRenderer.transform.localScale = Vector3.one * scale;
         }
         if (npcDialogueText) npcDialogueText.text = dialogue;
+        UpdateDialogueBoxPosition();
     }
 
     Vector3 GetNpcStandingPosition()
     {
         return playerTransform != null ? playerTransform.position + npcStandingOffset : npcStandingOffset;
+    }
+
+    // 말풍선 박스를 NPC의 현재 월드 위치(머리 위)로 이동 - Screen Space 캔버스라 World→Screen→로컬 변환 필요
+    void UpdateDialogueBoxPosition()
+    {
+        if (npcDialogueBox == null || npcSpriteRenderer == null || Camera.main == null) return;
+
+        var parentRect = npcDialogueBox.parent as RectTransform;
+        if (parentRect == null) return;
+
+        Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, npcSpriteRenderer.transform.position);
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, null, out Vector2 localPoint))
+            npcDialogueBox.anchoredPosition = localPoint + dialogueBoxScreenOffset;
     }
 
     // 양보NPC 이벤트 등장 시 - 서있는 미리보기 + 평소 대사
@@ -97,6 +113,7 @@ public class NPCManager : MonoBehaviour
             npcSpriteRenderer.transform.position = GetNpcStandingPosition();
             npcSpriteRenderer.transform.localScale = Vector3.one * data.scale;
         }
+        UpdateDialogueBoxPosition();
 
         if (npcDialogueText) npcDialogueText.text = data.requestDialogue;
     }

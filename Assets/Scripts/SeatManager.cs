@@ -301,6 +301,9 @@ public class SeatManager : MonoBehaviour
             seat.seatedNPCObject = null;
         }
         seat.isOccupied = false;
+        // 특수석은 일반 실루엣 풀 소속이 아니므로 stale 참조가 남아있을 수 없게 항상 비워둠
+        seat.currentSilhouetteSprite = null;
+        seat.currentHighlightSprite = null;
 
         if (UnityEngine.Random.value > specialSeatFillChance) return; // 확률 미달 - 빈자리로 유지
 

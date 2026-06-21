@@ -143,6 +143,10 @@ public class NPCManager : MonoBehaviour
         obj.transform.localScale = Vector3.one * data.scale;
         SpriteRenderer sr = obj.AddComponent<SpriteRenderer>();
         sr.sprite = data.sittingSprite;
+        // 이 좌석은 더 이상 "일반 실루엣 풀" 소속이 아니므로 stale한 강조/평소 스프라이트 참조를 지움
+        // (안 지우면 Phase1 후보 강조 표시가 엉뚱하게 이 값으로 덮어씌워버림 - 이 NPC가 새로 들어왔다는 걸 모르고 예전 값을 그대로 씀)
+        seat.currentSilhouetteSprite = null;
+        seat.currentHighlightSprite = null;
         sr.sortingOrder = seatedNPCSortingOrder;
         seatedNPCObjects.Add(obj);
         seat.seatedNPCObject = obj;

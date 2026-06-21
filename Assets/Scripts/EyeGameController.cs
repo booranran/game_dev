@@ -386,6 +386,9 @@ public class EyeGameController : MonoBehaviour
         sr.sprite = initialSprite; // 막 앉은 포즈 - 다음 턴 시작 시 TurnController가 seatedSprite로 교체
         sr.sortingOrder = -29;
         seat.seatedNPCObject = go;
+        // 이 좌석은 더 이상 일반 실루엣 풀 소속이 아니므로 stale 참조 제거 (Phase1 강조 표시 오작동 방지)
+        seat.currentSilhouetteSprite = null;
+        seat.currentHighlightSprite = null;
     }
 
     // 경쟁에서 진 다음 턴, TurnController가 해당 NPC의 "정착 포즈"로 교체할 때 사용

@@ -186,6 +186,11 @@ public class GameManager : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth + delta, 0, maxHealth);
     }
 
+    public void ChangeConsideration(float delta)
+    {
+        consideration = Mathf.Clamp(consideration + delta, 0f, 100f);
+    }
+
     EndingType DetermineEnding()
     {
         float healthPercent = (float)currentHealth / maxHealth * 100f;

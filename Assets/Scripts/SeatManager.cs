@@ -6,16 +6,51 @@ public class SeatManager : MonoBehaviour
 {
     public static SeatManager Instance;
 
+    public enum SeatType { Normal, PregnantSeat, ElderlySeat }
+
     [Serializable]
     public class SeatSlot
     {
         public Transform seatPosition;
         public Transform standingInFrontPosition;
         public GameObject silhouette;
+        public SeatType seatType = SeatType.Normal;
         [HideInInspector] public bool isOccupied = true;
         [HideInInspector] public GameObject seatedNPCObject;
         [HideInInspector] public GameObject spawnedIcon; // 동적으로 생성된 선택 아이콘 인스턴스
         [HideInInspector] public int index;
+    }
+
+    // 특수석 타입이 전담하는 NPC 타입 (배려점수 페널티 매칭, 좌석 채움 시 사용)
+    public static EventManager.NPCType? GetMatchingNPCType(SeatType type)
+    {
+        switch (type)
+        {
+            case SeatType.PregnantSeat: return EventManager.NPCType.Pregnant;
+            case SeatType.ElderlySeat: return EventManager.NPCType.Elderly;
+            default: return null;
+        }
+    }
+
+    // 해당 타입의 특수석이 (하나 이상 있다면) 전부 채워져있는지 - 양보NPC 타입 편향에 사용
+    public bool IsSpecialSeatTypeFull(SeatType type)
+    {
+        bool foundAny = false;
+        foreach (var seat in seats)
+        {
+            if (seat.seatType != type) continue;
+            foundAny = true;
+            if (!seat.isOccupied) return false;
+        }
+        return foundAny;
+    }
+
+    // 해당 타입의 특수석이 씬에 하나라도 존재하는지 (없으면 "채워짐" 제약 자체가 의미 없음)
+    public bool HasSeatType(SeatType type)
+    {
+        foreach (var seat in seats)
+            if (seat.seatType == type) return true;
+        return false;
     }
 
     public SeatSlot[] seats;
@@ -34,6 +69,35 @@ public class SeatManager : MonoBehaviour
     public Vector2 selectableIconColliderSize = new Vector2(2.8f, 5f); // 기존 프리팹에 박혀있던 값 그대로 이식
     public Vector2 selectableIconColliderOffset = new Vector2(-0.1f, -1.8f);
 
+    [Header("특수석 배려점수 페널티 (앉는 순간 1회 적용 / 해당 NPC 양보 무시 시 추가 적용)")]
+    public float pregnantSeatBasePenalty = -15f;
+    public float pregnantSeatIgnoreExtraPenalty = -10f; // 무시 시 기본+추가 = -25
+    public float elderlySeatBasePenalty = -8f;
+    public float elderlySeatIgnoreExtraPenalty = -7f; // 무시 시 기본+추가 = -15
+
+    [Header("특수석 채움 설정 (해당 NPC 타입만 채워지고, 일반 좌석보다 채움 확률이 낮음)")]
+    [Range(0f, 1f)] public float specialSeatFillChance = 0.4f;
+
+    public float GetSeatBasePenalty(SeatType type)
+    {
+        switch (type)
+        {
+            case SeatType.PregnantSeat: return pregnantSeatBasePenalty;
+            case SeatType.ElderlySeat: return elderlySeatBasePenalty;
+            default: return 0f;
+        }
+    }
+
+    public float GetSeatIgnoreExtraPenalty(SeatType type)
+    {
+        switch (type)
+        {
+            case SeatType.PregnantSeat: return pregnantSeatIgnoreExtraPenalty;
+            case SeatType.ElderlySeat: return elderlySeatIgnoreExtraPenalty;
+            default: return 0f;
+        }
+    }
+
     public SeatSlot currentEmptySeat { get; private set; }
     public SeatSlot playerCurrentSeat { get; private set; }
     public List<SeatSlot> openSeats { get; } = new List<SeatSlot>(); // 선택 대기 중인 빈자리들 (1개 이상)
@@ -49,11 +113,20 @@ public class SeatManager : MonoBehaviour
         {
             seats[i].index = i;
             seats[i].isOccupied = true;
-            SetupSeatClickDetection(seats[i]);
         }
     }
 
-    // 게임 시작 시 풀에서 중복 없이 랜덤하게 뽑아서 좌석마다 다른 스프라이트로 배정
+    // NPCManager.Instance 보장을 위해 모든 Awake() 이후로 미룸 (특수석 초기 상태 채우기)
+    void Start()
+    {
+        foreach (var seat in seats)
+        {
+            if (seat.seatType != SeatType.Normal)
+                FillSpecialSeat(seat);
+        }
+    }
+
+    // 게임 시작 시 풀에서 중복 없이 랜덤하게 뽑아서 좌석마다 다른 스프라이트로 배정 (특수석은 제외 - Start()에서 따로 채워짐)
     void AssignRandomSilhouetteSprites()
     {
         if (silhouetteSpritePool == null || silhouetteSpritePool.Length == 0) return;
@@ -61,6 +134,7 @@ public class SeatManager : MonoBehaviour
         var pool = new List<Sprite>(silhouetteSpritePool);
         foreach (var seat in seats)
         {
+            if (seat.seatType != SeatType.Normal) continue;
             if (seat.silhouette == null || pool.Count == 0) continue;
             var sr = seat.silhouette.GetComponentInChildren<SpriteRenderer>(true);
             if (sr == null) continue;
@@ -69,20 +143,6 @@ public class SeatManager : MonoBehaviour
             sr.sprite = pool[r];
             pool.RemoveAt(r);
         }
-    }
-
-    public void SetupSeatClickDetection(SeatSlot seat)
-    {
-        var obj = seat.silhouette ?? seat.seatedNPCObject;
-        if (obj == null) return;
-
-        if (obj.GetComponent<Collider2D>() == null)
-            obj.AddComponent<BoxCollider2D>();
-
-        var detector = obj.GetComponent<SeatClickDetector>();
-        if (detector == null)
-            detector = obj.AddComponent<SeatClickDetector>();
-        detector.seat = seat;
     }
 
     public void HidePlayerSeat()
@@ -94,6 +154,11 @@ public class SeatManager : MonoBehaviour
         var slot = seats[playerStartSeatIndex];
         slot.isOccupied = false;
         if (slot.silhouette) slot.silhouette.SetActive(false);
+        if (slot.seatedNPCObject) // 특수석 Start() 초기화와 순서가 겹쳐도 안전하게 - 그 자리에 NPC가 먼저 채워져있었다면 치움
+        {
+            Destroy(slot.seatedNPCObject);
+            slot.seatedNPCObject = null;
+        }
         playerCurrentSeat = slot;
         Debug.Log($"[SeatManager] 플레이어 시작 자리 숨김 → index {playerStartSeatIndex}");
     }
@@ -123,6 +188,16 @@ public class SeatManager : MonoBehaviour
             openSeats.Add(seat);
             ActivateSelectableIcon(seat);
             Debug.Log($"[SeatManager] OpenSeats → index {seat.index} 열림, 아이콘 생성 {(seat.spawnedIcon != null ? "성공" : "실패(prefab/seatPosition 확인)")}");
+        }
+
+        // 특수석은 채움 확률이 낮아서 이미 비어있는 채로 방치돼있을 수 있음 - 빈자리 이벤트가 뜰 때마다 같이 선택지로 노출
+        foreach (var seat in seats)
+        {
+            if (seat.seatType == SeatType.Normal) continue;
+            if (seat.isOccupied || openSeats.Contains(seat)) continue;
+            openSeats.Add(seat);
+            ActivateSelectableIcon(seat);
+            Debug.Log($"[SeatManager] OpenSeats → 특수석 index {seat.index}도 이미 빈자리라 같이 노출");
         }
 
         Debug.Log($"[SeatManager] 빈자리 {n}개 열림 (요청 {count}개)");
@@ -160,6 +235,12 @@ public class SeatManager : MonoBehaviour
         Debug.Log($"[SeatManager] FillSeatWithRandomNPC 호출 → index {seat.index} (호출 스택은 Console에서 이 로그 클릭하면 확인 가능)");
         if (seat.seatPosition == null) return;
 
+        if (seat.seatType != SeatType.Normal)
+        {
+            FillSpecialSeat(seat);
+            return;
+        }
+
         var pool = new List<GameObject>();
         foreach (var s in seats)
         {
@@ -191,7 +272,35 @@ public class SeatManager : MonoBehaviour
 
         seat.seatedNPCObject = go;
         seat.isOccupied = true;
-        SetupSeatClickDetection(seat);
+    }
+
+    // 특수석은 일반 풀에서 빌려오지 않고 그 좌석이 전담하는 NPC 타입만, 그것도 낮은 확률로만 채움
+    // (나머지는 빈자리로 남아 일반 좌석보다 더 자주 비어있는 것처럼 보이게 됨)
+    void FillSpecialSeat(SeatSlot seat)
+    {
+        if (seat.silhouette) seat.silhouette.SetActive(false);
+        if (seat.seatedNPCObject)
+        {
+            Destroy(seat.seatedNPCObject);
+            seat.seatedNPCObject = null;
+        }
+        seat.isOccupied = false;
+
+        if (UnityEngine.Random.value > specialSeatFillChance) return; // 확률 미달 - 빈자리로 유지
+
+        var npcType = GetMatchingNPCType(seat.seatType);
+        var data = npcType.HasValue ? NPCManager.Instance?.GetData(npcType.Value) : null;
+        if (data == null || data.sittingSprite == null) return;
+
+        var go = new GameObject("SpecialSeatNPC");
+        go.transform.position = seat.seatPosition.position;
+        go.transform.localScale = Vector3.one * data.scale;
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = data.sittingSprite;
+        sr.sortingOrder = NPCManager.Instance.seatedNPCSortingOrder;
+
+        seat.seatedNPCObject = go;
+        seat.isOccupied = true;
     }
 
     // 좌석 위치에 선택 아이콘을 생성 (Phase1 후보 표시, 빈자리 선택 등 공용으로 사용)

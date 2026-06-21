@@ -13,6 +13,8 @@ public class NPCManager : MonoBehaviour
         public Sprite standingSprite;
         public Sprite sittingSprite;
         public float scale = 1f; // 이 NPC 타입의 스프라이트에 맞춘 배율 (서있기/앉기 공통)
+        [TextArea] public string requestDialogue; // 양보 요청 시 대사
+        [TextArea] public string thankYouDialogue; // 양보 받은 직후 감사 대사
     }
 
     [Header("NPC 데이터")]
@@ -96,31 +98,15 @@ public class NPCManager : MonoBehaviour
             npcSpriteRenderer.transform.localScale = Vector3.one * data.scale;
         }
 
-        switch (npcType)
-        {
-            case EventManager.NPCType.Elderly:
-                if (npcDialogueText) npcDialogueText.text = "아이고~ 삭신이 쑤시네";
-                break;
-            case EventManager.NPCType.Pregnant:
-                if (npcDialogueText) npcDialogueText.text = "아이고 배가 무거워서 힘드네요...";
-                break;
-            // 추가 NPC는 스프라이트 준비 후 주석 해제
-            // case EventManager.NPCType.Passenger: ...
-            // case EventManager.NPCType.Dog: ...
-            // case EventManager.NPCType.BabyHappy: ...
-            // case EventManager.NPCType.BabyCrying: ...
-        }
+        if (npcDialogueText) npcDialogueText.text = data.requestDialogue;
     }
 
     // 양보 누른 직후(이번 턴) - 위치/스프라이트는 서있는 채로 그대로 두고, 대사만 감사 인사로 바꿈
     public void ShowThankYouDialogue(EventManager.NPCType npcType)
     {
-        if (!npcDialogueText) return;
-        switch (npcType)
-        {
-            case EventManager.NPCType.Elderly: npcDialogueText.text = "고맙습니다~"; break;
-            case EventManager.NPCType.Pregnant: npcDialogueText.text = "감사합니다!"; break;
-        }
+        NPCData data = GetData(npcType);
+        if (data == null || !npcDialogueText) return;
+        npcDialogueText.text = data.thankYouDialogue;
     }
 
     // 다음 턴 시작 시 - 양보로 비워진 그 좌석에 실제로 앉힘 (seat는 양보 시점에 미리 캡쳐해둔 슬롯 - playerCurrentSeat는 그 사이 null이 돼서 못 씀)
@@ -137,7 +123,6 @@ public class NPCManager : MonoBehaviour
         sr.sortingOrder = seatedNPCSortingOrder;
         seatedNPCObjects.Add(obj);
         seat.seatedNPCObject = obj;
-        SeatManager.Instance?.SetupSeatClickDetection(seat);
     }
 
     public void ShowIgnoreReaction(EventManager.NPCType npcType) { }
@@ -155,7 +140,7 @@ public class NPCManager : MonoBehaviour
         if (npcDialogueText) npcDialogueText.text = "";
     }
 
-    NPCData GetData(EventManager.NPCType npcType)
+    public NPCData GetData(EventManager.NPCType npcType)
     {
         switch (npcType)
         {

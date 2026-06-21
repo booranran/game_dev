@@ -116,7 +116,8 @@ public class EventManager : MonoBehaviour
 
         if (state == GameManager.PlayerState.Sitting)
         {
-            if (yieldNPCCount < maxYieldNPCs)
+            // 노약자석/임산부석이 둘 다 비어있으면 그 타입들이 굳이 플레이어에게 양보를 구할 이유가 없음 - 둘 다 자기 전용석이 있는데 비어있다면 이벤트 자체를 배제
+            if (yieldNPCCount < maxYieldNPCs && (ElderlyYieldEligible() || PregnantYieldEligible()))
                 for (int i = 0; i < yieldNPCWeight; i++) pool.Add(EventType.YieldNPC);
             if (!elbowOnCooldown)
                 for (int i = 0; i < elbowGameWeight; i++) pool.Add(EventType.ElbowGame);
@@ -151,9 +152,23 @@ public class EventManager : MonoBehaviour
         return NPCType.SmartphonePassenger;
     }
 
+    // 해당 타입 전용석이 비어있으면 그 타입은 거기 가서 앉으면 되니 플레이어에게 양보를 구할 이유가 없음 - 전용석이 없거나(미설정) 다 차있을 때만 후보
+    bool ElderlyYieldEligible() =>
+        !SeatManager.Instance.HasSeatType(SeatManager.SeatType.ElderlySeat) ||
+        SeatManager.Instance.IsSpecialSeatTypeFull(SeatManager.SeatType.ElderlySeat);
+
+    bool PregnantYieldEligible() =>
+        !SeatManager.Instance.HasSeatType(SeatManager.SeatType.PregnantSeat) ||
+        SeatManager.Instance.IsSpecialSeatTypeFull(SeatManager.SeatType.PregnantSeat);
+
     NPCType PickYieldNPC()
     {
-        return UnityEngine.Random.value < 0.5f ? NPCType.Elderly : NPCType.Pregnant;
+        bool elderlyEligible = ElderlyYieldEligible();
+        bool pregnantEligible = PregnantYieldEligible();
+
+        if (elderlyEligible && pregnantEligible)
+            return UnityEngine.Random.value < 0.5f ? NPCType.Elderly : NPCType.Pregnant;
+        return elderlyEligible ? NPCType.Elderly : NPCType.Pregnant;
     }
 
     public void ResolveYield()

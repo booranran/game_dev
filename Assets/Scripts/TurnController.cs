@@ -210,6 +210,12 @@ public class TurnController : MonoBehaviour
             noEventPanel.SetActive(true);
         }
 
+        // 특수석(임신부석/노약자석)에 앉은 채로 정확히 그 좌석이 전담하는 NPC를 무시한 경우 - 추가 배려점수 페널티
+        var seat = SeatManager.Instance.playerCurrentSeat;
+        if (seat != null && SeatManager.GetMatchingNPCType(seat.seatType) == npc)
+            GameManager.Instance.ChangeConsideration(SeatManager.Instance.GetSeatIgnoreExtraPenalty(seat.seatType));
+        hudManager.UpdateHUD();
+
         Invoke(nameof(ClearMonologueAndAdvance), 1f);
     }
 
@@ -225,7 +231,8 @@ public class TurnController : MonoBehaviour
 
     void AttemptSit()
     {
-        if (UnityEngine.Random.value < seatCompetitionChance)
+        bool isSpecialSeat = SeatManager.Instance.currentEmptySeat.seatType != SeatManager.SeatType.Normal;
+        if (!isSpecialSeat && UnityEngine.Random.value < seatCompetitionChance)
         {
             Debug.Log("[TurnController] 빈자리 경쟁 발생 → Phase2");
             EyeGameController.Instance.StartCompetitionForCurrentSeat();
@@ -234,9 +241,18 @@ public class TurnController : MonoBehaviour
 
         EventManager.Instance.ResolveSit();
         SeatManager.Instance.OccupySeat();
+        ApplySpecialSeatPenalty();
         characterDisplay.UpdateSprite();
         hudManager.UpdateHUD();
         Invoke(nameof(AdvanceTurn), 0.5f);
+    }
+
+    // 특수석(임신부석/노약자석)에 앉는 순간 1회 배려점수 기본 페널티 적용
+    void ApplySpecialSeatPenalty()
+    {
+        var seat = SeatManager.Instance.playerCurrentSeat;
+        if (seat == null || seat.seatType == SeatManager.SeatType.Normal) return;
+        GameManager.Instance.ChangeConsideration(SeatManager.Instance.GetSeatBasePenalty(seat.seatType));
     }
 
     // 빈자리 패널의 "서있기" 버튼 - 열려있던 빈자리들 전부 다른 NPC로 즉시 채움
@@ -257,6 +273,7 @@ public class TurnController : MonoBehaviour
         {
             EventManager.Instance.ResolveSit();
             SeatManager.Instance.OccupySeat();
+            ApplySpecialSeatPenalty();
             characterDisplay.UpdateSprite(CharacterDisplay.PoseOverride.JustSat); // 다음 턴 OnTurnStart()에서 자동으로 평소 포즈로 복귀
         }
         else
@@ -344,15 +361,16 @@ public class TurnController : MonoBehaviour
         ShowPostMinigameMonologue(ElbowGameController.Instance.GetEndLine(playerWon));
     }
 
-    void OnBagGameResult(int conditionDelta, int healthDamage)
+    void OnBagGameResult(int conditionDamage, int healthDamage, bool won)
     {
-        // 가방방어는 체력만 담당(컨디션은 안 건드림) - 팔꿈치 게임이 컨디션 전담
+        // 체력은 컨디션에 따라 배율 적용, 컨디션 자체는 등급과 무관하게 항상 깎임(서서 방어한 피로)
         float multiplier = GameManager.Instance.GetConditionDamageMultiplier();
-        int scaledDamage = Mathf.RoundToInt(healthDamage * multiplier);
+        int scaledHealthDamage = Mathf.RoundToInt(healthDamage * multiplier);
 
-        GameManager.Instance.ChangeHealth(scaledDamage);
+        GameManager.Instance.ChangeHealth(scaledHealthDamage);
+        GameManager.Instance.ChangeCondition(conditionDamage);
         hudManager.UpdateHUD();
-        ShowPostMinigameMonologue(BagDefenseController.Instance.GetEndLine(conditionDelta >= 0));
+        ShowPostMinigameMonologue(BagDefenseController.Instance.GetEndLine(won));
     }
 
     public void OnTriggerContinueButton()

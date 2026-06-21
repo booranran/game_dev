@@ -169,9 +169,6 @@ public class EyeGameController : MonoBehaviour
             {
                 var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
                 if (sr) sr.color = hintColor;
-
-                var col = obj.GetComponent<Collider2D>();
-                if (col) col.enabled = false; // 아이콘 클릭과 겹쳐서 헷갈리지 않도록 비활성화
             }
 
             var icon = SeatManager.Instance.SpawnSeatIcon(seat, 1.1f); // 사람이 앉아있어서 기본 높이보다 더 올림
@@ -222,8 +219,13 @@ public class EyeGameController : MonoBehaviour
         {
             var seat = candidates[correctIndex];
             SeatManager.Instance.SetCurrentEmptySeat(seat);
-            currentCompetitor = PickCompetitor();
-            StartCompetition();
+            if (seat.seatType != SeatManager.SeatType.Normal)
+                OnEyeGameEnd?.Invoke(true); // 특수석은 일반 경쟁 NPC가 끼어들지 않음 - 바로 착석
+            else
+            {
+                currentCompetitor = PickCompetitor();
+                StartCompetition();
+            }
         }
         else
         {
@@ -391,9 +393,6 @@ public class EyeGameController : MonoBehaviour
             {
                 var sr = obj.GetComponentInChildren<SpriteRenderer>(true);
                 if (sr) sr.color = Color.white;
-
-                var col = obj.GetComponent<Collider2D>();
-                if (col) col.enabled = true;
             }
             SeatManager.Instance.RemoveSeatIcon(seat);
         }

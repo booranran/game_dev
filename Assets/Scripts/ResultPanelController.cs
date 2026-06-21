@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System.Collections;
 
@@ -61,6 +62,10 @@ public class ResultPanelController : MonoBehaviour
     [Header("타이밍 - 엔딩 이름")]
     public float endingTitleFadeInDuration = 1f;
 
+    [Header("리트라이")]
+    public GameObject retryButton; // 엔딩 타이틀 다 뜨고 일정 시간 후 노출 - OnClick에 OnRetryButtonClicked() 연결
+    public float retryButtonDelay = 3f;
+
     [Header("클릭 안내 (TriggerEventController의 continuePrompt와 동일한 구조)")]
     public GameObject continuePrompt; // 일정 시간 후 나타나는 "클릭하세요" 안내 - 풀스크린 버튼의 OnClick에서 OnContinueClicked() 연결
     public float continuePromptDelay = 2f;
@@ -96,6 +101,7 @@ public class ResultPanelController : MonoBehaviour
         SetAlpha(illustrationGroup, 0f);
         SetAlpha(endingTitleGroup, 0f);
         if (continuePrompt) continuePrompt.SetActive(false);
+        if (retryButton) retryButton.SetActive(false);
         AudioManager.Instance?.FadeOutBGM(bgmFadeOutDuration); // 암전 시작과 동시에 점점 조용해져서 하차 일러스트 뜰 때쯈 무음
 
         // 1. 게임 뷰 → 암전 (이후 끝까지 검은 배경 유지)
@@ -137,6 +143,16 @@ public class ResultPanelController : MonoBehaviour
         if (titleText) titleText.text = fallbackTitle;
         yield return FadeGroup(endingTitleGroup, 0f, 1f, endingTitleFadeInDuration);
         AudioManager.Instance?.PlaySFX(endingTitleSFX);
+
+        // 6. 일정 시간 후 리트라이 버튼 노출
+        yield return new WaitForSeconds(retryButtonDelay);
+        if (retryButton) retryButton.SetActive(true);
+    }
+
+    // 리트라이 버튼 OnClick에 연결 - 단일 씬 구조라 씬을 통째로 다시 로드해서 모든 상태를 깨끗하게 초기화
+    public void OnRetryButtonClicked()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // 일러스트 뜬 뒤 일정 시간 조용히 있다가, 이 결과(캐릭터x엔딩) 전용 브금으로 페이드인 - 엔딩 타이틀까지 계속 이어짐

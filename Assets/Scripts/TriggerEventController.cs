@@ -16,6 +16,7 @@ public class TriggerEventController : MonoBehaviour
         [TextArea] public string dialogue;
         public int conditionDelta; // 양수면 컨디션 호전, 음수면 악화
         [TextArea] public string postMonologue; // 컷씬 닫힌 후 메인 화면에서 보여줄 후속 독백 (턴 전환 전 한 박자 쉬어가는 용도)
+        public AudioClip triggerBGM; // 이 컷씬 전용 브금 - 비워두면 브금 전환 없이 기존 그대로 유지
     }
 
     [Header("UI 참조")]
@@ -24,6 +25,9 @@ public class TriggerEventController : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public GameObject continuePrompt; // 일정 시간 후 나타나는 "클릭하세요" 안내 텍스트/박스
     public float continuePromptDelay = 2f;
+
+    [Header("사운드")]
+    public AudioManager.FadeStyle bgmFadeStyle = AudioManager.FadeStyle.Crossfade;
 
     [Header("트리거 이벤트 데이터 (인스펙터에서 자유롭게 추가/수정)")]
     public TriggerEventData[] events;
@@ -69,6 +73,8 @@ public class TriggerEventController : MonoBehaviour
 
         if (illustrationImage) illustrationImage.sprite = data.illustration;
         if (dialogueText) dialogueText.text = data.dialogue;
+        if (data.triggerBGM != null)
+            AudioManager.Instance?.PlayBGM(data.triggerBGM, bgmFadeStyle);
 
         triggerPanel.SetActive(true);
         if (continuePrompt) continuePrompt.SetActive(false);
@@ -89,6 +95,8 @@ public class TriggerEventController : MonoBehaviour
         {
             GameManager.Instance.ChangeCondition(events[currentIndex].conditionDelta);
             _pendingPostMonologue = events[currentIndex].postMonologue;
+            if (events[currentIndex].triggerBGM != null)
+                AudioManager.Instance?.RequestReturnToMainGameIfUnclaimed();
         }
 
         triggerPanel.SetActive(false);

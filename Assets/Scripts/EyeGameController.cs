@@ -236,7 +236,10 @@ public class EyeGameController : MonoBehaviour
             float rate = GameManager.Instance.lineType == GameManager.LineType.Line9
                 ? line9CompetitionRate : line7CompetitionRate;
             if (UnityEngine.Random.value < rate)
+            {
+                currentCompetitor = PickCompetitor(); // 이전엔 빠져있어서 currentCompetitor가 직전 값(또는 기본값 Elderly)으로 남아있던 버그
                 StartCompetition();
+            }
             else
                 OnEyeGameEnd?.Invoke(true);
         }

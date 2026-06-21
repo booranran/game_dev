@@ -37,6 +37,7 @@ public class TurnController : MonoBehaviour
     public GameObject characterMonologueText; // Image 박스 (보이기/숨기기용)
     public TextMeshProUGUI characterMonologueTMP; // 위 박스의 자식 TMP (실제 텍스트)
     public ResultPanelController resultPanelController;
+    public GameOverPanelController gameOverPanelController;
 
     private System.Action pendingMinigameStart;
     private string pendingTurnStartMonologue;
@@ -413,7 +414,7 @@ public class TurnController : MonoBehaviour
         if (characterMonologueText) characterMonologueText.SetActive(false);
     }
 
-    void GoToResult() => resultPanelController.Show(GameManager.Instance.characterType, GameManager.EndingType.GameOver);
+    void GoToResult() => gameOverPanelController.Show(GameManager.Instance.characterType);
     void GoToResult(GameManager.EndingType ending) => StartCoroutine(PlayExitWalkThenShowResult(ending));
 
     // 마지막 턴이 화면에 반영될 틈 없이 바로 ResultPanel이 켜지던 문제 - 앞으로 걸어나가는 연출 하나 끼워넣음

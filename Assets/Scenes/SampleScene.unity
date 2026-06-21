@@ -797,8 +797,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.3200001, y: 0.27, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -851,15 +851,15 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -30
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 5378222986219268943, guid: cb6dd2fe07ca54f8694ef1ad1806de34, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 83ec4323b0df24aff9f3e6ef3e5e58e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 18.39, y: 45.140003}
+  m_Size: {x: 35.875, y: 35.875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!1 &80714374
 GameObject:
@@ -887,8 +887,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.5607505, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2503,7 +2503,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.1799994, y: 0.30556, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -2786,34 +2786,34 @@ MonoBehaviour:
   randomizePlayerSeat: 0
   playerStartSeatIndex: 4
   silhouetteSpritePool:
-  - normal: {fileID: 21300000, guid: 44d6f366100be4c13bc6a9765897d5ed, type: 3}
-    highlighted: {fileID: 21300000, guid: 045e7a9f039894000853bee10ea148ea, type: 3}
-  - normal: {fileID: 21300000, guid: 60b43f82ef18e4ef987bd99b0447dcb0, type: 3}
-    highlighted: {fileID: 21300000, guid: ba1ff3b368abc457a8fc421a7a2ab495, type: 3}
-  - normal: {fileID: 21300000, guid: 3872191326a8942f1b61549d437fa587, type: 3}
-    highlighted: {fileID: 21300000, guid: ad0583a4fc6d74b24b9cf624758c9f25, type: 3}
-  - normal: {fileID: 21300000, guid: 832fcad99f34d4fac93056d526f89032, type: 3}
-    highlighted: {fileID: 21300000, guid: bbae4dc57873d4b0c9be9826142a6eb3, type: 3}
-  - normal: {fileID: 21300000, guid: c8a1a58ad89b1418d845b95ec1efc254, type: 3}
-    highlighted: {fileID: 21300000, guid: f1ead0ac9441243ccb68478ba258d900, type: 3}
-  - normal: {fileID: 21300000, guid: 6703bf36b771b4d008e916bcfcce38e3, type: 3}
-    highlighted: {fileID: 21300000, guid: dc4024ea4a93240cfa5aa2a07a8dd300, type: 3}
-  - normal: {fileID: 21300000, guid: 7a8fb6b0899a448d491506571b175f5b, type: 3}
-    highlighted: {fileID: 21300000, guid: 8b24d6034d8e845108dc0c657da24c26, type: 3}
-  - normal: {fileID: 21300000, guid: 92efb417b1cf64134ab45475b459d7f6, type: 3}
-    highlighted: {fileID: 21300000, guid: a45b56efbc44e48a6970b9e656429b73, type: 3}
-  - normal: {fileID: 21300000, guid: f1bce30b39fa94e0fb0ec36fbd4270d8, type: 3}
-    highlighted: {fileID: 21300000, guid: 827b84bf40bc54e88be5131739e76958, type: 3}
-  - normal: {fileID: 21300000, guid: 9a3d7da6a8ee8495ea43c857511c7357, type: 3}
-    highlighted: {fileID: 21300000, guid: f2e7ad8ee08614db29c18a631b80780d, type: 3}
-  - normal: {fileID: 21300000, guid: 367f78918586140d6825dfcf12ad685b, type: 3}
-    highlighted: {fileID: 21300000, guid: b808fc88c4d18464e88a44f324c27bd4, type: 3}
-  - normal: {fileID: 21300000, guid: 280d053944cca4539ad43b13f485c47d, type: 3}
-    highlighted: {fileID: 21300000, guid: c4bf3f51ee27e44b9a2e4a54eab39736, type: 3}
-  - normal: {fileID: 21300000, guid: 114f704ec248a4024aa583663dcd841d, type: 3}
-    highlighted: {fileID: 21300000, guid: 2282ce471556b456c80b183e6a291173, type: 3}
-  - normal: {fileID: 21300000, guid: a27fbeb24a21f481dba416d4f93ee301, type: 3}
-    highlighted: {fileID: 21300000, guid: 3dd2f6428e0814ba18f8dded5e4ecd8e, type: 3}
+  - normal: {fileID: 21300000, guid: f389fdb54b7e0455c85b24b8f910528c, type: 3}
+    highlighted: {fileID: 21300000, guid: 278af88025ca1449f9c03474cebac4be, type: 3}
+  - normal: {fileID: 21300000, guid: 83ec4323b0df24aff9f3e6ef3e5e58e1, type: 3}
+    highlighted: {fileID: 21300000, guid: 69c1f00f4b07e461bbc1123e1c092a4c, type: 3}
+  - normal: {fileID: 21300000, guid: 5839e974c2d504802ae77a4859d676a5, type: 3}
+    highlighted: {fileID: 21300000, guid: 390f344293d6b41bd9e116d120787b6d, type: 3}
+  - normal: {fileID: 21300000, guid: 8dab9f0c421a346c5bb9bef7821f3f86, type: 3}
+    highlighted: {fileID: 21300000, guid: 88ee72b21dc5d4a6bb1efdfcc620cd18, type: 3}
+  - normal: {fileID: 21300000, guid: 92e8bf9d154634e70abd8be7bd29d489, type: 3}
+    highlighted: {fileID: 21300000, guid: f69f339a8716244fb9aaffe19509bcb6, type: 3}
+  - normal: {fileID: 21300000, guid: 7ede51588aa7143349116d85019c8a86, type: 3}
+    highlighted: {fileID: 21300000, guid: ebad04953b965463e9b435d4edf185c4, type: 3}
+  - normal: {fileID: 21300000, guid: 8449c0a22a84e4b2087978d75be3b150, type: 3}
+    highlighted: {fileID: 21300000, guid: ed55b9516fa54473394d77031991e4a8, type: 3}
+  - normal: {fileID: 21300000, guid: 1183f76fd3ae34c7c8b64444783770c5, type: 3}
+    highlighted: {fileID: 21300000, guid: 5626ba3a487ae49f1b8b8f7e3bd6c8c5, type: 3}
+  - normal: {fileID: 21300000, guid: c508028685afd40b4bcfa76d9d6927b5, type: 3}
+    highlighted: {fileID: 21300000, guid: 659f2c77fb96342b18d99954377f7f9d, type: 3}
+  - normal: {fileID: 21300000, guid: 8afdb01cee1b84c81bcb81429c0f6cc5, type: 3}
+    highlighted: {fileID: 21300000, guid: 3a8575b6fb2914bf8af13138ded0c879, type: 3}
+  - normal: {fileID: 21300000, guid: 52df4fdedea704a7c844d0646a581adb, type: 3}
+    highlighted: {fileID: 21300000, guid: 0f237e176d65b402f8c85a3de3b59922, type: 3}
+  - normal: {fileID: 21300000, guid: 771c8d8da86844dd78bc3c8b9efe608f, type: 3}
+    highlighted: {fileID: 21300000, guid: 7649bd38a25894b0493a468f8194141a, type: 3}
+  - normal: {fileID: 21300000, guid: fc45849c5f73d405e94f3504116cfa77, type: 3}
+    highlighted: {fileID: 21300000, guid: 24d26ba1aede141d5bcc236b5dbceb64, type: 3}
+  - normal: {fileID: 21300000, guid: 25de3744039164072a4748fc148e1833, type: 3}
+    highlighted: {fileID: 21300000, guid: d6d2dd8dc82a949a797a24ca594f6e58, type: 3}
   selectableIconPrefab: {fileID: 328621318559455568, guid: 6735b2bb11d3640afb9f642400c80d7b, type: 3}
   selectableIconOffsetX: 0
   selectableIconFixedY: 0.8
@@ -2956,8 +2956,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.2207503, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4261,8 +4261,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.1007504, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4293,7 +4293,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.52, y: 0.27, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -4355,7 +4355,7 @@ SpriteRenderer:
   m_Size: {x: 18.39, y: 45.140003}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &423516566
 GameObject:
@@ -4520,8 +4520,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.6192496, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4893,7 +4893,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.1200001, y: 0.30556, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -5058,8 +5058,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5692495, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5678,8 +5678,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 6.2492495, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5881,7 +5881,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.2199998, y: 0.30556, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -5972,7 +5972,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.92, y: 0.27, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -6689,6 +6689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
   bgm: {fileID: 8300000, guid: f5767e6d12aaa4ea992813a062eb6491, type: 3}
   fadeStyle: 0
+  silenceFadeOutDuration: 1
 --- !u!1 &701184621
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,8 +7777,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 8.46, y: 0.27, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7830,15 +7831,15 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -30
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 5378222986219268943, guid: cb6dd2fe07ca54f8694ef1ad1806de34, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f389fdb54b7e0455c85b24b8f910528c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 18.39, y: 45.140003}
+  m_Size: {x: 35.875, y: 35.875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!1 &882426368
 GameObject:
@@ -8212,8 +8213,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.2792494, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8617,6 +8618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
   bgm: {fileID: 8300000, guid: 548029eb85fc6404e9b799c9ce89aaa5, type: 3}
   fadeStyle: 0
+  silenceFadeOutDuration: 1
 --- !u!1 &967350131
 GameObject:
   m_ObjectHideFlags: 0
@@ -9667,8 +9669,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.9307504, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9982,6 +9984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
   bgm: {fileID: 8300000, guid: ea49ec0d64d2f434c88ceee96f9d0f14, type: 3}
   fadeStyle: 0
+  silenceFadeOutDuration: 1
 --- !u!1 &1092234867
 GameObject:
   m_ObjectHideFlags: 0
@@ -11636,7 +11639,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 4.2, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273326484
@@ -12316,6 +12319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
   bgm: {fileID: 8300000, guid: f5767e6d12aaa4ea992813a062eb6491, type: 3}
   fadeStyle: 0
+  silenceFadeOutDuration: 1
 --- !u!1 &1365807943
 GameObject:
   m_ObjectHideFlags: 0
@@ -13708,7 +13712,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.9399998, y: 0.30556, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -13798,8 +13802,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7.29, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14824,7 +14828,7 @@ MonoBehaviour:
   playerTransform: {fileID: 525003304}
   competitorStandingOffset: {x: -1.8, y: 0, z: 0}
   phase2Duration: 5
-  seatedCompetitorScale: 0.7
+  seatedCompetitorScale: 0.6
   competitorConfigs:
   - npcType: 4
     redChance: 0.4
@@ -15220,8 +15224,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.2407506, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16116,8 +16120,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.7492495, y: -0.4, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1976068518}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16373,7 +16377,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.7299995, y: 0.30556, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -16466,6 +16470,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5895a8985c174e57ac679ad78c77e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultPanelController
+  endingBGMFadeStyle: 0
+  totalScoreRevealSFX: {fileID: 8300000, guid: 505b93d114c30476ba67bca256a3010d, type: 3}
+  endingTitleSFX: {fileID: 8300000, guid: 505b93d114c30476ba67bca256a3010d, type: 3}
   resultPanel: {fileID: 1896234386}
   illustrationImage: {fileID: 840470780}
   titleText: {fileID: 1840273086}
@@ -16479,6 +16486,7 @@ MonoBehaviour:
   illustrationGroup: {fileID: 343466796}
   endingTitleGroup: {fileID: 538835290}
   fadeOverlayInDuration: 1
+  bgmFadeOutDuration: 1
   exitIllustrationFadeInDuration: 1
   exitIllustrationDisplayDuration: 2.5
   exitIllustrationFadeOutDuration: 1
@@ -16486,6 +16494,7 @@ MonoBehaviour:
   scoreFadeOutDuration: 1
   illustrationFadeInDuration: 1
   illustrationFadeOutDuration: 1
+  illustrationBGMFadeInDelay: 2
   endingTitleFadeInDuration: 0
   continuePrompt: {fileID: 1516609270}
   continuePromptDelay: 2
@@ -16497,6 +16506,7 @@ MonoBehaviour:
     monologueLines:
     - "\uC624\uB298\uD558\uB8E8\uB3C4 \uD798\uB0C8\uB2E4"
     - "\uB0B4\uC77C\uB3C4 \uD798\uB0B4\uC790"
+    endingBGM: {fileID: 8300000, guid: a5f01850da2bb462ea67420bc2485536, type: 3}
   - character: 0
     ending: 1
     illustration: {fileID: 6174054119768636856, guid: ecafaca570ab64d7f8e14989f9ac2e35, type: 3}
@@ -16504,37 +16514,44 @@ MonoBehaviour:
     monologueLines:
     - "\uC624\uB298\uD558\uB8E8\uB3C4\uD798\uB4E4\uC5C7\uB2E4"
     - "\uB0B4\uC77C\uB3C4\uD798\uB4E4\uAC9F\uC9C0"
+    endingBGM: {fileID: 8300000, guid: 67aeb8c84c54f426796bdf0dddf921c3, type: 3}
   - character: 0
     ending: 2
     illustration: {fileID: 6174054119768636856, guid: ecafaca570ab64d7f8e14989f9ac2e35, type: 3}
     title: NORMAL ENDING
     monologueLines:
     - 
+    endingBGM: {fileID: 8300000, guid: 67aeb8c84c54f426796bdf0dddf921c3, type: 3}
   - character: 0
     ending: 3
     illustration: {fileID: -5887216996598405274, guid: 75ec91959a36a405e9e8fb7feb8ba254, type: 3}
     title: BAD ENDING
     monologueLines: []
+    endingBGM: {fileID: 8300000, guid: 93d3040e6041847cd9c12239278ac9e8, type: 3}
   - character: 1
     ending: 0
     illustration: {fileID: 4682166637309171905, guid: 41a2e3ebaf187471a86450201dfee5ff, type: 3}
     title: GOOD ENDING
     monologueLines: []
+    endingBGM: {fileID: 8300000, guid: a5f01850da2bb462ea67420bc2485536, type: 3}
   - character: 1
     ending: 1
     illustration: {fileID: 3096134113647579147, guid: 88353b91baeef47779185f23fcd98a4d, type: 3}
     title: NORMAL ENDING
     monologueLines: []
+    endingBGM: {fileID: 8300000, guid: 67aeb8c84c54f426796bdf0dddf921c3, type: 3}
   - character: 1
     ending: 2
     illustration: {fileID: 3096134113647579147, guid: 88353b91baeef47779185f23fcd98a4d, type: 3}
     title: NORMAL ENDING
     monologueLines: []
+    endingBGM: {fileID: 8300000, guid: 67aeb8c84c54f426796bdf0dddf921c3, type: 3}
   - character: 1
     ending: 3
     illustration: {fileID: 3681201384695615192, guid: 517b6549883954c3e9b74d23168adc28, type: 3}
     title: BAD ENDING
     monologueLines: []
+    endingBGM: {fileID: 8300000, guid: 93d3040e6041847cd9c12239278ac9e8, type: 3}
 --- !u!4 &1733542834
 Transform:
   m_ObjectHideFlags: 0
@@ -16577,8 +16594,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.4, y: 0.27, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16745,6 +16762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
   bgm: {fileID: 8300000, guid: 548029eb85fc6404e9b799c9ce89aaa5, type: 3}
   fadeStyle: 0
+  silenceFadeOutDuration: 1
 --- !u!1 &1770751621
 GameObject:
   m_ObjectHideFlags: 0
@@ -18769,6 +18787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelBGMPlayer
   bgm: {fileID: 8300000, guid: d49f54151abf64e99b9608829134c79a, type: 3}
   fadeStyle: 0
+  silenceFadeOutDuration: 1
 --- !u!1 &1989849357
 GameObject:
   m_ObjectHideFlags: 0
@@ -19131,7 +19150,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.6200001, y: 0.30556, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1184454688}
@@ -19381,28 +19400,28 @@ MonoBehaviour:
   continuePromptDelay: 2
   events:
   - standingSprite: {fileID: 21300000, guid: d694b188b7a444bffa1769fcb5841c3c, type: 3}
-    standingScale: 0.7
+    standingScale: 0.2
     illustration: {fileID: -7654494564207864009, guid: c1028276352b04d9590ab0395ec00c47, type: 3}
     dialogue: "\"\uC800.. \uC5EC\uAE30\uC11C \uB0B4\uB824\uC694\"\n\uAFC8\uC5D0\uC11C\uB9CC
       \uBCF4\uB358 \uC774\uC0C1\uD615\uC774 \uB9D0\uC744 \uAC78\uC5C8\uB2E4."
     conditionDelta: 1
     postMonologue: "\"\uC800\uB3C4 \uAC19\uC774 \uB530\uB77C \uB0B4\uB824\uB3C4 \uB420\uAE4C\uC694\""
   - standingSprite: {fileID: 21300000, guid: fe57afcb5e4364eeeb86fbd0bcc74bfd, type: 3}
-    standingScale: 0.8
+    standingScale: 0.2
     illustration: {fileID: -1530876662242959701, guid: c35832129775d40a491800ec29091199, type: 3}
     dialogue: "\"\uC655\uC655!\"\n\uAC15\uC544\uC9C0\uAC00 \uAF2C\uB9AC\uB97C \uD754\uB4E4\uBA70
       \uCCD0\uB2E4\uBD24\uB2E4."
     conditionDelta: 1
     postMonologue: "\"\uADC0\uC5EC\uC6CC~\""
-  - standingSprite: {fileID: 21300000, guid: dc37cb6e33abb447e83e43b979ba8eaa, type: 3}
-    standingScale: 0.8
+  - standingSprite: {fileID: 21300000, guid: 4036bf792a32645fd8de815cd5ca3547, type: 3}
+    standingScale: 0.2
     illustration: {fileID: 3185919244135021220, guid: 493f489f5831d4a7691e49bdf96e88fd, type: 3}
     dialogue: "\"\uC73C\uC544\uC559~\"\n\uC9C0\uD558\uCCA0\uC5D0 \uC544\uAE30 \uC6B8\uC74C
       \uC18C\uB9AC\uAC00 \uC6B8\uB824\uD37C\uC84C\uB2E4.."
     conditionDelta: -1
     postMonologue: "\"\uC560\uAE30\uAC00 \uB9CE\uC774  \uC11C\uB7EC\uC6B4\uAC00\uBCF4\uB2E4...\""
-  - standingSprite: {fileID: 21300000, guid: 38769c27f9e23419f91aef88cf6a6ba5, type: 3}
-    standingScale: 0.8
+  - standingSprite: {fileID: 21300000, guid: 69b816c4a23c2466e9ccc73aca93b872, type: 3}
+    standingScale: 0.2
     illustration: {fileID: 8378791647582186463, guid: c9db8c048b8e144c6ba4d19581f72581, type: 3}
     dialogue: "\"\uC544\uBD80\uBD80...\"\n\uC544\uAE30\uAC00 \uB098\uB97C \uBCF4\uBA70
       \uC6C3\uC5C8\uB2E4."

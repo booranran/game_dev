@@ -277,7 +277,9 @@ public class SeatManager : MonoBehaviour
 
         var go = new GameObject("FilledNPC");
         go.transform.position = seat.seatPosition.position;
-        go.transform.localScale = sourceSeat.silhouette.transform.localScale; // 빌려온 원본 실루엣과 동일한 크기로 보이게
+        // 스프라이트만 빌려오고 스케일은 이 좌석(target) 자신의 실루엣 스케일을 따름 - donor 좌석 스케일을 그대로 쓰면
+        // 좌석마다 원근감에 맞게 다르게 잡아둔 크기가 안 맞아서 엉뚱하게 커지거나 작아짐
+        go.transform.localScale = seat.silhouette != null ? seat.silhouette.transform.localScale : sourceSeat.silhouette.transform.localScale;
         var sr2 = go.AddComponent<SpriteRenderer>();
         sr2.sprite = sourceSr.sprite;
         sr2.sortingOrder = -29;

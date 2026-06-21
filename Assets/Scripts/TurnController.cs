@@ -96,6 +96,12 @@ public class TurnController : MonoBehaviour
         {
             NPCManager.Instance.HideNPC();
             NPCManager.Instance.SeatNPCAt(pendingSeatedNPCType.Value, pendingSeatedNPCSeat);
+
+            // 같은 좌석이 마침 눈치게임 패배 NPC 정착 대기 중이었다면(아래 블록) - 방금 막 새로 앉힌 NPC를
+            // 엉뚱하게 경쟁 NPC 정착 스프라이트로 덮어쓰게 되니 그 예약은 무효화
+            if (pendingNormalizeSeat == pendingSeatedNPCSeat)
+                pendingNormalizeSeat = null;
+
             pendingSeatedNPCType = null;
             pendingSeatedNPCSeat = null;
         }
@@ -104,7 +110,8 @@ public class TurnController : MonoBehaviour
         if (pendingNormalizeSeat != null)
         {
             var npcObj = pendingNormalizeSeat.seatedNPCObject;
-            if (npcObj != null) // Unity fake null 주의 - ?. 대신 명시적 체크
+            bool npcObjAlive = npcObj != null; // Unity fake null 주의 - ?. 대신 명시적 체크
+            if (npcObjAlive)
             {
                 var sr = npcObj.GetComponent<SpriteRenderer>();
                 var seatedSprite = EyeGameController.Instance.GetSeatedSprite(pendingNormalizeNPCType);

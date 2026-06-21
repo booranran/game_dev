@@ -14,7 +14,13 @@ public class ResultPanelController : MonoBehaviour
         public Sprite illustration;
         public string title; // "GOOD ENDING" 등 마지막에만 단독으로 표시
         [TextArea] public string[] monologueLines; // 일러스트 아래에 순서대로 한 줄씩 표시
+        public AudioClip endingBGM; // 이 캐릭터x엔딩 조합 전용 브금 (엔딩 시작과 동시에 전환)
     }
+
+    [Header("사운드")]
+    public AudioManager.FadeStyle endingBGMFadeStyle = AudioManager.FadeStyle.Crossfade;
+    public AudioClip totalScoreRevealSFX; // "최종점수" 타이틀 뜨는 시점 1회 재생
+    public AudioClip endingTitleSFX; // 엔딩 이름(5단계)이 뜨는 순간 1회 재생
 
     [Header("UI 참조")]
     public GameObject resultPanel;
@@ -36,6 +42,7 @@ public class ResultPanelController : MonoBehaviour
 
     [Header("타이밍 - 게임 뷰 암전")]
     public float fadeOverlayInDuration = 1f;
+    public float bgmFadeOutDuration = 1f; // 암전 시작과 동시에 배경음악이 조용해지는 시간
 
     [Header("타이밍 - 하차 일러스트 (시간 지나면 자동 전환)")]
     public float exitIllustrationFadeInDuration = 1f;
@@ -49,6 +56,7 @@ public class ResultPanelController : MonoBehaviour
     [Header("타이밍 - 캐릭터 일러스트 + 독백 (한 줄씩 클릭, 페이드 길이만)")]
     public float illustrationFadeInDuration = 1f;
     public float illustrationFadeOutDuration = 1f;
+    public float illustrationBGMFadeInDelay = 3f; // 일러스트 뜨고 이 시간 지나야 endingBGM이 들어오기 시작
 
     [Header("타이밍 - 엔딩 이름")]
     public float endingTitleFadeInDuration = 1f;
@@ -88,6 +96,7 @@ public class ResultPanelController : MonoBehaviour
         SetAlpha(illustrationGroup, 0f);
         SetAlpha(endingTitleGroup, 0f);
         if (continuePrompt) continuePrompt.SetActive(false);
+        AudioManager.Instance?.FadeOutBGM(bgmFadeOutDuration); // 암전 시작과 동시에 점점 조용해져서 하차 일러스트 뜰 때쯈 무음
 
         // 1. 게임 뷰 → 암전 (이후 끝까지 검은 배경 유지)
         if (fadeOverlay) fadeOverlay.gameObject.SetActive(true);
@@ -102,15 +111,17 @@ public class ResultPanelController : MonoBehaviour
         if (healthScoreText) healthScoreText.text = $"{Mathf.RoundToInt(GameManager.Instance.GetHealthScore())}점";
         if (considerationScoreText) considerationScoreText.text = $"{Mathf.RoundToInt(GameManager.Instance.GetConsiderationScore())}점";
         yield return FadeGroup(scoreGroup, 0f, 1f, scoreFadeInDuration);
+        AudioManager.Instance?.PlaySFX(totalScoreRevealSFX); // "최종점수" 타이틀 뜨는 시점 - 체력/배려 개별 효과음은 타임라인 시그널로 직접 처리
 
         if (scoreTimeline) scoreTimeline.Play();
 
         yield return WaitForContinue();
         yield return FadeGroup(scoreGroup, 1f, 0f, scoreFadeOutDuration);
 
-        // 4. 일러스트 + 독백 (한 줄씩 클릭해서 넘김)
+        // 4. 일러스트 + 독백 (한 줄씩 클릭해서 넘김) - 초반엔 조용하다가 일정 시간 후 이 결과(캐릭터x엔딩) 전용 브금이 들어와서 엔딩 타이틀까지 이어짐
         if (illustrationImage) illustrationImage.sprite = data.illustration;
         yield return FadeGroup(illustrationGroup, 0f, 1f, illustrationFadeInDuration);
+        StartCoroutine(FadeInEndingBGMAfterDelay(data.endingBGM, illustrationBGMFadeInDelay));
 
         if (data.monologueLines != null)
         {
@@ -125,6 +136,15 @@ public class ResultPanelController : MonoBehaviour
         // 5. 엔딩 이름만 단독으로
         if (titleText) titleText.text = fallbackTitle;
         yield return FadeGroup(endingTitleGroup, 0f, 1f, endingTitleFadeInDuration);
+        AudioManager.Instance?.PlaySFX(endingTitleSFX);
+    }
+
+    // 일러스트 뜬 뒤 일정 시간 조용히 있다가, 이 결과(캐릭터x엔딩) 전용 브금으로 페이드인 - 엔딩 타이틀까지 계속 이어짐
+    IEnumerator FadeInEndingBGMAfterDelay(AudioClip endingBGM, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (endingBGM != null)
+            AudioManager.Instance?.PlayBGM(endingBGM, endingBGMFadeStyle);
     }
 
     // 풀스크린 버튼의 OnClick에서 호출 - TriggerEventController.OnTriggerContinueButton과 동일한 역할

@@ -140,7 +140,8 @@ public class AudioManager : MonoBehaviour
             yield return null;
         }
         activeSource.Stop();
-        activeSource.volume = 1f; // 다음에 다시 쓸 때를 위해 원복
+        // volume을 다시 1로 되돌리지 않음 - 지금 진짜로 무음 상태인 게 맞고, 다음 크로스페이드/페이드인은
+        // 어차피 자기 쪽에서 0부터 다시 올리니 여기서 1로 리셋해두면 오히려 다음 페이드 계산이 잘못된 시작값을 읽게 됨
     }
 
     IEnumerator DoCrossfade(AudioClip clip)

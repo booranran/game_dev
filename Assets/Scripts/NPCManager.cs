@@ -132,6 +132,12 @@ public class NPCManager : MonoBehaviour
         NPCData data = GetData(npcType);
         if (data == null || seat == null || seat.seatPosition == null) return;
 
+        if (seat.seatedNPCObject != null) // 그 자리에 이미 다른 오브젝트(경쟁에서 진 NPC 등)가 남아있었다면 정리
+        {
+            Destroy(seat.seatedNPCObject);
+            seat.seatedNPCObject = null;
+        }
+
         GameObject obj = new GameObject("SeatedNPC");
         obj.transform.position = seat.seatPosition.position;
         obj.transform.localScale = Vector3.one * data.scale;

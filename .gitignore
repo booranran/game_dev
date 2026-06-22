@@ -19,9 +19,16 @@
 
 # 빌드 결과물
 *.apk
+*.apk.cpgz
 *.aab
 *.unitypackage
 *.app
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+*BurstDebugInformation*/
+.utmp/
+
+# 서명 키 (민감 정보 - 직접 보관)
+*.keystore
 
 # OS 관련
 .DS_Store

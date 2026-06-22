@@ -27,9 +27,13 @@ public class EventManager : MonoBehaviour
     public int maxEmptySeats = 10;
     public int maxYieldNPCs = 9;
 
-    [Header("YieldNPC 가중치")]
-    [Tooltip("Sitting 상태 풀에서 YieldNPC가 차지하는 비율 (높을수록 양보 기회 자주 생김) - 기존엔 3으로 하드코딩돼있었음")]
-    public int yieldNPCWeight = 4;
+    [Header("YieldNPC 가중치 (호선별 - 7호선은 배려점수 얻을 기회 자체를 줄여서 배려점수 관리를 어렵게)")]
+    public int yieldNPCWeightLine9 = 4;
+    public int yieldNPCWeightLine7 = 2;
+
+    [Header("EmptySeat 가중치 (호선별 - 9호선은 한번 일어나면 다시 앉기 어렵게 해서 체력 관리를 어렵게)")]
+    public int emptySeatWeightLine9 = 1;
+    public int emptySeatWeightLine7 = 3;
 
     [Header("None 이벤트 가중치")]
     [Tooltip("Standing 상태에서 None 이벤트 비율 (낮을수록 EmptySeat 자주 발생)")]
@@ -45,11 +49,14 @@ public class EventManager : MonoBehaviour
     [Tooltip("팔꿈치 게임 등장 가중치 (0이면 비활성화)")]
     public int elbowGameWeight = 1;
 
-    [Header("BagDefense 설정 (보딩 인원수 기반)")]
+    [Header("BagDefense 설정 (보딩 연출이 있을 때만 등장 - 호선별 가중치/최대 발생횟수)")]
     [Tooltip("가방 방어 게임이 등장하기 시작하는 턴")]
     public int bagGameStartTurn = 5;
-    [Tooltip("이번 정거장 보딩 인원 1명당 추가되는 가중치 (인원 0이면 BagDefense 안 나옴)")]
-    public int bagDefenseWeightPerBoardingPerson = 1;
+    public int bagDefenseWeightLine9 = 2;
+    public int bagDefenseWeightLine7 = 2;
+    [Tooltip("게임 전체에서 BagDefense가 최대 몇 번까지 발생할지 (호선별) - 9호선은 체력관리가 핵심이라 더 자주 발생")]
+    public int maxBagDefenseLine9 = 4;
+    public int maxBagDefenseLine7 = 3;
 
     [Header("미니게임 쿨다운 (각자 따로 적용)")]
     [Tooltip("ElbowGame이 발생하면, 이후 최소 이만큼 턴이 지나야 ElbowGame이 다시 발생함")]
@@ -59,6 +66,7 @@ public class EventManager : MonoBehaviour
 
     private int emptySeatCount = 0;
     private int yieldNPCCount = 0;
+    private int bagDefenseCount = 0;
     private int lastElbowGameTurn = -1000; // 충분히 큰 음수로, currentTurn과 빼도 오버플로우 안 나게
     private int lastBagDefenseTurn = -1000;
 
@@ -102,7 +110,9 @@ public class EventManager : MonoBehaviour
         else if (currentEvent == EventType.BagDefense)
         {
             lastBagDefenseTurn = gm.currentTurn;
-            Debug.Log("[EventManager] BagDefense 발생");
+            bagDefenseCount++;
+            int maxBagDefense = gm.lineType == GameManager.LineType.Line9 ? maxBagDefenseLine9 : maxBagDefenseLine7;
+            Debug.Log($"[EventManager] BagDefense 발생 ({bagDefenseCount}/{maxBagDefense})");
         }
 
         OnEventGenerated?.Invoke(currentEvent, currentNPC);
@@ -114,11 +124,16 @@ public class EventManager : MonoBehaviour
         bool elbowOnCooldown = GameManager.Instance.currentTurn - lastElbowGameTurn < elbowGameCooldownTurns;
         bool bagOnCooldown = GameManager.Instance.currentTurn - lastBagDefenseTurn < bagDefenseCooldownTurns;
 
+        bool isLine9 = GameManager.Instance.lineType == GameManager.LineType.Line9;
+
         if (state == GameManager.PlayerState.Sitting)
         {
             // 노약자석/임산부석이 둘 다 비어있으면 그 타입들이 굳이 플레이어에게 양보를 구할 이유가 없음 - 둘 다 자기 전용석이 있는데 비어있다면 이벤트 자체를 배제
             if (yieldNPCCount < maxYieldNPCs && (ElderlyYieldEligible() || PregnantYieldEligible()))
-                for (int i = 0; i < yieldNPCWeight; i++) pool.Add(EventType.YieldNPC);
+            {
+                int yieldWeight = isLine9 ? yieldNPCWeightLine9 : yieldNPCWeightLine7;
+                for (int i = 0; i < yieldWeight; i++) pool.Add(EventType.YieldNPC);
+            }
             if (!elbowOnCooldown)
                 for (int i = 0; i < elbowGameWeight; i++) pool.Add(EventType.ElbowGame);
             for (int i = 0; i < noneWeightSitting; i++) pool.Add(EventType.None);
@@ -127,12 +142,14 @@ public class EventManager : MonoBehaviour
         {
             if (emptySeatCount < maxEmptySeats)
             {
-                pool.Add(EventType.EmptySeat);
-                pool.Add(EventType.EmptySeat);
+                int emptySeatWeight = isLine9 ? emptySeatWeightLine9 : emptySeatWeightLine7;
+                for (int i = 0; i < emptySeatWeight; i++) pool.Add(EventType.EmptySeat);
             }
-            if (!bagOnCooldown && GameManager.Instance.currentTurn >= bagGameStartTurn && BoardingController.Instance != null)
+            int maxBagDefense = isLine9 ? maxBagDefenseLine9 : maxBagDefenseLine7;
+            if (!bagOnCooldown && bagDefenseCount < maxBagDefense && GameManager.Instance.currentTurn >= bagGameStartTurn
+                && BoardingController.Instance != null && BoardingController.Instance.CurrentBoardingCount > 0)
             {
-                int bagWeight = BoardingController.Instance.CurrentBoardingCount * bagDefenseWeightPerBoardingPerson;
+                int bagWeight = isLine9 ? bagDefenseWeightLine9 : bagDefenseWeightLine7;
                 for (int i = 0; i < bagWeight; i++) pool.Add(EventType.BagDefense);
             }
             for (int i = 0; i < noneWeightStanding; i++) pool.Add(EventType.None);
@@ -142,14 +159,6 @@ public class EventManager : MonoBehaviour
             for (int i = 0; i < triggerNPCWeight; i++) pool.Add(EventType.TriggerNPC);
 
         return pool[UnityEngine.Random.Range(0, pool.Count)];
-    }
-
-    NPCType PickCompetingNPC()
-    {
-        int r = UnityEngine.Random.Range(0, 3);
-        if (r == 0) return NPCType.TiredWorker;
-        if (r == 1) return NPCType.Girl;
-        return NPCType.SmartphonePassenger;
     }
 
     // 해당 타입 전용석이 비어있으면 그 타입은 거기 가서 앉으면 되니 플레이어에게 양보를 구할 이유가 없음 - 전용석이 없거나(미설정) 다 차있을 때만 후보

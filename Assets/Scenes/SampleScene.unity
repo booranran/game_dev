@@ -2167,7 +2167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 134, y: -78}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &214598228
@@ -3097,7 +3097,8 @@ MonoBehaviour:
   pregnantSeatIgnoreExtraPenalty: -10
   elderlySeatBasePenalty: -8
   elderlySeatIgnoreExtraPenalty: -7
-  specialSeatFillChance: 0.9
+  specialSeatFillChanceLine9: 0.8
+  specialSeatFillChanceLine7: 0.7
 --- !u!4 &283339516
 Transform:
   m_ObjectHideFlags: 0
@@ -3690,7 +3691,7 @@ MonoBehaviour:
   npcSpriteRenderer: {fileID: 870266069}
   npcDialogueText: {fileID: 490891783}
   npcDialogueBox: {fileID: 214598227}
-  dialogueBoxScreenOffset: {x: 210, y: 200}
+  dialogueBoxScreenOffset: {x: 190, y: 150}
   seatedNPCSortingOrder: -29
   playerTransform: {fileID: 525003304}
   npcStandingOffset: {x: 1.8, y: -0.55, z: 0}
@@ -5786,9 +5787,10 @@ MonoBehaviour:
   debugMode: 0
   roundDuration: 3
   tapAmount: 0.1
-  studentBasePushSpeed: 0.3
-  studentSpeedIncreasePerRound: 0.05
-  workerBasePushSpeed: 0.7
+  winThreshold: 0.75
+  studentBasePushSpeed: 0.6
+  studentSpeedIncreasePerRound: 0.06
+  workerBasePushSpeed: 0.8
   workerSpeedIncreasePerRound: 0.08
   startMonologues:
   - "\"\uC544 \uAC70\uC2AC\uB9AC\uB124...?\""
@@ -5880,7 +5882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &540642795
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14083,7 +14085,7 @@ MonoBehaviour:
   playerState: 0
   characterType: 1
   lineType: 0
-  debugMode: 1
+  debugMode: 0
   debugCharacterType: 0
   debugLineType: 1
   maxHealth: 0
@@ -20642,13 +20644,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventManager
   maxEmptySeats: 10
   maxYieldNPCs: 9
-  yieldNPCWeight: 6
+  yieldNPCWeightLine9: 6
+  yieldNPCWeightLine7: 4
+  emptySeatWeightLine9: 2
+  emptySeatWeightLine7: 4
   noneWeightStanding: 1
   noneWeightSitting: 1
   triggerNPCWeight: 1
   elbowGameWeight: 1
   bagGameStartTurn: 5
-  bagDefenseWeightPerBoardingPerson: 1
+  bagDefenseWeightLine9: 2
+  bagDefenseWeightLine7: 2
+  maxBagDefenseLine9: 4
+  maxBagDefenseLine7: 3
   elbowGameCooldownTurns: 3
   bagDefenseCooldownTurns: 3
 --- !u!4 &2095006330

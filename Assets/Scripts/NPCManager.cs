@@ -96,8 +96,12 @@ public class NPCManager : MonoBehaviour
         var parentRect = npcDialogueBox.parent as RectTransform;
         if (parentRect == null) return;
 
+        // Screen Space - Overlay면 null, Screen Space - Camera면 캔버스의 렌더 카메라를 넘겨야 변환이 맞음
+        var canvas = parentRect.GetComponentInParent<Canvas>();
+        Camera eventCamera = (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay) ? canvas.worldCamera : null;
+
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, npcSpriteRenderer.transform.position);
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, null, out Vector2 localPoint))
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, screenPoint, eventCamera, out Vector2 localPoint))
             npcDialogueBox.anchoredPosition = localPoint + dialogueBoxScreenOffset;
     }
 

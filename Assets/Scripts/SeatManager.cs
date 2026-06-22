@@ -85,8 +85,9 @@ public class SeatManager : MonoBehaviour
     public float elderlySeatBasePenalty = -8f;
     public float elderlySeatIgnoreExtraPenalty = -7f; // 무시 시 기본+추가 = -15
 
-    [Header("특수석 채움 설정 (해당 NPC 타입만 채워지고, 일반 좌석보다 채움 확률이 낮음)")]
-    [Range(0f, 1f)] public float specialSeatFillChance = 0.4f;
+    [Header("특수석 채움 확률 (호선별 - 9호선은 혼잡해서 더 자주 차있고, 7호선은 더 자주 비어있게)")]
+    [Range(0f, 1f)] public float specialSeatFillChanceLine9 = 0.5f;
+    [Range(0f, 1f)] public float specialSeatFillChanceLine7 = 0.3f;
 
     public float GetSeatBasePenalty(SeatType type)
     {
@@ -126,8 +127,18 @@ public class SeatManager : MonoBehaviour
         }
     }
 
-    // NPCManager.Instance 보장을 위해 모든 Awake() 이후로 미룸 (특수석 초기 상태 채우기)
-    void Start()
+    void OnEnable()
+    {
+        GameManager.OnGameInitialized += FillAllSpecialSeats;
+    }
+
+    void OnDisable()
+    {
+        GameManager.OnGameInitialized -= FillAllSpecialSeats;
+    }
+
+    // BeginGame()이 호선을 확정한 뒤에 채워야 호선별 확률이 제대로 적용됨 - Start()로 하면 플레이어가 호선 고르기도 전에 먼저 돌아가버림
+    void FillAllSpecialSeats()
     {
         foreach (var seat in seats)
         {
@@ -305,7 +316,9 @@ public class SeatManager : MonoBehaviour
         seat.currentSilhouetteSprite = null;
         seat.currentHighlightSprite = null;
 
-        if (UnityEngine.Random.value > specialSeatFillChance) return; // 확률 미달 - 빈자리로 유지
+        float fillChance = GameManager.Instance.lineType == GameManager.LineType.Line9
+            ? specialSeatFillChanceLine9 : specialSeatFillChanceLine7;
+        if (UnityEngine.Random.value > fillChance) return; // 확률 미달 - 빈자리로 유지
 
         var npcType = GetMatchingNPCType(seat.seatType);
         var data = npcType.HasValue ? NPCManager.Instance?.GetData(npcType.Value) : null;
@@ -394,11 +407,12 @@ public class SeatManager : MonoBehaviour
         }
     }
 
+    // Phase1 후보군 - 특수석은 제외 (특수석은 비어있을 때만 OpenSeats()의 선택지로 노출됨, Phase1 관찰 대상이 아님)
     public SeatSlot[] GetCandidateSeats(int count)
     {
         List<SeatSlot> occupied = new List<SeatSlot>();
         foreach (var seat in seats)
-            if (seat.isOccupied) occupied.Add(seat);
+            if (seat.isOccupied && seat.seatType == SeatType.Normal) occupied.Add(seat);
 
         List<SeatSlot> result = new List<SeatSlot>();
         while (result.Count < count && occupied.Count > 0)

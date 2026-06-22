@@ -27,6 +27,7 @@ public class ElbowGameController : MonoBehaviour
     [Header("게임 설정")]
     public float roundDuration = 3f;
     public float tapAmount = 0.1f;
+    [Range(0f, 1f)] public float winThreshold = 0.5f; // 게이지가 이 값 이상이어야 승리 - 0.5보다 올리면 시작점(0.5)보다 더 오른쪽까지 밀어야 함
 
     [Header("밀기 속도 - 학생")]
     public float studentBasePushSpeed = 0.15f;
@@ -136,7 +137,7 @@ public class ElbowGameController : MonoBehaviour
     void EndRound()
     {
         isPlaying = false;
-        bool roundWon = gaugeValue >= 0.5f;
+        bool roundWon = gaugeValue >= winThreshold;
         if (roundWon) playerWins++;
 
         if (resultText) resultText.text = roundWon ? "방어 성공!" : "밀렸다!";

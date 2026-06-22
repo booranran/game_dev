@@ -57,7 +57,6 @@ public class BoardingController : MonoBehaviour
 
         if (slotPositions.Length == 0 || boardingSprites == null || boardingSprites.Length == 0)
         {
-            Debug.Log($"[BoardingController] 이번 정거장 보딩 인원: {CurrentBoardingCount}명 (영역/스프라이트 미설정, 비주얼 생략)");
             return;
         }
 
@@ -93,7 +92,6 @@ public class BoardingController : MonoBehaviour
             }
         }
 
-        Debug.Log($"[BoardingController] 이번 정거장 보딩 인원: {targetCount}명 (유지 {Mathf.Min(currentCount, targetCount)} / 변화 {Mathf.Abs(targetCount - currentCount)})");
     }
 
     void EnsureSlots()
